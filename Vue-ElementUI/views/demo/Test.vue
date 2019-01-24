@@ -8,6 +8,7 @@
         <div class="container" >
 			<el-button type="primary" icon="el-icon-edit" circle @click="handleTest"></el-button>
 			<el-button type="success" icon="el-icon-check" circle @click="handleTest1"></el-button>
+			<el-button type="success" icon="el-icon-check" circle @click="handleTest2"></el-button>
         </div>
     </div>
 </template>
@@ -36,6 +37,9 @@
 		   },
 		   handleTest1:function(){
 			   console.log("base",BASE_API)
+		   },
+		   handleTest2:function(){
+			   console.log("测试")
 		   }
         },
         computed: {
