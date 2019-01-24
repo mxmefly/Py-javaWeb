@@ -13,13 +13,13 @@ define(function(require, exports, module) {
     var Tabs = httpVueLoader('./views/demo/Tabs.vue');
     var Icon = httpVueLoader('./views/demo/Icon.vue');
     var ElIcon = httpVueLoader('./views/demo/ElIcon.vue');
-	var Test = httpVueLoader('./views/demo/Test.vue')
+	var Test = httpVueLoader('./views/business/Test.vue')
     const constantRouterMap = [
         { path: '/login', component: Login, hidden: true },
         { path: '/404', component: Page404, hidden: true },  
         {
          path: '/',
-         redirect: '/dashboard'
+         redirect: '/Login'
         },
         {
             path: '/',

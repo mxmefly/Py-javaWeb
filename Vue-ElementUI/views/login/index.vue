@@ -38,7 +38,7 @@
                         </el-button>
                     </el-form-item>
                 </el-form>
-                <div class="login-footer">恒丰银行版权所有</div>
+                <div class="login-footer">仅用于测试</div>
             </el-col>
         </el-row>
     </div>
@@ -71,10 +71,15 @@
         methods: {
             handleLogin : function(){
             	
-            	
-                console.log("redirect to welcome page!!")
+                console.log("登录成功，跳转首页")
               
-                 this.$router.push({ path: this.redirect || '/' }) /*this.$store.dispatch('Login', this.loginForm).then(function(){
+                 /* this.$router.push({ path: this.redirect || '/' }) */
+				 
+				 this.$router.push({
+					 path:'/dashboard'
+				 });
+				 
+				 /*this.$store.dispatch('Login', this.loginForm).then(function(){
                     this.loading = false
                     this.$router.push({ path: this.redirect || '/' })
                 }).catch(function() {
