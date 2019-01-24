@@ -39,7 +39,7 @@
 			   console.log("base",BASE_API)
 		   },
 		   handleTest2:function(){
-			   console.log("测试")
+			   console.log("store",this.$store)
 		   }
         },
         computed: {
