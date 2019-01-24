@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Element</title>
+    <link rel="stylesheet" href="./modules/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="./icons/iconfont.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/color-dark.css">
+
+    <script src="./modules/vue/vue.js"></script>
+    <script src="./modules/vuex/vuex.js"></script>
+    <script src="./modules/vue-router/vue-router.min.js"></script>
+    <script src="./modules/httpVueLoader/httpVueLoader.js"></script>
+    <script src="./modules/element-ui/lib/index.js"></script>
+    <script src="./modules/seajs/sea.js"></script>
+    <script src="./modules/stylus/stylus.min.js"></script>
+    <script src="./modules/axios/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--<router-view/>-->
+        <my-app></my-app>
+    </div>
+    <!--<script src="./main.js"></script>-->
+	<!-- 导入全局api表 -->
+	<script src="./api/api.js"></script>
+    <script>
+        process = {
+            env: {
+                BASE_API: "https://easy-mock.com/mock/5c47de3ad78a504a6c37c0b6/example"
+            }
+        };
+        seajs.config({
+            alias: {
+                'router':'./router/index.js',
+                'store':'./store/index.js',
+                'validator':'./util/validate.js',
+            }
+        });
+        httpVueLoader.langProcessor.stylus = function(stylusText) {
+
+            return new Promise(function(resolve, reject) {
+
+                stylus.render(stylusText, {}, function(err, css) {
+
+                    if (err) reject(err);
+                    resolve(css);
+                });
+            })
+        }
+        seajs.use('./main.js');  
+    </script>
+</body>
+</html>

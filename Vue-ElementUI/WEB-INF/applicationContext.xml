@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>            
+
+	<bean id="DAOService" class="cn.sunline.repository.DAOService" factory-method="getInstance"/>
+
+	<bean id="ServerShutdown" class="cn.sunline.dao.ServerShutdown" factory-method="getInstance"/>
+
+	<bean id="UserStateService" class="cn.sunline.state.UserStateService" factory-method="getInstance"/>
+		
+	<bean id="LogService" class="cn.sunline.repository.OperationLogService" factory-method="getInstance"/>
+	
+	<bean id="FrameConfigService" class="cn.sunline.config.FrameConfigService" factory-method="getInstance"/>
+	
+	<bean id="SystemConfigService" class="cn.sunline.config.SystemConfigService" factory-method="getInstance"/>
+	
+	<!--<bean id="UapServices" class="cn.sunline.uap.UapService" factory-method="getInstance">-->
+		<!--<property name="permissionManagerServices" ref="PermissionManagerServices"/>-->
+		<!--<property name="orgManagerService" ref="OrgManagerService"/>-->
+	<!--</bean>-->
+	
+	<bean id="PermissionManagerServices" class="cn.sunline.permission.PermissionManagerServices" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="ResourceManagerService" class="cn.sunline.permission.ResourceManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="OrgManagerService" class="cn.sunline.permission.OrgManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="RoleManagerService" class="cn.sunline.permission.RoleManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="AuthService" class="cn.sunline.permission.AuthService" factory-method="getInstance" >
+		<property name="userStateService">
+			<ref bean="UserStateService" />
+		</property>
+	</bean>
+	
+	<bean id="MenuManagerService" class="cn.sunline.permission.MenuManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="authService" ref="AuthService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="AttrManagerService" class="cn.sunline.permission.AttrManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+	</bean>
+	
+	<bean id="ResOperateManagerService" class="cn.sunline.permission.ResOperateManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+	</bean>
+	
+	<bean id="UserRoleManagerService" class="cn.sunline.permission.UserRoleManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="ResAttrDataManagerService" class="cn.sunline.permission.ResAttrDataManagerService" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="DataSourceServices" class="cn.sunline.sysmgt.DataSourceServices" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+
+	<bean id="OptLogServices" class="cn.sunline.sysmgt.OptLogServices" factory-method="getInstance">
+		<property name="userStateService" ref="UserStateService"/>
+	</bean>
+	
+	<bean id="DicServices" class="cn.sunline.sysmgt.DicServices" factory-method="getInstance">
+		<property name="daoService" ref="DAOService"/>
+	</bean>
+	
+	<bean id="CommonService" class="cn.sunline.framework.rmi.CommonService" factory-method="getInstance">
+		<property name="services">
+			<map>
+				<entry><key><value>UserStateService</value></key><ref bean="UserStateService" /></entry>
+				<entry><key><value>FrameConfigService</value></key><ref bean="FrameConfigService" /></entry>
+ 				<entry><key><value>LogService</value></key><ref bean="LogService" /></entry>
+ 				<entry><key><value>SystemConfigService</value></key><ref bean="SystemConfigService" /></entry>
+ 				<entry><key><value>PermissionManagerServices</value></key><ref bean="PermissionManagerServices" /></entry>
+ 				<entry><key><value>OrgManagerService</value></key><ref bean="OrgManagerService" /></entry>
+ 				<entry><key><value>RoleManagerService</value></key><ref bean="RoleManagerService" /></entry>
+ 				<entry><key><value>ResourceManagerService</value></key><ref bean="ResourceManagerService" /></entry>
+ 				<entry><key><value>AuthService</value></key><ref bean="AuthService" /></entry>
+ 				<entry><key><value>MenuManagerService</value></key><ref bean="MenuManagerService" /></entry>
+ 				<entry><key><value>AttrManagerService</value></key><ref bean="AttrManagerService" /></entry>
+ 				<entry><key><value>ResOperateManagerService</value></key><ref bean="ResOperateManagerService" /></entry>
+ 				<entry><key><value>UserRoleManagerService</value></key><ref bean="UserRoleManagerService" /></entry>
+ 				<entry><key><value>ResAttrDataManagerService</value></key><ref bean="ResAttrDataManagerService" /></entry>
+ 				<entry><key><value>DataSourceServices</value></key><ref bean="DataSourceServices" /></entry>
+ 				<entry><key><value>OptLogServices</value></key><ref bean="OptLogServices" /></entry>
+ 				<entry><key><value>DicServices</value></key><ref bean="DicServices" /></entry>
+ 				<!--<entry><key><value>UapServices</value></key><ref bean="UapServices" /></entry> 	-->
+			</map>
+		</property>
+		<property name="transactionListeners">
+			<list>
+				<bean class="cn.sunline.repository.TransactionListener">
+					<property name="daoService" ref="DAOService"></property>
+				</bean>
+			</list>
+		</property>
+		<property name="requestListeners">
+			<list>
+				<ref bean="UserStateService" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="framework" class="cn.sunline.framework.Framework" init-method="activate" factory-method="getInstance">
+		<property name="services">
+			<map>
+				<entry><key><value>UserStateService</value></key><ref bean="UserStateService" /></entry>
+				<entry><key><value>CommonService</value></key><ref bean="CommonService" /></entry>
+				<entry><key><value>DAOService</value></key><ref bean="DAOService" /></entry>
+				<entry><key><value>LogService</value></key><ref bean="LogService" /></entry>
+				<entry><key><value>SystemConfigService</value></key><ref bean="SystemConfigService" /></entry>
+				<entry><key><value>PermissionManagerServices</value></key><ref bean="PermissionManagerServices" /></entry>
+				<entry><key><value>OrgManagerService</value></key><ref bean="OrgManagerService" /></entry>
+				<entry><key><value>RoleManagerService</value></key><ref bean="RoleManagerService" /></entry>
+				<entry><key><value>ResourceManagerService</value></key><ref bean="ResourceManagerService" /></entry>
+				<entry><key><value>AuthService</value></key><ref bean="AuthService" /></entry>
+				<entry><key><value>MenuManagerService</value></key><ref bean="MenuManagerService" /></entry>
+				<entry><key><value>AttrManagerService</value></key><ref bean="AttrManagerService" /></entry>
+				<entry><key><value>ResOperateManagerService</value></key><ref bean="ResOperateManagerService" /></entry>
+				<entry><key><value>UserRoleManagerService</value></key><ref bean="UserRoleManagerService" /></entry>
+				<entry><key><value>ResAttrDataManagerService</value></key><ref bean="ResAttrDataManagerService" /></entry>
+				<entry><key><value>DataSourceServices</value></key><ref bean="DataSourceServices" /></entry>
+				<entry><key><value>OptLogServices</value></key><ref bean="OptLogServices" /></entry>
+				<entry><key><value>DicServices</value></key><ref bean="DicServices" /></entry> 		
+				<!--<entry><key><value>UapServices</value></key><ref bean="UapServices" /></entry> 	-->
+			</map>
+		</property>
+		<property name="serverShutdowns">
+			<map>
+				<entry><key><value>ServerShutdown</value></key><ref bean="ServerShutdown" /></entry>
+			</map>
+		</property>
+	</bean>
+</beans>
