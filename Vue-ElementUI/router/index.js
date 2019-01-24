@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
     "use strict";
-    var Login = httpVueLoader('./views/login/index.vue');
+    var Login = httpVueLoader('./views/login/login.vue');
     var Page404 = httpVueLoader('./views/404.vue');
     var Layout = httpVueLoader('./views/layout/Layout.vue');
 
