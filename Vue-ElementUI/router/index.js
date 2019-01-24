@@ -4,12 +4,8 @@ define(function(require, exports, module) {
     var Page404 = httpVueLoader('./views/404.vue');
     var Layout = httpVueLoader('./views/layout/Layout.vue');
 
-    var Page6 = httpVueLoader('./views/testpages/Page6.vue');
-    var Page5 = httpVueLoader('./views/testpages/Page5.vue');
-    var Page4 = httpVueLoader('./views/testpages/Page4.vue');
-    var Page3 = httpVueLoader('./views/testpages/Page3.vue');
     var Form = httpVueLoader('./views/testpages/Form.vue');
-    var Dashboard = httpVueLoader('./views/demo/Dashboard.vue');
+    var Dashboard = httpVueLoader('./views/business/Dashboard.vue');
     var BaseForm = httpVueLoader('./views/demo/BaseForm.vue');
     var BaseTable = httpVueLoader('./views/demo/BaseTable.vue');
     var DragList = httpVueLoader('./views/demo/DragList.vue');
