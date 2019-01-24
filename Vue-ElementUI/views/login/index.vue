@@ -6,7 +6,6 @@
             </el-col>
             <el-col :span="6" class="login-right">
                 <div class="login-header">
-                    <img src="assets/images/bank/HF-Logo-120-white.png"></img>
                     <h3 class="title">Vue-ElementUI</h3>
                 </div>
                 <el-form ref="loginForm" :model="loginForm" class="login-form" auto-complete="on"
@@ -38,7 +37,7 @@
                         </el-button>
                     </el-form-item>
                 </el-form>
-                <div class="login-footer">恒丰银行版权所有</div>
+                <div class="login-footer">Yetta,mxmefly.cn 仅用于毕业设计</div>
             </el-col>
         </el-row>
     </div>
