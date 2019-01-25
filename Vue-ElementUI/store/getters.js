@@ -6,7 +6,8 @@ define(function(require, exports, module) {
     avatar: function(state){ return state.user.avatar},
     name: function(state){ return state.user.name},
     roles: function(state){ return state.user.roles},
-		
+		menuList: function(state){ return state.user.menuList},
+		routerList: function(state){ return state.user.routerList},
   }
   module.exports = getters
 })

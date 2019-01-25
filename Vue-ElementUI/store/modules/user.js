@@ -5,7 +5,7 @@ define(function(require, exports, module) {
   var login = loginAPI.login;
   var logout = loginAPI.logout;
   var getInfo = loginAPI.getInfo;
-
+  var menu = require('../../menu/menu.js');
   var auth = require('../../utils/auth.js');
   var getToken = auth.getToken;
   var setToken = auth.setToken;
@@ -16,7 +16,9 @@ define(function(require, exports, module) {
       token: getToken(),
       name: '',
       avatar: '',
-      roles: []
+      roles: [],
+			menuList:menu.menuList,
+			routerList:menu.routerList
     },
 
     mutations: {
