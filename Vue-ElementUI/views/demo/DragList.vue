@@ -46,12 +46,8 @@
     </section>
 </template>
 
-<script src="../../modules/sortablejs/Sortable.min.js"></script>
-<script src="../../modules/vuedraggable/dist/vuedraggable.js"></script>
 <script>
-//    import draggable from 'vuedraggable'
-//    var draggable =
-//    var draggable = httpVueLoader('vuedraggable');
+
     module.exports = {
         name: 'draglist',
         data: function() {
@@ -97,9 +93,6 @@
                 ]
             }
         },
-//        components:{
-//            draggable:draggable
-//        },
         methods: {
             removeHandle: function(event){
                 console.log(event);

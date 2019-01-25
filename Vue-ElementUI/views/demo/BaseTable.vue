@@ -72,7 +72,6 @@
         name: 'basetable',
         data: function() {
             return {
-                url: 'store/vuetable.json',
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
@@ -129,12 +128,17 @@
                     this.url = '/ms/table/list';
                 };*/
                 var _this = this;
-                this.$axios.post(this.url, {
-                    page: this.cur_page
-                }).then(function(res) {
-                    _this.tableData = res.data.list;
-
-                })
+				var obj=[];
+                this.$axios({
+                	method: 'get',
+                	url:Demo_Apis.getTable,
+                	data: obj
+                }).then(function(res){
+                	console.log("res",res);
+					_this.tableData=res.data.list
+                }).catch(function(){
+                    console.log("请求失败");
+                });
             },
             search: function() {
                 this.is_search = true;
