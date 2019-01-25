@@ -47,6 +47,13 @@ define(function(require, exports, module) {
 								path:'./views/demo/Tabs.vue',
 								isMoudel:false
 							},
+							{
+							    icon: 'el-icon-ex-barrage',
+							    index: 'BaseEcharts',
+							    title: 'V-charts',
+								path:'./views/demo/BaseEcharts.vue',
+								isMoudel:false
+							},
                         ]
                     },          
                     {
