@@ -7,19 +7,8 @@ define(function(require, exports, module) {
     var constantRouterMap = [
         { path: '/login', component: Login, hidden: true },
         { path: '/404', component: Page404, hidden: true },  
-        {
-         path: '/',
-         redirect: '/Login'
-        },
-        {
-            path: '/',
-            component: Layout,
-            iconCls: 'el-icon-message',
-            children: menu.routerList
-        },
-        { path: '*', redirect: '/404', hidden: true }
+        { path: '*', redirect: '/404', hidden: true },
     ]
-
     module.exports =  new VueRouter({
         //mode: 'history', //后端支持可开
         scrollBehavior: function() {return ({ y: 0 })},
