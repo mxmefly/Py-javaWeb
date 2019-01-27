@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 		}]
 		var res = axios({
 			method: 'post',
-			url:' https://easy-mock.com/mock/5c47de3ad78a504a6c37c0b6/example/login',
+			url: LoginApi,
 			data: obj
 		})
 		return res;

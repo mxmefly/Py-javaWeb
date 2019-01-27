@@ -10,7 +10,8 @@ define(function(require, exports, module) {
 		if(to.path!='/login'){
 			if(store.getters.token==''){
 				console.log("----用户未登录，跳转login----");
-				next('/login?redirect=${to.path}');
+				var path = '/login?redirect='+to.path;
+				next(path);
 			}else{
 				next();
 			}	
