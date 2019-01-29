@@ -1,27 +1,27 @@
-import { ElementUIComponent } from './component'
+import {ElementUIComponent} from './component'
 
 export type AlertType = 'success' | 'warning' | 'info' | 'error'
 
 /** Alert Component */
 export declare class ElAlert extends ElementUIComponent {
-  /** Title */
-  title: string
+    /** Title */
+    title: string
 
-  /** Component type */
-  type: AlertType
+    /** Component type */
+    type: AlertType
 
-  /** Descriptive text. Can also be passed with the default slot */
-  description: string
+    /** Descriptive text. Can also be passed with the default slot */
+    description: string
 
-  /** If closable or not */
-  closable: boolean
+    /** If closable or not */
+    closable: boolean
 
-  /** whether to center the text */
-  center: boolean
+    /** whether to center the text */
+    center: boolean
 
-  /** Customized close button text */
-  closeText: string
+    /** Customized close button text */
+    closeText: string
 
-  /** If a type icon is displayed */
-  showIcon: boolean
+    /** If a type icon is displayed */
+    showIcon: boolean
 }

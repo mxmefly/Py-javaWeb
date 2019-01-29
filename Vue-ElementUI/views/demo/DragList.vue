@@ -50,9 +50,9 @@
 
     module.exports = {
         name: 'draglist',
-        data: function() {
+        data: function () {
             return {
-                dragOptions:{
+                dragOptions: {
                     animation: 120,
                     scroll: true,
                     group: 'sortlist',
@@ -83,7 +83,7 @@
                         content: '开发表单相关组件'
                     }
                 ],
-                done:[
+                done: [
                     {
                         content: '初始化项目，生成工程目录，完成相关配置'
                     },
@@ -94,7 +94,7 @@
             }
         },
         methods: {
-            removeHandle: function(event){
+            removeHandle: function (event) {
                 console.log(event);
                 this.$message.success('从 ${event.from.id} 移动到 ${event.to.id} ');
             }
@@ -104,10 +104,11 @@
 </script>
 
 <style scoped>
-    .drag-box{
+    .drag-box {
         display: flex;
         user-select: none;
     }
+
     .drag-box-item {
         flex: 1;
         max-width: 330px;
@@ -117,21 +118,25 @@
         border-radius: 6px;
         border: 1px #e1e4e8 solid;
     }
-    .item-title{
+
+    .item-title {
         padding: 8px 8px 8px 12px;
         font-size: 14px;
         line-height: 1.5;
         color: #24292e;
         font-weight: 600;
     }
-    .item-ul{
+
+    .item-ul {
         padding: 0 8px 8px;
         height: 500px;
         overflow-y: scroll;
     }
-    .item-ul::-webkit-scrollbar{
+
+    .item-ul::-webkit-scrollbar {
         width: 0;
     }
+
     .drag-list {
         border: 1px #e1e4e8 solid;
         padding: 10px;
@@ -143,9 +148,11 @@
         -webkit-transition: border .3s ease-in;
         transition: border .3s ease-in;
     }
+
     .drag-list:hover {
         border: 1px solid #20a0ff;
     }
+
     .drag-title {
         font-weight: 400;
         line-height: 25px;
@@ -153,7 +160,8 @@
         font-size: 22px;
         color: #1f2f3d;
     }
-    .ghost-style{
+
+    .ghost-style {
         display: block;
         color: transparent;
         border-style: dashed

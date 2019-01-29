@@ -38,21 +38,21 @@
             }
         },
         watch: {
-            $route: function() {
+            $route: function () {
                 console.log("------")
                 this.getBreadcrumb()
             }
         },
         methods: {
-            getBreadcrumb: function() {
-                let matched = this.$route.matched.filter(function(item) {
+            getBreadcrumb: function () {
+                let matched = this.$route.matched.filter(function (item) {
                     if (item.name) {
                         return true
                     }
                 })
                 const first = matched[0]
                 if (first && first.name !== 'dashboard') {
-                    matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+                    matched = [{path: '/dashboard', meta: {title: 'Dashboard'}}].concat(matched)
                 }
                 console.log(matched)
                 this.levelList = matched
@@ -98,7 +98,7 @@
                         name: route.matched[1].components.default.name
                     })
                 }
-               this.$emit('set-tags', this.tagsList);
+                this.$emit('set-tags', this.tagsList);
             },
             handleTags: function (command) {
                 command === 'other' ? this.closeOther() : this.closeAll();
@@ -196,10 +196,11 @@
         z-index: 10;
     }
 
-    .tags-close-box .el-dropdown{
+    .tags-close-box .el-dropdown {
         margin-top: 3px;
     }
-    .breadcrumb{
+
+    .breadcrumb {
         position: absolute;
         left: 0;
         top: 0;
@@ -209,7 +210,8 @@
         border-right: 1px;
         box-shadow: 3px 0 15px 3px rgba(0, 0, 0, .1);
     }
-    .el-breadcrumb{
+
+    .el-breadcrumb {
         padding: 11px 10px;
     }
 </style>

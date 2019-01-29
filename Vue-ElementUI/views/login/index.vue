@@ -33,7 +33,8 @@
                                 class="login-input"/>
                     </el-form-item>
                     <el-form-item>
-                        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                        <el-button :loading="loading" type="primary" style="width:100%;"
+                                   @click.native.prevent="handleLogin">
                             Sign in
                         </el-button>
                     </el-form-item>
@@ -45,7 +46,7 @@
 </template>
 
 <script>
-    module.exports =  {
+    module.exports = {
         name: 'Login',
         data: function () {
             return {
@@ -61,7 +62,7 @@
         watch: {
             $route: {
                 handler: function (route) {
-                    console.log(route.query,route.query.redirect)
+                    console.log(route.query, route.query.redirect)
                     this.redirect = route.query && route.query.redirect
                     console.log(this.redirect)
                 },
@@ -69,22 +70,22 @@
             }
         },
         methods: {
-            handleLogin : function(){
-            	
+            handleLogin: function () {
+
                 console.log("登录成功，跳转首页")
-              
-                 /* this.$router.push({ path: this.redirect || '/' }) */
-				 
-				 this.$router.push({
-					 path:'/dashboard'
-				 });
-				 
-				 /*this.$store.dispatch('Login', this.loginForm).then(function(){
-                    this.loading = false
-                    this.$router.push({ path: this.redirect || '/' })
-                }).catch(function() {
-                    this.loading = false
-                })*/
+
+                /* this.$router.push({ path: this.redirect || '/' }) */
+
+                this.$router.push({
+                    path: '/dashboard'
+                });
+
+                /*this.$store.dispatch('Login', this.loginForm).then(function(){
+                   this.loading = false
+                   this.$router.push({ path: this.redirect || '/' })
+               }).catch(function() {
+                   this.loading = false
+               })*/
             }
         }
     }
@@ -92,36 +93,43 @@
 
 
 <style scoped>
-    .bg-img{
-        width:100%;
-        height:100%;
+    .bg-img {
+        width: 100%;
+        height: 100%;
         opacity: 0.8;
         background: url("../../assets/images/login/login-bg1.jpg");
         background-size: cover;
     }
-    .login-container{
+
+    .login-container {
         height: 100%;
     }
-    .login-container .el-row{
+
+    .login-container .el-row {
         height: 100%;
     }
-    .login-container .el-row .el-col{
+
+    .login-container .el-row .el-col {
         height: 100%;
     }
+
     .login-left {
         background: black;
         opacity: 0.1;
     }
-    .login-right{
+
+    .login-right {
         padding: 0 30px;
         background: #0d2650;
         opacity: 0.9;
         position: relative;
     }
-    .login-form{
+
+    .login-form {
         top: 17%;
         position: relative;
     }
+
     .login-input {
         -webkit-box-flex: 1;
         -ms-flex: 1;
@@ -135,8 +143,9 @@
         border: none;
         outline: none;
         resize: none;
-        width:100%;
+        width: 100%;
     }
+
     .title {
         font-size: 26px;
         font-weight: 400;
@@ -145,18 +154,24 @@
         text-align: center;
         font-weight: bold;
     }
-    .el-form-item{
+
+    .el-form-item {
         margin-bottom: 10px;
     }
-    body{overflow: hidden}
-    .login-header{
+
+    body {
+        overflow: hidden
+    }
+
+    .login-header {
         margin: 15px 0 20px;
         font-size: 18px;
         text-align: center;
         top: 12%;
         position: relative;
     }
-    .login-footer{
+
+    .login-footer {
         bottom: 50px;
         position: absolute;
         text-align: center;

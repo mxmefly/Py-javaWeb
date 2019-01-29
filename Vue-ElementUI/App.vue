@@ -4,8 +4,7 @@
 <script>
     module.exports = {
         name: "App",
-        components: {
-        }
+        components: {}
     }
 </script>
 <style>

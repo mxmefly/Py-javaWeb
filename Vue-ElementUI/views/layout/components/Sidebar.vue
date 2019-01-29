@@ -1,9 +1,9 @@
 <template>
     <div class="sidebar">
         <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" unique-opened router
-                 >
-        <!--<el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" unique-opened router
-                 background-color="#324157" text-color="#bfcbd9" active-text-color="#20a0ff">-->
+        >
+            <!--<el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse" unique-opened router
+                     background-color="#324157" text-color="#bfcbd9" active-text-color="#20a0ff">-->
             <template v-for="item in items">
                 <template v-if="item.subs">
                     <el-submenu :index="item.index" :key="item.index">
@@ -14,7 +14,7 @@
                             <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
                                 <i :class="subItem.icon"></i><span slot="title">{{ subItem.title }}</span>
                                 <el-menu-item v-for="(threeItem,i) in subItem.subs" :key="i" :index="threeItem.index">
-									<i :class="threeItem.icon"></i><span slot="title">{{ threeItem.title }}</span>
+                                    <i :class="threeItem.icon"></i><span slot="title">{{ threeItem.title }}</span>
                                 </el-menu-item>
                             </el-submenu>
                             <el-menu-item v-else :index="subItem.index" :key="subItem.index">
@@ -77,6 +77,7 @@
     .sidebar > ul {
         height: 100%;
     }
+
     [class^="el-icon-ex"] {
         font-size: 20px;
     }

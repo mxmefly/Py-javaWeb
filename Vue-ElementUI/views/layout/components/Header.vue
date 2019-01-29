@@ -7,9 +7,9 @@
         <div class="logo">后台管理系统</div>
         <div class="header-right">
             <div class="header-user-con">
-				<div style="width: 30px;height: 30px;">
-				  <el-color-picker v-model="bgcolor"></el-color-picker>
-				</div>
+                <div style="width: 30px;height: 30px;">
+                    <el-color-picker v-model="bgcolor"></el-color-picker>
+                </div>
                 <!-- 全屏显示 -->
                 <div class="btn-fullscreen" @click="handleFullScreen">
                     <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
@@ -26,7 +26,8 @@
                     <span class="btn-bell-badge" v-if="message"></span>
                 </div>
                 <!-- 用户头像 -->
-                <div class="user-avator" style="width: 40px !important; height: 40px !important;"><img src="assets/images/user/MyHead.jpg"></div>
+                <div class="user-avator" style="width: 40px !important; height: 40px !important;"><img
+                        src="assets/images/user/MyHead.jpg"></div>
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
@@ -47,7 +48,7 @@
     module.exports = {
         data: function () {
             return {
-				bgcolor:'#35234E',
+                bgcolor: '#35234E',
                 collapse: false,
                 fullscreen: false,
                 name: 'admin',
@@ -200,9 +201,10 @@
     .el-dropdown-menu__item {
         text-align: center;
     }
-	.el-color-picker__trigger{
-		width: 25px !important;
-		height: 25px !important;
-		border: 0 !important;
-	}
+
+    .el-color-picker__trigger {
+        width: 25px !important;
+        height: 25px !important;
+        border: 0 !important;
+    }
 </style>

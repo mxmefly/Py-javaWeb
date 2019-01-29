@@ -1,3 +1,3 @@
 export function isDef(val) {
-  return val !== undefined && val !== null;
+    return val !== undefined && val !== null;
 }

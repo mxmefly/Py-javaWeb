@@ -32,17 +32,17 @@
             vSidebar: vSidebar,
             vTags: vTags
         },
-        methods:{
-            onCollapse: function(msg){
+        methods: {
+            onCollapse: function (msg) {
                 this.collapse = msg;
             },
             // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
-            setTags: function(msg){
-               var arr = [];
-               for (var i = 0, len = msg.length; i < len; i++) {
-                   msg[i].name && arr.push(msg[i].name);
-               }
-               this.tagsList = arr;
+            setTags: function (msg) {
+                var arr = [];
+                for (var i = 0, len = msg.length; i < len; i++) {
+                    msg[i].name && arr.push(msg[i].name);
+                }
+                this.tagsList = arr;
             }
         }
     }

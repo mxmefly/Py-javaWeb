@@ -17,32 +17,32 @@
     <script src="./modules/seajs/sea.js"></script>
     <script src="./modules/stylus/stylus.min.js"></script>
     <script src="./modules/axios/axios.min.js"></script>
-	<!-- 引入 E-Charts V-charts -->
-	<script src="./modules/e-charts/echarts.common.min.js"></script>
-	<script src="./modules/v-charts/index.min.js"></script>
+    <!-- 引入 E-Charts V-charts -->
+    <script src="./modules/e-charts/echarts.common.min.js"></script>
+    <script src="./modules/v-charts/index.min.js"></script>
 </head>
 <body>
-    <div id="app">
-        <!--<router-view/>-->
-        <my-app></my-app>
-    </div>
-    <!--<script src="./main.js"></script>-->
-	<!-- 导入全局api表 -->
-	<script src="./api/api.js"></script>
-    <script>
-        process = {
-            env: {
-                BASE_API: "https://easy-mock.com/mock/5c47de3ad78a504a6c37c0b6/example"
-            }
-        };
-        seajs.config({
-            alias: {
-                'router':'./router/index.js',
-                'store':'./store/index.js',
-                'validator':'./util/validate.js'
-            }
-        });
-        seajs.use('./main.js');  
-    </script>
+<div id="app">
+    <!--<router-view/>-->
+    <my-app></my-app>
+</div>
+<!--<script src="./main.js"></script>-->
+<!-- 导入全局api表 -->
+<script src="./api/api.js"></script>
+<script>
+    process = {
+        env: {
+            BASE_API: "https://easy-mock.com/mock/5c47de3ad78a504a6c37c0b6/example"
+        }
+    };
+    seajs.config({
+        alias: {
+            'router': './router/index.js',
+            'store': './store/index.js',
+            'validator': './util/validate.js'
+        }
+    });
+    seajs.use('./main.js');
+</script>
 </body>
 </html>

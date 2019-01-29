@@ -15,7 +15,8 @@
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
             </div>
-            <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange" size="small">
+            <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange"
+                      size="small">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="date" label="日期" sortable width="150">
                 </el-table-column>
@@ -25,13 +26,18 @@
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)" size="small">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)" size="small">删除</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"
+                                   size="small">编辑
+                        </el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red"
+                                   @click="handleDelete(scope.$index, scope.row)" size="small">删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next"
+                               :total="1000">
                 </el-pagination>
             </div>
         </div>
@@ -40,7 +46,8 @@
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="50px">
                 <el-form-item label="日期">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="姓名">
                     <el-input v-model="form.name"></el-input>
@@ -70,7 +77,7 @@
 <script>
     module.exports = {
         name: 'basetable',
-        data: function() {
+        data: function () {
             return {
                 tableData: [],
                 cur_page: 1,
@@ -89,13 +96,13 @@
                 idx: -1
             }
         },
-        created: function() {
+        created: function () {
             this.getData();
         },
         computed: {
-            data: function() {
+            data: function () {
                 var _this = this;
-                var filterData=  this.tableData.filter(function(d) {
+                var filterData = this.tableData.filter(function (d) {
                     let is_del = false;
                     for (let i = 0; i < _this.del_list.length; i++) {
                         if (d.name === _this.del_list[i].name) {
@@ -117,34 +124,34 @@
         },
         methods: {
             // 分页导航
-            handleCurrentChange: function(val) {
+            handleCurrentChange: function (val) {
                 this.cur_page = val;
                 this.getData();
             },
             // 获取 easy-mock 的模拟数据
-            getData: function() {
+            getData: function () {
                 var _this = this;
-				var obj=[];
+                var obj = [];
                 this.$axios({
-                	method: 'get',
-                	url:Demo_Apis.getTable,
-                	data: obj
-                }).then(function(res){
-					_this.tableData=res.data.list
-                }).catch(function(){
+                    method: 'get',
+                    url: Demo_Apis.getTable,
+                    data: obj
+                }).then(function (res) {
+                    _this.tableData = res.data.list
+                }).catch(function () {
                     console.log("请求失败");
                 });
             },
-            search: function() {
+            search: function () {
                 this.is_search = true;
             },
-            formatter: function(row, column) {
+            formatter: function (row, column) {
                 return row.address;
             },
-            filterTag: function(value, row) {
+            filterTag: function (value, row) {
                 return row.tag === value;
             },
-            handleEdit: function(index, row) {
+            handleEdit: function (index, row) {
                 this.idx = index;
                 const item = this.tableData[index];
                 this.form = {
@@ -154,11 +161,11 @@
                 }
                 this.editVisible = true;
             },
-            handleDelete: function(index, row) {
+            handleDelete: function (index, row) {
                 this.idx = index;
                 this.delVisible = true;
             },
-            delAll: function() {
+            delAll: function () {
                 const length = this.multipleSelection.length;
                 let str = '';
                 this.del_list = this.del_list.concat(this.multipleSelection);
@@ -168,17 +175,17 @@
                 this.$message.error('删除了' + str);
                 this.multipleSelection = [];
             },
-            handleSelectionChange: function(val) {
+            handleSelectionChange: function (val) {
                 this.multipleSelection = val;
             },
             // 保存编辑
-            saveEdit: function() {
+            saveEdit: function () {
                 this.$set(this.tableData, this.idx, this.form);
                 this.editVisible = false;
                 this.$message.success('修改第 ${this.idx+1} 行成功');
             },
             // 确定删除
-            deleteRow: function(){
+            deleteRow: function () {
                 this.tableData.splice(this.idx, 1);
                 this.$message.success('删除成功');
                 this.delVisible = false;
@@ -201,15 +208,18 @@
         width: 300px;
         display: inline-block;
     }
-    .del-dialog-cnt{
+
+    .del-dialog-cnt {
         font-size: 16px;
         text-align: center
     }
-    .table{
+
+    .table {
         width: 100%;
         font-size: 14px;
     }
-    .red{
+
+    .red {
         color: #ff0000;
     }
 </style>

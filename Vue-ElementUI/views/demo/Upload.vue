@@ -13,10 +13,10 @@
                 访问地址：<a href="http://element.eleme.io/#/zh-CN/component/upload" target="_blank">Element UI Upload</a>
             </div>
             <el-upload
-                class="upload-demo"
-                drag
-                action="/api/posts/"
-                multiple>
+                    class="upload-demo"
+                    drag
+                    action="/api/posts/"
+                    multiple>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -45,10 +45,10 @@
 </template>
 
 <script>
-//    import VueCropper  from 'vue-cropperjs';
+    //    import VueCropper  from 'vue-cropperjs';
     module.exports = {
         name: 'upload',
-        data: function(){
+        data: function () {
             return {
                 defaultSrc: './static/img/img.jpg',
                 fileList: [],
@@ -60,63 +60,66 @@
         /*components: {
             VueCropper:VueCropper
         },*/
-        methods:{
-            setImage: function(e){
+        methods: {
+            setImage: function (e) {
                 const file = e.target.files[0];
                 if (!file.type.includes('image/')) {
                     return;
                 }
                 const reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     this.dialogVisible = true;
                     this.imgSrc = event.target.result;
                     this.$refs.cropper && this.$refs.cropper.replace(event.target.result);
                 };
                 reader.readAsDataURL(file);
             },
-            cropImage: function() {
+            cropImage: function () {
                 this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             },
-            cancelCrop: function(){
+            cancelCrop: function () {
                 this.dialogVisible = false;
                 this.cropImg = this.defaultSrc;
             },
-            imageuploaded: function(res) {
+            imageuploaded: function (res) {
                 console.log(res)
             },
-            handleError: function(){
+            handleError: function () {
                 this.$notify.error({
                     title: '上传失败',
                     message: '图片上传接口上传失败，可更改为自己的服务器接口'
                 });
             }
         },
-        created: function(){
+        created: function () {
             this.cropImg = this.defaultSrc;
         }
     }
 </script>
 
 <style scoped>
-    .content-title{
+    .content-title {
         font-weight: 400;
         line-height: 50px;
         margin: 10px 0;
         font-size: 22px;
         color: #1f2f3d;
     }
-    .pre-img{   
+
+    .pre-img {
         width: 100px;
         height: 100px;
         background: #f8f8f8;
         border: 1px solid #eee;
         border-radius: 5px;
     }
-    .crop-demo{
+
+    .crop-demo {
         display: flex;
         align-items: flex-end;
     }
-    .crop-demo-btn{
+
+    .crop-demo-btn {
         position: relative;
         width: 100px;
         height: 40px;
@@ -129,7 +132,8 @@
         border-radius: 4px;
         box-sizing: border-box;
     }
-    .crop-input{
+
+    .crop-input {
         position: absolute;
         width: 100px;
         height: 40px;

@@ -71,7 +71,7 @@
                         name: route.matched[1].components.default.name
                     })
                 }
-               this.$emit('set-tags', this.tagsList);
+                this.$emit('set-tags', this.tagsList);
             },
             handleTags: function (command) {
                 command === 'other' ? this.closeOther() : this.closeAll();
@@ -166,7 +166,7 @@
         z-index: 10;
     }
 
-    .tags-close-box .el-dropdown{
+    .tags-close-box .el-dropdown {
         margin-top: 3px;
     }
 </style>

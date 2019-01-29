@@ -36,7 +36,8 @@
                             <el-table-column prop="date" width="180"></el-table-column>
                             <el-table-column width="120">
                                 <template slot-scope="scope">
-                                    <el-button type="danger" @click="handleDel(scope.$index)" size="small">删除</el-button>
+                                    <el-button type="danger" @click="handleDel(scope.$index)" size="small">删除
+                                    </el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -73,14 +74,14 @@
 <script>
     module.exports = {
         name: 'tabs',
-        data:function() {
+        data: function () {
             return {
                 message: 'first',
                 showHeader: false,
                 unread: [{
                     date: '2018-04-19 20:00:00',
                     title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护',
-                },{
+                }, {
                     date: '2018-04-19 21:00:00',
                     title: '今晚12点整发大红包，先到先得',
                 }],
@@ -95,22 +96,22 @@
             }
         },
         methods: {
-            handleRead: function(index) {
+            handleRead: function (index) {
                 const item = this.unread.splice(index, 1);
                 console.log(item);
                 this.read = item.concat(this.read);
             },
-            handleDel: function(index) {
+            handleDel: function (index) {
                 const item = this.read.splice(index, 1);
                 this.recycle = item.concat(this.recycle);
             },
-            handleRestore: function(index) {
+            handleRestore: function (index) {
                 const item = this.recycle.splice(index, 1);
                 this.read = item.concat(this.read);
             }
         },
         computed: {
-            unreadNum: function(){
+            unreadNum: function () {
                 return this.unread.length;
             }
         }
@@ -119,11 +120,12 @@
 </script>
 
 <style>
-.message-title{
-    cursor: pointer;
-}
-.handle-row{
-    margin-top: 30px;
-}
+    .message-title {
+        cursor: pointer;
+    }
+
+    .handle-row {
+        margin-top: 30px;
+    }
 </style>
 

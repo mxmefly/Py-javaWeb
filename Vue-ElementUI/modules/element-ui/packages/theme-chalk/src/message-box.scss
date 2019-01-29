@@ -84,6 +84,7 @@
 
     & input.invalid {
       border-color: $--color-danger;
+
       &:focus {
         border-color: $--color-danger;
       }
