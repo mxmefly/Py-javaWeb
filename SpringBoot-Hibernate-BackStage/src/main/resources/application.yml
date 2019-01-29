@@ -1,0 +1,12 @@
+server:
+  port: 8100
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sbhdb
+    username: wzy
+    password: wzy112099
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
