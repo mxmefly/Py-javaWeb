@@ -8,10 +8,10 @@ public class Results {
 
     }
     public Results(boolean success, String message) {
-        this(success, message, null);
+        this(success, message, "");
     }
     public Results(boolean success) {
-        this(success, null, null);
+        this(success, null, "");
     }
     public Results(boolean success, String message, Object data) {
         this.success = success;
