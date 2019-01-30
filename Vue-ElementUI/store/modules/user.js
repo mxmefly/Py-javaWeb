@@ -84,14 +84,18 @@ define(function (require, exports, module) {
             // 登出
             LogOut: function (obj) {
                 return new Promise(function (resolve, reject) {
-                    logout(obj.state.token).then(function () {
+                    obj.commit('SET_TOKEN', '');
+                    obj.commit('SET_ROLES', []);
+                    removeToken();
+                    resolve();
+					/* logout(obj.state.token).then(function () {
                         obj.commit('SET_TOKEN', '')
                         obj.commit('SET_ROLES', [])
                         removeToken()
                         resolve()
                     }).catch(function (error) {
                         reject(error)
-                    })
+                    }) */
                 })
             },
 

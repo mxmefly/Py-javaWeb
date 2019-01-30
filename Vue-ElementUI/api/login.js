@@ -27,9 +27,6 @@ define(function (require, exports, module) {
     }
 
     exports.logout = function () {
-        return request({
-            url: '/user/logout',
-            method: 'post'
-        })
+        return ;
     }
 })

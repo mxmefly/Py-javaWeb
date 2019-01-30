@@ -64,9 +64,14 @@
         methods: {
             // 用户名下拉菜单选择事件
             handleCommand: function (command) {
+				var _this=this;
                 if (command == 'loginout') {
-                    localStorage.removeItem('ms_username')
-                    this.$router.push('/login');
+					this.$store.dispatch('LogOut').then(function () {
+					    _this.$router.push({
+					        path: '/login'
+					    });
+					});
+                    localStorage.removeItem('ms_username')		
                 }
             },
             // 侧边栏折叠
