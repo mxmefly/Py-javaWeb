@@ -1,6 +1,7 @@
 /* 统一管理数据接口 */
-const BASE_API = 'https://easy-mock.com/mock/5c47de3ad78a504a6c37c0b6/example';
+const BASE_API = 'http://localhost:8100';
 const LoginApi = BASE_API + '/login';
+const getInfoApi =BASE_API+'/getInfo';
 const Demo_Apis = {
     Test_Url: BASE_API + '/test',
     getUser: BASE_API + '/getUse',

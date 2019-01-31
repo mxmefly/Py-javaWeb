@@ -48,8 +48,8 @@ define(function (require, exports, module) {
                 const username = userInfo.username.trim()
                 return new Promise(function (resolve, reject) {
                     login(username, userInfo.password).then(function (response) {
-                        var result = response.data.result.ret;
-                        if (result == '0') {
+                        var result = response.data.success;
+                        if (result) {
                             setToken(userInfo.username);
                             obj.commit('SET_TOKEN', userInfo.username);
                             obj.commit('SET_MENULIST', menu.menuList)
@@ -65,17 +65,16 @@ define(function (require, exports, module) {
             // 获取用户信息
             GetInfo: function (obj) {
                 return new Promise(function (resolve, reject) {
-                    getInfo(obj.state.token).then(function (response) {
-                        const data = response.data
-                        if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-                            obj.commit('SET_ROLES', data.roles)
-                        } else {
-                            reject('getInfo: roles must be a non-null array !')
-                        }
-                        obj.commit('SET_NAME', data.name)
-                        obj.commit('SET_AVATAR', data.avatar)
-                        resolve(response)
+                    getInfo(getToken()).then(function (response) {
+                        const data = response.data;
+						if(data.success){
+							obj.commit('SET_MENULIST', menu.menuList);
+							obj.commit('SET_ROUTERLIST', menu.routerList)
+							obj.commit('SET_NAME', data.data.name);
+						}
+                        resolve(response);
                     }).catch(function (error) {
+						console.log("error",error)
                         reject(error)
                     })
                 })

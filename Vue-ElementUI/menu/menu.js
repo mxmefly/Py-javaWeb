@@ -1,10 +1,11 @@
 define(function (require, exports, module) {
     var Layout = httpVueLoader('./views/layout/Layout.vue');
+	var Page404 = httpVueLoader('./views/404.vue');
     const menuList = [{
         icon: 'el-icon-ex-homepage',
         index: 'dashboard',
         title: '系统首页',
-        path: './views/business/Dashboard.vue',
+        path: 'views/business/Dashboard.vue',
         isMoudel: false
     },
         {
@@ -16,42 +17,42 @@ define(function (require, exports, module) {
                 icon: 'el-icon-ex-createtask',
                 index: 'BaseForm',
                 title: '基础表单',
-                path: './views/demo/BaseForm.vue',
+                path: 'views/demo/BaseForm.vue',
                 isMoudel: false
             },
                 {
                     icon: 'el-icon-ex-createtask',
                     index: 'BaseTable',
                     title: '基础表格',
-                    path: './views/demo/BaseTable.vue',
+                    path: 'views/demo/BaseTable.vue',
                     isMoudel: false
                 },
                 {
                     icon: 'el-icon-ex-createtask',
                     index: 'DragList',
                     title: '拖拽列表',
-                    path: './views/demo/DragList.vue',
+                    path: 'views/demo/DragList.vue',
                     isMoudel: false
                 },
                 {
                     icon: 'el-icon-ex-createtask',
                     index: 'Upload',
                     title: '文件上传',
-                    path: './views/demo/Upload.vue',
+                    path: 'views/demo/Upload.vue',
                     isMoudel: false
                 },
                 {
                     icon: 'el-icon-ex-barrage',
                     index: 'Tabs',
                     title: 'tab选项卡',
-                    path: './views/demo/Tabs.vue',
+                    path: 'views/demo/Tabs.vue',
                     isMoudel: false
                 },
                 {
                     icon: 'el-icon-ex-barrage',
                     index: 'BaseEcharts',
                     title: 'V-charts',
-                    path: './views/demo/BaseEcharts.vue',
+                    path: 'views/demo/BaseEcharts.vue',
                     isMoudel: false
                 },
             ]
@@ -65,14 +66,14 @@ define(function (require, exports, module) {
                 icon: 'el-icon-ex-emoji',
                 index: 'Icon',
                 title: '自定义图标',
-                path: './views/demo/Icon.vue',
+                path: 'views/demo/Icon.vue',
                 isMoudel: false
             },
                 {
                     icon: 'el-icon-ex-emoji',
                     index: 'ElIcon',
                     title: 'EL官方图标',
-                    path: './views/demo/ElIcon.vue',
+                    path: 'views/demo/ElIcon.vue',
                     isMoudel: false
                 }
             ]
@@ -81,7 +82,7 @@ define(function (require, exports, module) {
             icon: 'el-icon-ex-emoji',
             index: 'Test',
             title: '测试',
-            path: './views/business/Test.vue',
+            path: 'views/business/Test.vue',
             isMoudel: false
         }
     ];
@@ -109,5 +110,8 @@ define(function (require, exports, module) {
         children: []
     };
     routerArr.children = getRouterList([], menuList);
+	var routerList=[];
+	routerList.push(routerArr);
+	routerList.push({path: '*', redirect: '/404', hidden: true});
     exports.routerList = [routerArr];
 })

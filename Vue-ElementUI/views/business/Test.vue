@@ -22,10 +22,13 @@
         methods: {
             /* 测试 axios 请求 */
             handleTest: function () {
-                var obj = [];
+                var obj = {
+					id:'admin'
+				};
+				// obj = JSON.stringify(obj);
                 this.$axios({
-                    method: 'get',
-                    url: Demo_Apis.Test_Url,
+                    method: 'post',
+                    url: 'http://localhost:8100'+'/getInfo',
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);
@@ -34,7 +37,7 @@
                 });
             },
             handleTest1: function () {
-                console.log("base", BASE_API)
+                console.log("router", this.$router)
             },
             handleTest2: function () {
                 console.log("store", this.$store)

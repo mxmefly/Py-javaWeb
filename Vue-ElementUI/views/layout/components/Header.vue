@@ -57,8 +57,7 @@
         },
         computed: {
             username: function () {
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
+				return this.$store.getters.name;
             }
         },
         methods: {

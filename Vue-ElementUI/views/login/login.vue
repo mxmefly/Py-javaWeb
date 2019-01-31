@@ -80,7 +80,7 @@
                 _this = this;
                 this.$store.dispatch('Login', this.loginForm).then(function () {
                     /* 动态添加路由*/
-                    _this.$router.addRoutes(_this.$store.getters.routerList);
+                    /* _this.$router.addRoutes(_this.$store.getters.routerList); */
                     _this.$router.push({
                         path: '/dashboard'
                     });
