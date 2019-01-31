@@ -48,9 +48,11 @@ define(function (require, exports, module) {
                 const username = userInfo.username.trim()
                 return new Promise(function (resolve, reject) {
                     login(username, userInfo.password).then(function (response) {
+						
                         var result = response.data.success;
                         if (result) {
-                            setToken(userInfo.username);
+							/* cookie 里放的是 sessionId 实现前后端登陆状态的统一 */
+                            setToken(response.data.data);
                             obj.commit('SET_TOKEN', userInfo.username);
                             obj.commit('SET_MENULIST', menu.menuList);
                             obj.commit('SET_ROUTERLIST', menu.routerList);
@@ -85,18 +87,14 @@ define(function (require, exports, module) {
             // 登出
             LogOut: function (obj) {
                 return new Promise(function (resolve, reject) {
-                    obj.commit('SET_TOKEN', '');
-                    obj.commit('SET_ROLES', []);
-                    removeToken();
-                    resolve();
-					/* logout(obj.state.token).then(function () {
+					logout(getToken()).then(function (response) {
                         obj.commit('SET_TOKEN', '')
                         obj.commit('SET_ROLES', [])
                         removeToken()
                         resolve()
                     }).catch(function (error) {
                         reject(error)
-                    }) */
+                    })
                 })
             },
 

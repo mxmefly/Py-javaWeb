@@ -60,7 +60,7 @@
             return {
                 loginForm: {
                     username: 'admin',
-                    password: 'admin'
+                    password: ''
                 },
             }
         },
@@ -79,6 +79,7 @@
             handleLogin: function () {
                 _this = this;
                 this.$store.dispatch('Login', this.loginForm).then(function () {
+					_this.$router.addRoutes(_this.$store.getters.routerList);
                     /* 动态添加路由*/
                     _this.$router.push({
                         path: '/dashboard'

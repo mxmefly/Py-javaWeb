@@ -106,7 +106,6 @@ define(function (require, exports, module) {
     var routerArr = {
         path: '/',
         component: Layout,
-        iconCls: 'el-icon-message',
         children: []
     };
     routerArr.children = getRouterList([], menuList);

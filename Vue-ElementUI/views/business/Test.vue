@@ -23,12 +23,13 @@
             /* 测试 axios 请求 */
             handleTest: function () {
                 var obj = {
-					id:'admin'
+					page:1,
+					size:6
 				};
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: 'http://localhost:8100'+'/getInfo',
+                    url: Demo_Apis.getTable,
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);

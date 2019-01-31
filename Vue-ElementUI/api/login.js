@@ -1,7 +1,8 @@
 define(function(require, exports, module) {
 	//import request from '@/utils/request'
 	/* var request = require('../utils/request.js'); */
-	require('../modules/axios/axios.js');
+	var store = require('../store/getters.js')
+	
 	exports.login = function(username, password) {
 	    var res = axios({
 			method: 'post',
@@ -16,18 +17,24 @@ define(function(require, exports, module) {
 	}
 
 	exports.getInfo = function(token) {
-		console.log("token",token)
 		var res = axios({
 			method: 'post',
 			url: getInfoApi,
 			data: {
-				id: token,
+				sessionId: token
 			}
 		})
 		return res;
 	}
 
-	exports.logout = function() {
-		return;
+	exports.logout = function(token) {
+		var res = axios({
+			method: 'post',
+			url: LogoutApi,
+			data: {
+				sessionId: token
+			}
+		})
+		return res;
 	}
 })
