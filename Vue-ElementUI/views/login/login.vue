@@ -80,26 +80,15 @@
                 _this = this;
                 this.$store.dispatch('Login', this.loginForm).then(function () {
                     /* 动态添加路由*/
-                    /* _this.$router.addRoutes(_this.$store.getters.routerList); */
                     _this.$router.push({
                         path: '/dashboard'
                     });
                     console.log("登录成功，跳转首页")
                 }).catch(function (err) {
-                    console.log("登陆失败，  " + err);
+                    _this.$message.error(err);
                 });
-
-
-                /* this.$router.push({ path: this.redirect || '/' }) */
-
-
-                /*this.$store.dispatch('Login', this.loginForm).then(function(){
-                   this.loading = false
-                   this.$router.push({ path: this.redirect || '/' })
-               }).catch(function() {
-                   this.loading = false
-               })*/
-            }
+            },
+			
         }
     }
 

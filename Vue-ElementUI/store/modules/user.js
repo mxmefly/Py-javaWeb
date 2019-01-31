@@ -52,10 +52,12 @@ define(function (require, exports, module) {
                         if (result) {
                             setToken(userInfo.username);
                             obj.commit('SET_TOKEN', userInfo.username);
-                            obj.commit('SET_MENULIST', menu.menuList)
-                            obj.commit('SET_ROUTERLIST', menu.routerList)
-                        }
-                        resolve()
+                            obj.commit('SET_MENULIST', menu.menuList);
+                            obj.commit('SET_ROUTERLIST', menu.routerList);
+							resolve();
+                        }else{
+							reject("账号或密码错误")
+						}
                     }).catch(function (error) {
                         reject(error)
                     })
