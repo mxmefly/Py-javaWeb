@@ -35,6 +35,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!--添加 spring data jpa 依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

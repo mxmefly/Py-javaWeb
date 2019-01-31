@@ -1,4 +1,4 @@
-package cn.mxmefly.app.Bean;
+package cn.mxmefly.app.SystemManage.Bean;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

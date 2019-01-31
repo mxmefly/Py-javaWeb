@@ -1,10 +1,10 @@
-package cn.mxmefly.app.Service;
+package cn.mxmefly.app.SystemManage.Service;
 
-import cn.mxmefly.app.Bean.pfUser;
-import cn.mxmefly.app.Dao.Repository.pfUserRepository;
+import cn.mxmefly.app.SystemManage.Bean.pfUser;
+import cn.mxmefly.app.SystemManage.Dao.Repository.pfUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
+
 import java.util.ArrayList;
 import java.util.List;
 
