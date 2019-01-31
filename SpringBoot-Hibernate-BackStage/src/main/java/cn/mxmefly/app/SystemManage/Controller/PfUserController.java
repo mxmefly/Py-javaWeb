@@ -26,7 +26,7 @@ public class PfUserController {
         return new CreateResult().getResults(pur.findAll());
     }
 
-    @PostMapping("/getInfo")
+   /* @PostMapping("/getInfo")
     public Results getUserInfoById(@RequestBody Map map){
         pfUser user = pur.findById((String)map.get("id"));
         if(user!=null){
@@ -34,7 +34,6 @@ public class PfUserController {
         }else{
             return new CreateResult().getResults(false,"未查询到用户信息");
         }
-
-    }
+    }*/
 
 }
