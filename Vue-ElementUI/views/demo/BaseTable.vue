@@ -15,7 +15,7 @@
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
             </div>
-            <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange"
+            <el-table :data="tableData" border class="table" ref="multipleTable" @selection-change="handleSelectionChange"
                       size="small">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="date" label="日期" sortable width="150">
@@ -36,8 +36,8 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next"
-                               :total="1000">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :page-size='tableSize'
+                               :total="total">
                 </el-pagination>
             </div>
         </div>
@@ -79,6 +79,8 @@
         name: 'basetable',
         data: function () {
             return {
+				total:0,
+				tableSize:5,
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
@@ -131,13 +133,17 @@
             // 获取 easy-mock 的模拟数据
             getData: function () {
                 var _this = this;
-                var obj = [];
+                var obj = {
+					page: this.cur_page-1,
+					size: this.tableSize
+				};
                 this.$axios({
-                    method: 'get',
+                    method: 'post',
                     url: Demo_Apis.getTable,
                     data: obj
                 }).then(function (res) {
-                    _this.tableData = res.data.list
+                    _this.tableData = res.data.data.content;
+					_this.total=res.data.data.totalElements;	
                 }).catch(function () {
                     console.log("请求失败");
                 });
