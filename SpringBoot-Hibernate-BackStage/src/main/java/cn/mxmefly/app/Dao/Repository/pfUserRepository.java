@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface pfUserRepository extends JpaRepository<pfUser,Integer> {
 
-    pfUser findByIdAndPwd(Integer id, String pwd);
-
+    pfUser findByIdAndPwd(String id, String pwd);
+    pfUser findById(String id);
 }

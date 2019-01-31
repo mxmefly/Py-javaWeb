@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class pfUser {
     @Id
     @GeneratedValue
-    private Integer id;
+    private String id;
     private String name;
     private String pwd;
     private String des;
@@ -25,11 +25,11 @@ public class pfUser {
         this.des = des;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
