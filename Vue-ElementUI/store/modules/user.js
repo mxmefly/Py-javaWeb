@@ -18,7 +18,8 @@ define(function (require, exports, module) {
             avatar: '',
             roles: [],
             menuList: [],
-            routerList: []
+            routerList: [],
+			unreadMsgNum:'', 
         },
 
         mutations: {
@@ -39,7 +40,10 @@ define(function (require, exports, module) {
             },
             SET_ROUTERLIST: function (state, routerList) {
                 state.routerList = routerList;
-            }
+            },
+			SET_UNREADMSGNUM: function (state, unreadMsgNum) {
+			    state.unreadMsgNum = unreadMsgNum;
+			}
         },
 
         actions: {
@@ -51,6 +55,7 @@ define(function (require, exports, module) {
 						
                         var result = response.data.success;
                         if (result) {
+
 							/* cookie 里放的是 sessionId 实现前后端登陆状态的统一 */
                             setToken(response.data.data);
                             obj.commit('SET_TOKEN', userInfo.username);
@@ -70,11 +75,13 @@ define(function (require, exports, module) {
             GetInfo: function (obj) {
                 return new Promise(function (resolve, reject) {
                     getInfo(getToken()).then(function (response) {
-                        const data = response.data;
+                        var data = response.data;
+						console.log("getInfoData",data)
 						if(data.success){
 							obj.commit('SET_MENULIST', menu.menuList);
-							obj.commit('SET_ROUTERLIST', menu.routerList)
+							obj.commit('SET_ROUTERLIST', menu.routerList);
 							obj.commit('SET_NAME', data.data.name);
+							obj.commit('SET_UNREADMSGNUM', data.data.unreadMsgNum);
 						}
                         resolve(response);
                     }).catch(function (error) {

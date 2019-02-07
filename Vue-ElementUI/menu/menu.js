@@ -2,14 +2,14 @@ define(function (require, exports, module) {
     var Layout = httpVueLoader('./views/layout/Layout.vue');
 	var Page404 = httpVueLoader('./views/404.vue');
     const menuList = [{
-        icon: 'el-icon-ex-homepage',
+        icon: 'el-icon-ex-homepage_fill',
         index: 'dashboard',
         title: '系统首页',
         path: 'views/business/Dashboard.vue',
         isMoudel: false
     },
         {
-            icon: 'el-icon-ex-createtask',
+            icon: 'el-icon-ex-createtask_fill',
             index: '1',
             title: '参考功能',
             isMoudel: true,
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
             ]
         },
         {
-            icon: 'el-icon-ex-emoji',
+            icon: 'el-icon-ex-emoji_fill',
             index: '2',
             title: '系统图标',
             isMoudel: true,
@@ -78,8 +78,15 @@ define(function (require, exports, module) {
                 }
             ]
         },
+		{
+		    icon: 'el-icon-ex-remind_fill',
+		    index: 'SysMsg',
+		    title: '系统消息',
+		    path: 'views/business/SysMsg.vue',
+		    isMoudel: false
+		},
         {
-            icon: 'el-icon-ex-emoji',
+            icon: 'el-icon-ex-dynamic_fill',
             index: 'Test',
             title: '测试',
             path: 'views/business/Test.vue',

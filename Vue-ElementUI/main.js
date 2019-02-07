@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 						router.addRoutes(store.getters.routerList);
 						next({path:to.path});
 					}).catch(function(err){
-						next({path:'login'});
+						next({path:'login?timeout'});
 					})
 				}else{
 					next();

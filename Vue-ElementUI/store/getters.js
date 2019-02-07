@@ -24,6 +24,9 @@ define(function (require, exports, module) {
         routerList: function (state) {
             return state.user.routerList
         },
+		unreadMsgNum: function(state){
+			return state.user.unreadMsgNum; 
+		}
     }
     module.exports = getters
 })

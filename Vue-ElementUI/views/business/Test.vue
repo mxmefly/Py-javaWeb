@@ -29,7 +29,7 @@
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: Demo_Apis.getTable,
+                    url: SysMsg_Apis.getMsgNum,
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);

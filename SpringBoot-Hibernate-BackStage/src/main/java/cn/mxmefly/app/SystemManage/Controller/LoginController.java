@@ -5,6 +5,7 @@ import cn.mxmefly.app.SystemManage.Bean.pfUser;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Md5;
 import cn.mxmefly.app.Common.Results;
+import cn.mxmefly.app.SystemManage.Dao.Repository.SysMsgRepository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.pfUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -20,6 +22,8 @@ public class LoginController {
 
     @Autowired
     private pfUserRepository pur;
+    @Autowired
+    private SysMsgRepository sysMsgRepository;
 
     @PostMapping(value = "/login")
     public Results login(@RequestBody Map map, HttpServletRequest request){
@@ -45,11 +49,12 @@ public class LoginController {
         if(session==null){
             return new CreateResult().getResults(false,"未查询到用户信息");
         }else{
-            pfUser user = new pfUser();
-            user.setId((String) session.getAttribute("id"));
-            user.setName((String)session.getAttribute("name"));
-            user.setDes((String)session.getAttribute("des"));
-            return  new CreateResult().getResults(user);
+            Map returnMap = new HashMap<>();
+            returnMap.put("id",session.getAttribute("id"));
+            returnMap.put("name",session.getAttribute("name"));
+            returnMap.put("des",session.getAttribute("des"));
+            returnMap.put("unreadMsgNum",sysMsgRepository.getMsgNum().get(0)+"");
+            return  new CreateResult().getResults(returnMap);
         }
     }
 
