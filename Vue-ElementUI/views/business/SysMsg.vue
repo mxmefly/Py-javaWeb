@@ -1,131 +1,179 @@
 <template>
-    <div class="">
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-copy"></i> 系统消息</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <div class="container">
-            <el-tabs v-model="message">
-                <el-tab-pane :label="`未读消息(${unread.length})`" name="first">
-                    <el-table :data="unread" :show-header="false" style="width: 100%">
-                        <el-table-column>
-                            <template slot-scope="scope">
-                                <span class="message-title">{{scope.row.title}}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="date" width="180"></el-table-column>
-                        <el-table-column width="120">
-                            <template slot-scope="scope">
-                                <el-button size="small" @click="handleRead(scope.$index)" size="small">标为已读</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div class="handle-row">
-                        <el-button type="primary" size="small">全部标为已读</el-button>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="`已读消息(${read.length})`" name="second">
-                    <template v-if="message === 'second'">
-                        <el-table :data="read" :show-header="false" style="width: 100%">
-                            <el-table-column>
-                                <template slot-scope="scope">
-                                    <span class="message-title">{{scope.row.title}}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="date" width="180"></el-table-column>
-                            <el-table-column width="120">
-                                <template slot-scope="scope">
-                                    <el-button type="danger" @click="handleDel(scope.$index)" size="small">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <div class="handle-row">
-                            <el-button type="danger" size="small">删除全部</el-button>
-                        </div>
-                    </template>
-                </el-tab-pane>
-                <el-tab-pane :label="`回收站(${recycle.length})`" name="third">
-                    <template v-if="message === 'third'">
-                        <el-table :data="recycle" :show-header="false" style="width: 100%">
-                            <el-table-column>
-                                <template slot-scope="scope">
-                                    <span class="message-title">{{scope.row.title}}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="date" width="180"></el-table-column>
-                            <el-table-column width="120">
-                                <template slot-scope="scope">
-                                    <el-button @click="handleRestore(scope.$index)" size="small">还原</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <div class="handle-row">
-                            <el-button type="danger" size="small">清空回收站</el-button>
-                        </div>
-                    </template>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
-    </div>
+	<div class="">
+		<div class="crumbs">
+			<el-breadcrumb separator="/">
+				<el-breadcrumb-item><i class="el-icon-lx-copy"></i> 系统消息</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+		<div class="container">
+			<el-tabs v-model="message">
+				<el-tab-pane :label="`未读消息(${unread.length})`" name="first">
+					<el-table :data="unread" :show-header="false" style="width: 100%">
+						<el-table-column>
+							<template slot-scope="scope">
+								<span class="message-title">{{scope.row.message}}</span>
+							</template>
+						</el-table-column>
+						<el-table-column width="240">
+							<template slot-scope="scope">
+								<span>{{ getLocalTime(scope.row.messageDate) }}</span>
+							</template>
+						</el-table-column>
+						<el-table-column width="120">
+							<template slot-scope="scope">
+								<el-button size="small" @click="handleRead(scope.$index)" size="small">标为已读</el-button>
+							</template>
+						</el-table-column>
+					</el-table>
+					<div class="handle-row">
+						<el-button type="primary" size="small">全部标为已读</el-button>
+					</div>
+				</el-tab-pane>
+				<el-tab-pane :label="`已读消息(${read.length})`" name="second">
+					<template v-if="message === 'second'">
+						<el-table :data="read" :show-header="false" style="width: 100%">
+							<el-table-column>
+								<template slot-scope="scope">
+									<span class="message-title">{{scope.row.message}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column width="240">
+								<template slot-scope="scope">
+									<span>{{ getLocalTime(scope.row.messageDate) }}</span>
+								</template>
+							</el-table-column>
+							<el-table-column width="120">
+								<template slot-scope="scope">
+									<el-button type="danger" @click="handleDel(scope.$index)" size="small">删除
+									</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div class="handle-row">
+							<el-button type="danger" size="small">删除全部</el-button>
+						</div>
+					</template>
+				</el-tab-pane>
+				<el-tab-pane :label="`回收站(${recycle.length})`" name="third">
+					<template v-if="message === 'third'">
+						<el-table :data="recycle" :show-header="false" style="width: 100%">
+							<el-table-column>
+								<template slot-scope="scope">
+									<span class="message-title">{{scope.row.message}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column width="240">
+								<template slot-scope="scope">
+									<span>{{ getLocalTime(scope.row.messageDate) }}</span>
+								</template>
+							</el-table-column>
+							<el-table-column width="120">
+								<template slot-scope="scope">
+									<el-button @click="handleRestore(scope.$index)" size="small">还原</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div class="handle-row">
+							<el-button type="danger" size="small">清空回收站</el-button>
+						</div>
+					</template>
+				</el-tab-pane>
+			</el-tabs>
+		</div>
+	</div>
 </template>
 
 <script>
-    module.exports = {
-        name: 'tabs',
-        data: function () {
-            return {
-                message: 'first',
-                showHeader: false,
-                unread: [{
-                    date: '2018-04-19 20:00:00',
-                    title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护',
-                }, {
-                    date: '2018-04-19 21:00:00',
-                    title: '今晚12点整发大红包，先到先得',
-                }],
-                read: [{
-                    date: '2018-04-19 20:00:00',
-                    title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-                }],
-                recycle: [{
-                    date: '2018-04-19 20:00:00',
-                    title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护' 
-                }]
-            }
-        },
-        methods: {
-            handleRead: function (index) {
-                const item = this.unread.splice(index, 1);
-                console.log(item);
-                this.read = item.concat(this.read);
-            },
-            handleDel: function (index) {
-                const item = this.read.splice(index, 1);
-                this.recycle = item.concat(this.recycle);
-            },
-            handleRestore: function (index) {
-                const item = this.recycle.splice(index, 1);
-                this.read = item.concat(this.read);
-            }
-        },
-        computed: {
-            unreadNum: function () {
-                return this.unread.length;
-            }
-        }
-    }
+	module.exports = {
+		name: 'SysMsg',
+		data: function() {
+			return {
+				message: 'first',
+				showHeader: false,
+				unread: [],
+				read: [],
+				recycle: []
+			}
+		},
+		computed: {
+			unreadNum: function() {
+				return this.unread.length;
+			},
+		},
+		methods: {
+			handleGetMsgData: function() {
+				var _this = this;
+				var obj = {};
+				this.$axios({
+					method: 'post',
+					url: SysMsg_Apis.getMsgData,
+					data: obj
+				}).then(function(res) {
+					var result = res.data.data;
+					_this.unread = result.unread;
+					_this.read = result.read;
+					_this.recycle = result.recycle;
+				}).catch(function() {
+					console.log("请求失败");
+				});
+			},
+			handleRead: function(index) {
+				const item = this.unread.splice(index, 1);
+				var _this = this;
+				var obj = {
+					id: item[0].id,
+					state: 1
+				};
+				this.$axios({
+					method: 'post',
+					url: SysMsg_Apis.updateMsgState,
+					data: obj
+				}).then(function(res) {
+					if (res.data.success) {
+						_this.$store.dispatch('GetInfo');
+						_this.handleGetMsgData();
+					} else {
+						_this.$message({
+							message: '请求失败，请刷新重试',
+							type: 'warning'
+						});
+					}
+				}).catch(function() {
+					console.log("请求失败");
+				});
 
+			},
+			handleDel: function(index) {
+				const item = this.read.splice(index, 1);
+				this.recycle = item.concat(this.recycle);
+			},
+			handleRestore: function(index) {
+				const item = this.recycle.splice(index, 1);
+				this.read = item.concat(this.read);
+			},
+			getLocalTime: function(timestamp) {
+				var d = new Date(timestamp);
+				var date = (d.getFullYear()) + "-" +
+					(d.getMonth() + 1) + "-" +
+					(d.getDate()) + " " +
+					(d.getHours() < 10 ? ("0" + d.getHours()) : (d.getHours())) + ":" +
+					(d.getMinutes() < 10 ? ("0" + d.getMinutes()) : (d.getMinutes())) + ":" +
+					(d.getSeconds() < 10 ? ("0" + d.getSeconds()) : (d.getSeconds()));
+				return date;
+			}
+		},
+		mounted: function() {
+			this.handleGetMsgData();
+		}
+	}
 </script>
 
 <style>
-    .message-title {
-        cursor: pointer;
-    }
+	.message-title {
+		cursor: pointer;
+	}
 
-    .handle-row {
-        margin-top: 30px;
-    }
+	.handle-row {
+		margin-top: 30px;
+	}
 </style>
-

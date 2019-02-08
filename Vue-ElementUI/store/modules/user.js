@@ -82,8 +82,11 @@ define(function (require, exports, module) {
 							obj.commit('SET_ROUTERLIST', menu.routerList);
 							obj.commit('SET_NAME', data.data.name);
 							obj.commit('SET_UNREADMSGNUM', data.data.unreadMsgNum);
+							resolve(response);
+						}else{
+							reject("response")
 						}
-                        resolve(response);
+                        
                     }).catch(function (error) {
 						console.log("error",error)
                         reject(error)

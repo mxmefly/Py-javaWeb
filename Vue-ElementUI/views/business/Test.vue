@@ -23,13 +23,13 @@
             /* 测试 axios 请求 */
             handleTest: function () {
                 var obj = {
-					page:1,
-					size:6
+					state:0,
+					oldState:1
 				};
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: SysMsg_Apis.getMsgNum,
+                    url: SysMsg_Apis.updateStateAll,
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);

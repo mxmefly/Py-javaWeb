@@ -4,7 +4,10 @@ const LoginApi = BASE_API + '/login';
 const LogoutApi = BASE_API + '/logout';
 const getInfoApi =BASE_API+'/getInfo';
 const SysMsg_Apis={
-	getMsgNum:BASE_API+'/getMsgNum'
+	getMsgNum:BASE_API+'/getMsgNum',
+	getMsgData:BASE_API+'/getMsgData',
+	updateMsgState:BASE_API+'/updateMsgState',
+	updateStateAll:BASE_API+'/updateStateAll'
 }
 const Demo_Apis = {
     Test_Url: BASE_API + '/test',

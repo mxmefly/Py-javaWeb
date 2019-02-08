@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/sbhdb
+    url: jdbc:mysql://127.0.0.1:3306/sbhdb?characterEncoding=utf-8
     username: wzy
     password: wzy112099
   jpa:
