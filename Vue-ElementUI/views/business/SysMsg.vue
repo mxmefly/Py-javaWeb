@@ -26,7 +26,7 @@
 						</el-table-column>
 					</el-table>
 					<div class="handle-row">
-						<el-button type="primary" size="small">全部标为已读</el-button>
+						<el-button type="primary" size="small" @click="handleReadAll" >全部标为已读</el-button>
 					</div>
 				</el-tab-pane>
 				<el-tab-pane :label="`已读消息(${read.length})`" name="second">
@@ -50,31 +50,7 @@
 							</el-table-column>
 						</el-table>
 						<div class="handle-row">
-							<el-button type="danger" size="small">删除全部</el-button>
-						</div>
-					</template>
-				</el-tab-pane>
-				<el-tab-pane :label="`回收站(${recycle.length})`" name="third">
-					<template v-if="message === 'third'">
-						<el-table :data="recycle" :show-header="false" style="width: 100%">
-							<el-table-column>
-								<template slot-scope="scope">
-									<span class="message-title">{{scope.row.message}}</span>
-								</template>
-							</el-table-column>
-							<el-table-column width="240">
-								<template slot-scope="scope">
-									<span>{{ getLocalTime(scope.row.messageDate) }}</span>
-								</template>
-							</el-table-column>
-							<el-table-column width="120">
-								<template slot-scope="scope">
-									<el-button @click="handleRestore(scope.$index)" size="small">还原</el-button>
-								</template>
-							</el-table-column>
-						</el-table>
-						<div class="handle-row">
-							<el-button type="danger" size="small">清空回收站</el-button>
+							<el-button type="danger" size="small" @click="handleDelMsgAll">删除全部</el-button>
 						</div>
 					</template>
 				</el-tab-pane>
@@ -118,7 +94,7 @@
 				});
 			},
 			handleRead: function(index) {
-				const item = this.unread.splice(index, 1);
+				var item = this.unread.splice(index, 1);
 				var _this = this;
 				var obj = {
 					id: item[0].id,
@@ -141,15 +117,79 @@
 				}).catch(function() {
 					console.log("请求失败");
 				});
-
+				
+			},
+			handleReadAll:function(){
+				var _this = this;
+				var obj = {
+					state: 1,
+					oldState:0
+				};
+				this.$axios({
+					method: 'post',
+					url: SysMsg_Apis.updateStateAll,
+					data: obj
+				}).then(function(res) {
+					if (res.data.data>0) {
+						_this.$store.dispatch('GetInfo');
+						_this.handleGetMsgData();
+					} else {
+						_this.$message({
+							message: '请求失败，请刷新重试',
+							type: 'warning'
+						});
+					}
+				}).catch(function() {
+					console.log("请求失败");
+				});		
 			},
 			handleDel: function(index) {
-				const item = this.read.splice(index, 1);
-				this.recycle = item.concat(this.recycle);
+				var item = this.read.splice(index, 1);
+				var _this = this;
+				var obj = {
+					id:item[0].id
+				};
+				this.$axios({
+					method: 'post',
+					url: SysMsg_Apis.delMsgById,
+					data: obj
+				}).then(function(res) {
+					if (res.data.success) {
+						_this.handleGetMsgData();
+					} else {
+						_this.$message({
+							message: '请求失败，请刷新重试',
+							type: 'warning'
+						});
+					}
+				}).catch(function() {
+					console.log("请求失败");
+				});
 			},
-			handleRestore: function(index) {
-				const item = this.recycle.splice(index, 1);
-				this.read = item.concat(this.read);
+			handleDelMsgAll:function(){
+				var _this = this;
+				var obj = {
+				};
+				this.$axios({
+					method: 'post',
+					url: SysMsg_Apis.delMsgByAll,
+					data: obj
+				}).then(function(res) {
+					if (res.data.success) {
+						_this.$message({
+							message: '共删除了'+res.data.data+"条数据",
+							type: 'success'
+						});
+						_this.handleGetMsgData();
+					} else {
+						_this.$message({
+							message: '请求失败，请刷新重试',
+							type: 'warning'
+						});
+					}
+				}).catch(function() {
+					console.log("请求失败");
+				});
 			},
 			getLocalTime: function(timestamp) {
 				var d = new Date(timestamp);

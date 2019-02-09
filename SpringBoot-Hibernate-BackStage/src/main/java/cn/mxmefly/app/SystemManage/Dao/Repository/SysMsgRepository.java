@@ -14,9 +14,10 @@ public interface SysMsgRepository extends JpaRepository<SysMsg, Integer> {
     public List getMsgNum();
 
     public List<SysMsg> findByState(int state, Sort sort);
+    public List<SysMsg> findByState(int state);
 
     @Query(nativeQuery = true, value = "update sys_msg set state = :state where state= :oldState")
     @Modifying
-    public int updateStateAll(@Param("state") int state, @Param("oldState") int oldState);
+    public void updateStateAll(@Param("state") int state, @Param("oldState") int oldState);
 
 }

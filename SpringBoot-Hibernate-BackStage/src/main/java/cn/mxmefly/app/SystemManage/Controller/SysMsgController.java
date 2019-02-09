@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,6 +49,27 @@ public class SysMsgController {
     public Results updateStateAll(@RequestBody Map map){
         int state = (int)map.get("state");
         int oldState = (int)map.get("oldState");
-        return new CreateResult().getResults(sysMsgRepository.updateStateAll(state,oldState));
+        List<SysMsg> list = sysMsgRepository.findByState(oldState);
+        for(int i=0;i<list.size();i++){
+            list.get(i).setState(state);
+        }
+        sysMsgRepository.save(list);
+        return new CreateResult().getResults(list.size());
     }
+
+    @PostMapping("delMsgById")
+    public Results delMsgById(@RequestBody Map map){
+        int id = (int)map.get("id");
+        sysMsgRepository.delete(id);
+        return new CreateResult().getResults(true,"删除成功");
+    }
+
+    @PostMapping("delMsgByAll")
+    public Results delMsgByAll(){
+        List<SysMsg> list = sysMsgRepository.findByState(1);
+        sysMsgRepository.delete(list);
+        return new CreateResult().getResults(list.size());
+    }
+
+
 }

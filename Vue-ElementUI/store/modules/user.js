@@ -76,7 +76,6 @@ define(function (require, exports, module) {
                 return new Promise(function (resolve, reject) {
                     getInfo(getToken()).then(function (response) {
                         var data = response.data;
-						console.log("getInfoData",data)
 						if(data.success){
 							obj.commit('SET_MENULIST', menu.menuList);
 							obj.commit('SET_ROUTERLIST', menu.routerList);
