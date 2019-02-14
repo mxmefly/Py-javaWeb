@@ -20,10 +20,11 @@ public class PfUserController {
 
     private pfUserService pus=new pfUserService();
 
+    private CreateResult createResult = new CreateResult();
     /*获取所有用户*/
     @GetMapping("/getAllPfUsers")
     public Results getAllPfUser(){
-        return new CreateResult().getResults(pur.findAll());
+        return createResult.getResults(pur.findAll());
     }
 
    /* @PostMapping("/getInfo")

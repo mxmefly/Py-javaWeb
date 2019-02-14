@@ -1,6 +1,7 @@
 /* 统一管理数据接口 */
 /* const BASE_API = 'http://localhost:8080/App-0.0.1-SNAPSHOT'; */
 const BASE_API = 'http://localhost:8080';
+/* const BASE_API = 'http://mxmefly.cn:8080/App'; */
 const LoginApi = BASE_API + '/login';
 const LogoutApi = BASE_API + '/logout';
 const getInfoApi =BASE_API+'/getInfo';

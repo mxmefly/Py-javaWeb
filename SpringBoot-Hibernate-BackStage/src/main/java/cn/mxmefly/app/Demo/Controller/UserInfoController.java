@@ -16,6 +16,7 @@ import java.util.Map;
 public class UserInfoController {
     @Autowired
     private UserInfoRepository userInfoRepository;
+    private CreateResult createResult =new CreateResult();
 
     @PostMapping("/getTable")
     public Results getUserInfoByage(@RequestBody Map map){
@@ -23,7 +24,7 @@ public class UserInfoController {
         int size = (int) map.get("size");
         Pageable pageable = new PageRequest(page, size);
         Page<UserInfo> pui=userInfoRepository.findAll(pageable);
-        return new CreateResult().getResults(pui);
+        return createResult.getResults(pui);
     }
 
 }

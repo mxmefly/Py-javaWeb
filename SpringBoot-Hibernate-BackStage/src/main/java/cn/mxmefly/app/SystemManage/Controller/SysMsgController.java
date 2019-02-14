@@ -19,9 +19,11 @@ public class SysMsgController {
     @Autowired
     private SysMsgRepository sysMsgRepository;
 
+    private CreateResult createResult = new CreateResult();
+
     @PostMapping("getMsgNum")
     public Results getMsgNum(@RequestBody Map map){
-       return new CreateResult().getResults(sysMsgRepository.getMsgNum().get(0));
+       return createResult.getResults(sysMsgRepository.getMsgNum().get(0));
     }
 
     @PostMapping("getMsgData")
@@ -32,7 +34,7 @@ public class SysMsgController {
         returnMap.put("unread",sysMsgRepository.findByState(0,sort));
         returnMap.put("read",sysMsgRepository.findByState(1,sort));
         returnMap.put("recycle",sysMsgRepository.findByState(2,sort));
-        return new CreateResult().getResults(returnMap);
+        return createResult.getResults(returnMap);
     }
 
     @PostMapping("updateMsgState")
@@ -42,7 +44,7 @@ public class SysMsgController {
         SysMsg sysMsg = sysMsgRepository.findOne(id);
         sysMsg.setState(state);
         sysMsgRepository.save(sysMsg);
-        return new CreateResult().getResults(true,"更新成功");
+        return createResult.getResults(true,"更新成功");
     }
 
     @PostMapping("updateStateAll")
@@ -54,21 +56,21 @@ public class SysMsgController {
             list.get(i).setState(state);
         }
         sysMsgRepository.save(list);
-        return new CreateResult().getResults(list.size());
+        return createResult.getResults(list.size());
     }
 
     @PostMapping("delMsgById")
     public Results delMsgById(@RequestBody Map map){
         int id = (int)map.get("id");
         sysMsgRepository.delete(id);
-        return new CreateResult().getResults(true,"删除成功");
+        return createResult.getResults(true,"删除成功");
     }
 
     @PostMapping("delMsgByAll")
     public Results delMsgByAll(){
         List<SysMsg> list = sysMsgRepository.findByState(1);
         sysMsgRepository.delete(list);
-        return new CreateResult().getResults(list.size());
+        return createResult.getResults(list.size());
     }
 
 

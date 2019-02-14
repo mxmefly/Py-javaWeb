@@ -25,20 +25,22 @@ public class LoginController {
     @Autowired
     private SysMsgRepository sysMsgRepository;
 
+    private CreateResult createResult = new CreateResult();
+
     @PostMapping(value = "/login")
     public Results login(@RequestBody Map map, HttpServletRequest request){
         String id = (String) map.get("id");
         String pwd=(String)map.get("pwd");
         pfUser user = pur.findByIdAndPwd(id,new Md5().md5Password(pwd));
         if(user==null){
-            return new CreateResult().getResults(false,"账号或密码错误");
+            return createResult.getResults(false,"账号或密码错误");
         }else {
             /*登陆成功 创建session*/
             HttpSession session = request.getSession(true);
             session.setAttribute("id",user.getId());
             session.setAttribute("name",user.getName());
             session.setAttribute("des",user.getDes());
-            return new CreateResult().getResults(true,"登陆成功",session.getId());
+            return createResult.getResults(true,"登陆成功",session.getId());
         }
     }
     @PostMapping("/getInfo")
@@ -47,14 +49,14 @@ public class LoginController {
         MySessionContext mySessionContext = MySessionContext.getInstance();
         HttpSession session = mySessionContext.getSession(sessionId);
         if(session==null){
-            return new CreateResult().getResults(false,"未查询到用户信息");
+            return createResult.getResults(false,"未查询到用户信息");
         }else{
             Map returnMap = new HashMap<>();
             returnMap.put("id",session.getAttribute("id"));
             returnMap.put("name",session.getAttribute("name"));
             returnMap.put("des",session.getAttribute("des"));
             returnMap.put("unreadMsgNum",sysMsgRepository.getMsgNum().get(0)+"");
-            return  new CreateResult().getResults(returnMap);
+            return createResult.getResults(returnMap);
         }
     }
 
@@ -64,10 +66,10 @@ public class LoginController {
         MySessionContext mySessionContext = MySessionContext.getInstance();
         HttpSession session = mySessionContext.getSession(sessionId);
         if(session==null){
-            return new CreateResult().getResults(false,"该用户未登录");
+            return createResult.getResults(false,"该用户未登录");
         }else {
             mySessionContext.delSession(sessionId);
-            return new CreateResult().getResults(false,"登出成功");
+            return createResult.getResults(false,"登出成功");
         }
     }
 
