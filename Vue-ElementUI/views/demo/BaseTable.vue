@@ -79,6 +79,7 @@
         name: 'basetable',
         data: function () {
             return {
+				title:"编辑啊啊啊",
 				total:0,
 				tableSize:5,
                 tableData: [],
@@ -142,6 +143,7 @@
                     url: Demo_Apis.getTable,
                     data: obj
                 }).then(function (res) {
+					console.log(res);
                     _this.tableData = res.data.data.content;
 					_this.total=res.data.data.totalElements;	
                 }).catch(function () {

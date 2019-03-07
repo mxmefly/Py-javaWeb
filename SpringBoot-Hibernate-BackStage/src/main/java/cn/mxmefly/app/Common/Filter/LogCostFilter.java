@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class LogCostFilter implements Filter {
 
+
     @Override
     public void init(javax.servlet.FilterConfig filterConfig) throws ServletException {
 
