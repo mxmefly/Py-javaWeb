@@ -109,7 +109,7 @@ define(function (require, exports, module) {
         }
         return arr;
     }
-
+ 
     var routerArr = {
         path: '/',
         component: Layout,

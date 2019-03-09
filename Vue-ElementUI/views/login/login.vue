@@ -81,6 +81,7 @@
                 this.$store.dispatch('Login', this.loginForm).then(function(){
 					_this.$store.dispatch('GetInfo');
 				}).then(function () {
+					console.log(_this.$store.getters.routerList)
 					_this.$router.addRoutes(_this.$store.getters.routerList);
                     /* 动态添加路由*/
                     _this.$router.push({

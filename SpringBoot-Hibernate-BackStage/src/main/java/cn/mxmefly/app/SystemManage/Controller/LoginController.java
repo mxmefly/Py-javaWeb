@@ -1,12 +1,18 @@
 package cn.mxmefly.app.SystemManage.Controller;
 
 import cn.mxmefly.app.Common.Listener.MySessionContext;
+import cn.mxmefly.app.SystemManage.Bean.PfMenu;
+import cn.mxmefly.app.SystemManage.Bean.PfRights;
+import cn.mxmefly.app.SystemManage.Bean.TreeNode;
 import cn.mxmefly.app.SystemManage.Bean.pfUser;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Md5;
 import cn.mxmefly.app.Common.Results;
+import cn.mxmefly.app.SystemManage.Dao.Repository.PfMenuRepository;
+import cn.mxmefly.app.SystemManage.Dao.Repository.PfRightsReposotory;
 import cn.mxmefly.app.SystemManage.Dao.Repository.SysMsgRepository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.pfUserRepository;
+import org.python.core.AstList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +32,10 @@ public class LoginController {
     private pfUserRepository pur;
     @Autowired
     private SysMsgRepository sysMsgRepository;
+    @Autowired
+    private PfMenuRepository pfMenuRepository;
+    @Autowired
+    private PfRightsReposotory pfRightsReposotory;
 
     private CreateResult createResult = new CreateResult();
 
@@ -40,9 +52,14 @@ public class LoginController {
             session.setAttribute("id",user.getId());
             session.setAttribute("name",user.getName());
             session.setAttribute("des",user.getDes());
-            return createResult.getResults(true,"登陆成功",session.getId());
+            Map returnMap = new HashMap<>();
+            returnMap.put("sessionId",session.getId());
+            returnMap.put("menuList",getMenuNodes("admin"));
+            returnMap.put("routList",getRouters("admin"));
+            return createResult.getResults(true,"登陆成功",returnMap);
         }
     }
+
     @PostMapping("/getInfo")
     public Results getUserInfoById(@RequestBody Map map){
         String sessionId= (String) map.get("sessionId");
@@ -52,10 +69,18 @@ public class LoginController {
             return createResult.getResults(false,"未查询到用户信息");
         }else{
             Map returnMap = new HashMap<>();
-            returnMap.put("id",session.getAttribute("id"));
+            String id = (String)session.getAttribute("id");
+            returnMap.put("id",id);
             returnMap.put("name",session.getAttribute("name"));
             returnMap.put("des",session.getAttribute("des"));
             returnMap.put("unreadMsgNum",sysMsgRepository.getMsgNum().get(0)+"");
+            if(pur.findById(id)==null){
+                returnMap.put("menuList",getMenuNodes("tourist"));
+                returnMap.put("routList",getRouters("tourist"));
+            }else{
+                returnMap.put("menuList",getMenuNodes("admin"));
+                returnMap.put("routList",getRouters("admin"));
+            }
             return createResult.getResults(returnMap);
         }
     }
@@ -71,6 +96,62 @@ public class LoginController {
             mySessionContext.delSession(sessionId);
             return createResult.getResults(false,"登出成功");
         }
+    }
+
+    private List<PfMenu> getRouters(String role){
+        List<PfMenu> lpm =pfMenuRepository.findAll();
+        List<PfMenu> list = new ArrayList<>();
+        for(int i=0; i<lpm.size();i++){
+            /*根据权限表 删除权限*/
+            PfMenu pfMenu = lpm.get(i);
+            if(pfMenu.getIsParent()==1){
+                List<PfMenu> pfMenusByParent = pfMenuRepository.findByParentIdOrderByMenuOrder(pfMenu.getId());
+                list.addAll(pfMenusByParent);
+            }else{
+                if(pfRightsReposotory.findByRoleAndMenuId(role,pfMenu.getId()).size()>0){
+                    list.add(lpm.get(i));
+                }
+            }
+        }
+        return  list;
+    }
+    private List<TreeNode> getMenuNodes(String role){
+        List<PfMenu> lpm = pfMenuRepository.findByParentIdOrderByMenuOrder("ROOT");
+        List<TreeNode> list = new ArrayList<>();
+        for(int i=0;i<lpm.size();i++){
+            PfMenu pfMenu = lpm.get(i);
+            if(pfRightsReposotory.findByRoleAndMenuId(role,pfMenu.getId()).size()>0){
+                TreeNode treeNode =new TreeNode();
+                treeNode.setId(pfMenu.getId());
+                treeNode.setName(pfMenu.getName());
+                treeNode.setIsparent(pfMenu.getIsParent());
+                treeNode.setIcon(pfMenu.getIcon());
+                treeNode.setPath(pfMenu.getPath());
+                treeNode.setDes(pfMenu.getDes());
+                if(pfMenu.getIsParent()==1){
+                    treeNode.setChildren(getMenuTreeNode(pfMenuRepository.findByParentIdOrderByMenuOrder(pfMenu.getId())));
+                }
+                list.add(treeNode);
+            }else {
+                continue;
+            }
+
+        }
+        return list;
+    }
+    private List<TreeNode> getMenuTreeNode(List<PfMenu> lpm){
+        List<TreeNode> ltn = new ArrayList<>();
+        for(int i=0;i<lpm.size();i++){
+            TreeNode treeNode = new TreeNode();
+            treeNode.setId(lpm.get(i).getId());
+            treeNode.setName(lpm.get(i).getName());
+            treeNode.setIsparent(lpm.get(i).getIsParent());
+            treeNode.setIcon(lpm.get(i).getIcon());
+            treeNode.setPath(lpm.get(i).getPath());
+            treeNode.setDes(lpm.get(i).getDes());
+            ltn.add(treeNode);
+        }
+        return ltn;
     }
 
 

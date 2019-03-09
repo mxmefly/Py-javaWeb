@@ -29,7 +29,7 @@
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: SysMsg_Apis.updateStateAll,
+                    url: BASE_API+'/getMenus',
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);
