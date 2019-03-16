@@ -1,6 +1,4 @@
 define(function (require, exports, module) {
-	var Layout = httpVueLoader('views/layout/Layout.vue');
-	var Page404 = httpVueLoader('views/404.vue');
     var loginAPI = require('../../api/login.js');
     var login = loginAPI.login;
     var logout = loginAPI.logout;
@@ -51,14 +49,12 @@ define(function (require, exports, module) {
             Login: function (obj, userInfo) {
                 const username = userInfo.username.trim()
                 return new Promise(function (resolve, reject) {
-                    login(username, userInfo.password).then(function (response) {				
+                    login(username, userInfo.password).then(function (response) {	
                         var result = response.data.success;
                         if (result) {
 							/* cookie 里放的是 sessionId 实现前后端登陆状态的统一 */
                             setToken(response.data.data.sessionId);
                             obj.commit('SET_TOKEN', userInfo.username);
-                            obj.commit('SET_MENULIST', response.data.data.menuList);
-                            obj.commit('SET_ROUTERLIST', getRouters(response.data.data.routList));
                         }else{
 							reject("账号或密码错误")
 						}
@@ -73,19 +69,17 @@ define(function (require, exports, module) {
                 return new Promise(function (resolve, reject) {
                     getInfo(getToken()).then(function (response) {
                         var data = response.data;
-						console.log("data",data)
 						/* console.log("menuList",getMenuList(data.data.menuList)) */
 						if(data.success){
 							// console.log("routerList",getRouters(data.data.routList))
 							obj.commit('SET_MENULIST', data.data.menuList);
-							obj.commit('SET_ROUTERLIST', getRouters(data.data.routList));
+							obj.commit('SET_ROUTERLIST', menu.getRouters(data.data.routList));
 							obj.commit('SET_NAME', data.data.name);
 							obj.commit('SET_UNREADMSGNUM', data.data.unreadMsgNum);
 							resolve(response);
 						}else{
 							reject("response")
-						}
-                        
+						}     
                     }).catch(function (error) {
 						console.log("error",error)
                         reject(error)
@@ -117,25 +111,5 @@ define(function (require, exports, module) {
             }
         }
     }
-	
-    var getRouters = function(RouList){
-		var routerArr = {
-		    path: '/',
-		    component: Layout,
-		    children: []
-		};
-		for(var i=0;i<RouList.length;i++){
-			var arr= {
-                path: '/' + RouList[i].id,
-                name: RouList[i].name,
-                component: httpVueLoader("../../"+RouList[i].path)
-            }
-			routerArr.children.push(arr);
-		}
-		var routerList=[];
-		routerList.push(routerArr);
-		routerList.push({path: '*', redirect: '/404', hidden: true});
-		return routerList;
-	}
     module.exports = user
 })

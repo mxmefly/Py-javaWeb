@@ -1,8 +1,10 @@
 package cn.mxmefly.app.SystemManage.Controller;
 
 import cn.mxmefly.app.Common.Listener.MySessionContext;
+import cn.mxmefly.app.Common.Log.Bean.PfLog;
+import cn.mxmefly.app.Common.Log.Dao.Repository.PfLogRepository;
+import cn.mxmefly.app.Common.Log.LogType;
 import cn.mxmefly.app.SystemManage.Bean.PfMenu;
-import cn.mxmefly.app.SystemManage.Bean.PfRights;
 import cn.mxmefly.app.SystemManage.Bean.TreeNode;
 import cn.mxmefly.app.SystemManage.Bean.pfUser;
 import cn.mxmefly.app.Common.CreateResult;
@@ -12,7 +14,6 @@ import cn.mxmefly.app.SystemManage.Dao.Repository.PfMenuRepository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.PfRightsReposotory;
 import cn.mxmefly.app.SystemManage.Dao.Repository.SysMsgRepository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.pfUserRepository;
-import org.python.core.AstList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class LoginController {
@@ -36,8 +34,11 @@ public class LoginController {
     private PfMenuRepository pfMenuRepository;
     @Autowired
     private PfRightsReposotory pfRightsReposotory;
+    @Autowired
+    private PfLogRepository pfLogRepository;
 
     private CreateResult createResult = new CreateResult();
+
 
     @PostMapping(value = "/login")
     public Results login(@RequestBody Map map, HttpServletRequest request){
@@ -54,12 +55,26 @@ public class LoginController {
             session.setAttribute("des",user.getDes());
             Map returnMap = new HashMap<>();
             returnMap.put("sessionId",session.getId());
-            returnMap.put("menuList",getMenuNodes("admin"));
-            returnMap.put("routList",getRouters("admin"));
+            pfLogRepository.save(new PfLog(user.getName(),user.getName()+"已登录",LogType.LOGIN,new Date()));
             return createResult.getResults(true,"登陆成功",returnMap);
         }
     }
-
+    @PostMapping("/touristLogin")
+    public Results touristLogin(HttpServletRequest request){
+        String ip;
+       /* 获取真实IP*/
+        if (request.getHeader("x-forwarded-for") == null) {
+            ip= request.getRemoteAddr();
+        }else{
+            ip= request.getHeader("x-forwarded-for");
+        }
+        String Agent = request.getHeader("User-Agent");
+        StringTokenizer st = new StringTokenizer(Agent,";");
+        st.nextToken();
+        String useros = st.nextToken();
+        String userbower = st.nextToken();
+        return  createResult.getResults("");
+    }
     @PostMapping("/getInfo")
     public Results getUserInfoById(@RequestBody Map map){
         String sessionId= (String) map.get("sessionId");
@@ -153,6 +168,4 @@ public class LoginController {
         }
         return ltn;
     }
-
-
 }

@@ -94,7 +94,7 @@ define(function (require, exports, module) {
         }
     ];
     exports.menuList = menuList;
-    var getRouterList = function (arr, list) {
+    /* var getRouterList = function (arr, list) {
         for (var i = 0; i < list.length; i++) {
             if (list[i].isMoudel) {
                 getRouterList(arr, list[i].subs);
@@ -120,4 +120,25 @@ define(function (require, exports, module) {
 	routerList.push(routerArr);
 	routerList.push({path: '*', redirect: '/404', hidden: true});
     exports.routerList = [routerArr];
+	 */
+	exports.getRouters = function(RouList){
+		var routerArr = {
+		    path: '/',
+		    component: Layout,
+		    children: []
+		};
+		for(var i=0;i<RouList.length;i++){
+			var arr= {
+		        path: '/' + RouList[i].id,
+		        name: RouList[i].name,
+		        component: httpVueLoader(RouList[i].path)
+		    }
+			routerArr.children.push(arr);
+		}
+		var routerList=[];
+		routerList.push(routerArr);
+		routerList.push({path: '*', redirect: '/404', hidden: true});
+		return routerList;
+	}
+	
 })

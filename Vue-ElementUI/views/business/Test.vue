@@ -23,13 +23,12 @@
             /* 测试 axios 请求 */
             handleTest: function () {
                 var obj = {
-					state:0,
-					oldState:1
+					
 				};
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: BASE_API+'/getMenus',
+                    url: BASE_API+'/touristLogin',
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);
