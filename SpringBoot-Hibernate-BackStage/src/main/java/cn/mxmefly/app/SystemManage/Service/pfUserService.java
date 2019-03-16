@@ -1,7 +1,7 @@
 package cn.mxmefly.app.SystemManage.Service;
 
 import cn.mxmefly.app.SystemManage.Bean.pfUser;
-import cn.mxmefly.app.SystemManage.Dao.Repository.pfUserRepository;
+import cn.mxmefly.app.SystemManage.Dao.Repository.PfUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class pfUserService {
 
     @Autowired
-    private pfUserRepository ud;
+    private PfUserRepository ud;
 
     public List<pfUser> getAllUser(){
         List<pfUser> lpf= new ArrayList<pfUser>();
