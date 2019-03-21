@@ -68,25 +68,34 @@
 		methods: {
 			handleLogin: function() {
 				_this = this;
-				var flag = true;
-				this.$store.dispatch('Login', this.loginForm).then(function() {
-
-				}).catch(function(err) {
-					flag = false;
-					_this.$message.error(err);
-				});
-				if (flag) {
-					/* _this.$store.dispatch('GetInfo'); */
+				this.$store.dispatch('Login', this.loginForm).then(function(){
+					_this.$store.dispatch('GetInfo');
+				}).then(function () {
 					_this.$router.addRoutes(_this.$store.getters.routerList);
-					/* 动态添加路由*/
-					_this.$router.push({
-						path: '/dashboard'
-					});
-					console.log("登录成功，跳转首页")
-				}
+                    /* 动态添加路由*/
+                    _this.$router.push({
+                        path: '/dashboard'
+                    });
+                    console.log("登录成功，跳转首页")
+                }).catch(function (err) {
+                    _this.$message.error(err);
+                });
+				
 			},
 			handleTouristLogin: function() {
-
+				_this = this;
+				this.$store.dispatch('TouristLogin').then(function(){
+					_this.$store.dispatch('GetInfo');
+				}).then(function () {
+					_this.$router.addRoutes(_this.$store.getters.routerList);
+				    /* 动态添加路由*/
+				    _this.$router.push({
+				        path: '/dashboard'
+				    });
+				    console.log("登录成功，跳转首页")
+				}).catch(function (err) {
+				    _this.$message.error("登录失败");
+				});
 			}
 
 		}

@@ -1,7 +1,14 @@
 define(function(require, exports, module) {
-	//import request from '@/utils/request'
-	/* var request = require('../utils/request.js'); */
+	
 	var store = require('../store/getters.js')
+	
+	exports.touristLogin = function() {
+	    var res = axios({
+			method: 'post',
+			url: touristLoginApi,
+		})
+		return res;
+	}
 	
 	exports.login = function(username, password) {
 	    var res = axios({
@@ -13,7 +20,6 @@ define(function(require, exports, module) {
 			}
 		})
 		return res;
-
 	}
 
 	exports.getInfo = function(token) {

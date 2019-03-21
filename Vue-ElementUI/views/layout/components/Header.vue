@@ -17,13 +17,13 @@
                     </el-tooltip>
                 </div>
                 <!-- 消息中心 -->
-                <div class="btn-bell">
-                    <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
+                <div class="btn-bell" v-if="isShowMsg">
+                    <el-tooltip v-if="isShowMsg" effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
                         <router-link to="/SysMsg">
                             <i class="el-icon-bell"></i>
                         </router-link>
                     </el-tooltip>
-                    <span class="btn-bell-badge" v-if="message"></span>
+                    <span class="btn-bell-badge" v-if="isShowMsg"></span>
                 </div>
                 <!-- 用户头像 -->
                 <div class="user-avator" style="width: 40px !important; height: 40px !important;"><img
@@ -60,6 +60,9 @@
             },
 			message:function(){
 				return parseInt(this.$store.getters.unreadMsgNum);
+			},
+			isShowMsg:function(){
+				return (this.$store.getters.unreadMsgNum=='0')?false:true;
 			}
         },
         methods: {
@@ -68,9 +71,9 @@
 				var _this=this;
                 if (command == 'loginout') {
 					this.$store.dispatch('LogOut').then(function () {
-					    _this.$router.push({
-					        path: '/login'
-					    });
+						location.reload();
+					}).catch(function(err){
+					    _this.$message.error("登出失败，请检查网络");
 					});
                     localStorage.removeItem('ms_username')		
                 }

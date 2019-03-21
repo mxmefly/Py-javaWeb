@@ -11,10 +11,7 @@ import cn.mxmefly.app.SystemManage.Bean.pfUser;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Md5;
 import cn.mxmefly.app.Common.Results;
-import cn.mxmefly.app.SystemManage.Dao.Repository.PfMenuRepository;
-import cn.mxmefly.app.SystemManage.Dao.Repository.PfRightsReposotory;
-import cn.mxmefly.app.SystemManage.Dao.Repository.SysMsgRepository;
-import cn.mxmefly.app.SystemManage.Dao.Repository.PfUserRepository;
+import cn.mxmefly.app.SystemManage.Dao.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +34,8 @@ public class LoginController {
     private PfRightsReposotory pfRightsReposotory;
     @Autowired
     private PfLogRepository pfLogRepository;
+    @Autowired
+    private PfTouristRepository pfTouristRepository;
 
     private CreateResult createResult = new CreateResult();
 
@@ -81,7 +80,7 @@ public class LoginController {
         Map returnMap = new HashMap<>();
         returnMap.put("sessionId",session.getId());
         pfLogRepository.save(new PfLog(ip,"ip为："+ip+"已登录",LogType.LOGIN,new Date()));
-        PfTourist pfTourist = new PfTourist(ip,userOs,userBower,new Date());
+        pfTouristRepository.save(new PfTourist(ip,userOs,userBower,new Date()));
         return createResult.getResults(true,"登陆成功",returnMap);
     }
     @PostMapping("/getInfo")
@@ -97,11 +96,13 @@ public class LoginController {
             returnMap.put("id",id);
             returnMap.put("name",session.getAttribute("name"));
             returnMap.put("des",session.getAttribute("des"));
-            returnMap.put("unreadMsgNum",sysMsgRepository.getMsgNum().get(0)+"");
+
             if(pfUserRepository.findById(id)==null){
                 returnMap.put("menuList",getMenuNodes("tourist"));
                 returnMap.put("routList",getRouters("tourist"));
+                returnMap.put("unreadMsgNum","0");
             }else{
+                returnMap.put("unreadMsgNum",sysMsgRepository.getMsgNum().get(0)+"");
                 returnMap.put("menuList",getMenuNodes("admin"));
                 returnMap.put("routList",getRouters("admin"));
             }

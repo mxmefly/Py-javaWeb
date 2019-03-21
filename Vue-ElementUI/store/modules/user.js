@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     var loginAPI = require('../../api/login.js');
     var login = loginAPI.login;
+	var touristLogin=loginAPI.touristLogin;
     var logout = loginAPI.logout;
     var getInfo = loginAPI.getInfo;
     var menu = require('../../menu/menu.js');
@@ -50,11 +51,13 @@ define(function (require, exports, module) {
                 const username = userInfo.username.trim()
                 return new Promise(function (resolve, reject) {
                     login(username, userInfo.password).then(function (response) {	
-                        var result = response.data.success;
-                        if (result) {
+						console.log("response",response)
+                        var result = response.data.data;
+                        if (response.data.success) {
 							/* cookie 里放的是 sessionId 实现前后端登陆状态的统一 */
-                            setToken(response.data.data.sessionId);
+                            setToken(result.sessionId);
                             obj.commit('SET_TOKEN', userInfo.username);
+							resolve();
                         }else{
 							reject("账号或密码错误")
 						}
@@ -63,6 +66,25 @@ define(function (require, exports, module) {
                     })
                 })
             },
+			
+			TouristLogin:function(obj){
+				return new Promise(function (resolve, reject) {
+				    touristLogin().then(function (response) {
+						console.log("response",response)
+				        var result = response.data.success;
+				        if (result) {
+				        	/* cookie 里放的是 sessionId 实现前后端登陆状态的统一 */
+				            setToken(response.data.data.sessionId);
+				            obj.commit('SET_TOKEN', "游客");
+							resolve();
+				        }else{
+							reject("登陆失败")
+						}
+				    }).catch(function (error) {
+				        reject(error)
+				    })
+				})
+			},
 
             // 获取用户信息
             GetInfo: function (obj) {
@@ -91,8 +113,12 @@ define(function (require, exports, module) {
             LogOut: function (obj) {
                 return new Promise(function (resolve, reject) {
 					logout(getToken()).then(function (response) {
-                        obj.commit('SET_TOKEN', '')
-                        obj.commit('SET_ROLES', [])
+                        obj.commit('SET_TOKEN', '');
+                        obj.commit('SET_ROLES', []);
+						obj.commit('SET_MENULIST', []);
+						obj.commit('SET_ROUTERLIST', []);
+						obj.commit('SET_NAME', '');
+						obj.commit('SET_UNREADMSGNUM', '');
                         removeToken()
                         resolve()
                     }).catch(function (error) {
