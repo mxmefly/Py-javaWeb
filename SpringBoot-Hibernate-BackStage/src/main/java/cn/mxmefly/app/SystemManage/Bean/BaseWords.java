@@ -17,6 +17,7 @@ public class BaseWords {
     int isShow;
     String wordIndex;
     int sentiments;
+    String pinyin;
     public BaseWords(){
 
     }
@@ -83,5 +84,13 @@ public class BaseWords {
 
     public void setSentiments(int sentiments) {
         this.sentiments = sentiments;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

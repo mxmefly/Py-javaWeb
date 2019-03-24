@@ -11,16 +11,23 @@ cursor.execute("SELECT count(*) FROM `base_words`")
 lengthData = cursor.fetchone()
 length=int(lengthData[0])
 print("词库中总词条数%d"%length)
-selectSql="select id,word from `base_words` where sentiments=0 "
+selectSql="select id,word from `base_words` "
 cursor.execute(selectSql)
 wordsResults=cursor.fetchall()
 count=0;
 for row in wordsResults:
     wordId=str(row[0])
     s=SnowNLP(str(row[1]))
-    wordSent=int(round(s.sentiments*10))
+    pinyin=s.pinyin
+    pinyinStr=""
+    i=0;
+    while(i<len(pinyin)):
+        pinyinStr+=pinyin[i]
+        if(i+1<len(pinyin)):
+            pinyinStr+=" "
+        i=i+1
     updateCursor = db.cursor()
-    updateSql="UPDATE `base_words` SET sentiments =" +str(wordSent)+ " WHERE id = "+wordId
+    updateSql="UPDATE `base_words` SET pinyin = '" +str(pinyinStr)+ "' WHERE id = "+wordId
     try:
         # 执行SQL语句
         updateCursor.execute(updateSql)
@@ -30,7 +37,7 @@ for row in wordsResults:
     except:
         # 发生错误时回滚
         db.rollback()
-    print(str(row[0])+"  "+str(row[1])+"  "+str(wordSent))
+    print(str(row[0])+"  "+str(row[1])+"  "+str(pinyinStr))
 print("共处理了%d条词库数据"%count)
 # 关闭数据库连接
 db.close()
