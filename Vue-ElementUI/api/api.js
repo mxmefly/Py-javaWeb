@@ -20,3 +20,4 @@ const Demo_Apis = {
     getTable: BASE_API + '/getTable'
 }
 const wordsImport = BASE_API+'/wordsImport';
+const getWordsInfoApi=BASE_API+'/getWordsInfo'

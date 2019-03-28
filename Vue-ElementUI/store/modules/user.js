@@ -51,7 +51,6 @@ define(function (require, exports, module) {
                 const username = userInfo.username.trim()
                 return new Promise(function (resolve, reject) {
                     login(username, userInfo.password).then(function (response) {	
-						console.log("response",response)
                         var result = response.data.data;
                         if (response.data.success) {
 							/* cookie 里放的是 sessionId 实现前后端登陆状态的统一 */

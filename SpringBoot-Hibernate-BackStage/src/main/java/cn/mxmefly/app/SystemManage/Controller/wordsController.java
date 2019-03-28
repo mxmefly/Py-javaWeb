@@ -1,24 +1,31 @@
 package cn.mxmefly.app.SystemManage.Controller;
 
+import cn.mxmefly.app.Common.GeneralMethod;
 import cn.mxmefly.app.SystemManage.Bean.BaseWords;
+import cn.mxmefly.app.SystemManage.Bean.BasicData;
+import cn.mxmefly.app.SystemManage.Bean.NewWords;
 import cn.mxmefly.app.SystemManage.Dao.Repository.BaseWordsRespository;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Results;
+import cn.mxmefly.app.SystemManage.Dao.Repository.BasicDataRespository;
+import cn.mxmefly.app.SystemManage.Dao.Repository.NewWordsRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.crypto.Data;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class wordsController {
     @Autowired
     private BaseWordsRespository baseWordsRespository;
+    @Autowired
+    private NewWordsRespository newWordsRespository;
+    @Autowired
+    private BasicDataRespository basicDataRespository;
 
     private CreateResult createResult = new CreateResult();
 
@@ -52,15 +59,17 @@ public class wordsController {
             return createResult.getResults(false,"未找到该路径请核实路径");
         }
     }
-    @PostMapping("/test")
+    /*@PostMapping("/test")
     public Results Test(@RequestBody Map map){
+
         String str= (String) map.get("str");
         return createResult.getResults(getWordsInfo(str));
-    }
+    }*/
 
     /*获取断词信息 时间复杂度<On！*/
-    public Map getWordsInfo(String str){
-        Map map = new HashMap();
+    @PostMapping("/getWordsInfo")
+    public Map getWordsInfo(@RequestBody Map map){
+        String str= (String) map.get("str");
         String[] res= articleToSentence(str);
         /*存储断句词*/
         List<String> wordList = new ArrayList<>();
@@ -116,21 +125,31 @@ public class wordsController {
         }
         return getWordResults(wordList);
     }
-    /*将文段安装句读分成若干字符数组*/
+    /*将文段安装句读分成若干字符数组,删掉空格*/
     private String[] articleToSentence(String articleStr){
+        articleStr=articleStr.replaceAll("\\s*", "");
         return articleStr.split("[\\p{P}+~$`^=|<>～｀＄＾＋＝｜＜＞￥×]");
     }
     /*处理分词结果集 时间复杂度On*/
     private Map getWordResults(List<String> wordList){
+        /*断词词语list*/
         List<BaseWords> listWords = new ArrayList<>();
+        /*存储疑似词库*/
         List<String> temStrList = new ArrayList<>();
+        /*统计词语频次*/
+        Map<String,Integer> wordsCount = new HashMap<>();
+        String dataType="user_get";
         String temStr="";
+        /*情感值分布*/
         int[] sentiments={0,0,0,0,0,0,0,0,0,0,0};
+        /*感情值加和*/
         int sentimentsAll=0;
         int sentimentsCount=0;
+        Date date = new Date();
         for(int i= 0;i<wordList.size();i++){
             String str = wordList.get(i);
             if(str!="++"){
+                /*单个字 也要获取情感偏向值*/
                 if(str.length()==1){
                     if(baseWordsRespository.findByWord(str)==null){
                         BaseWords baseWords = new BaseWords();
@@ -138,11 +157,14 @@ public class wordsController {
                         listWords.add(baseWords);
                     }else{
                         BaseWords baseWords= baseWordsRespository.findByWord(str);
-                        sentiments[baseWords.getSentiments()-1]++;
-                        sentimentsAll+=5;
-                        sentimentsCount++;
+                        sentiments[baseWords.getSentiments()]++;
+                        if(baseWords.getSentiments()!=5){
+                            sentimentsAll+=baseWords.getSentiments();
+                            sentimentsCount++;
+                        }
                         listWords.add(baseWords);
                     }
+                    /*拼接疑似新词*/
                     if(temStr.length()==0){
                         temStr+=str;
                     }
@@ -162,17 +184,47 @@ public class wordsController {
                         BaseWords baseWords= baseWordsRespository.findByWord(str);
                         baseWords.setCounts(baseWords.getCounts()+1);
                         baseWordsRespository.save(baseWords);
-                        sentiments[baseWords.getSentiments()-1]++;
-                        sentimentsAll+=5;
-                        sentimentsCount++;
+                        sentiments[baseWords.getSentiments()]++;
+                        if(baseWords.getSentiments()!=5){
+                            sentimentsAll+=baseWords.getSentiments();
+                            sentimentsCount++;
+                        }
                         listWords.add(baseWords);
+                        if (baseWords.getIsShow() == 1) {
+                            if(wordsCount.containsKey(str)){
+                                wordsCount.put(str,(int)wordsCount.get(str)+1);
+                            }else{
+                                wordsCount.put(str,1);
+                            }
+                        }
                     }
                 }
             }
         }
+        for(int i=0;i<temStrList.size();i++){
+            NewWords newWords = newWordsRespository.findByWord(temStrList.get(i));
+            if(newWords==null){
+                newWordsRespository.save(new NewWords(temStrList.get(i),0));
+            }else{
+                newWords.setCount(newWords.getCount()+1);
+                newWordsRespository.save(newWords);
+            }
+        }
+        List<BasicData> basicDataList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : wordsCount.entrySet()){
+            basicDataList.add(new BasicData(entry.getKey(),dataType,dataType,entry.getValue(),date));
+        }
+        basicDataRespository.save(basicDataList);
+        /*排序*/
+        Collections.sort(basicDataList, new Comparator<BasicData>() {
+            @Override
+            public int compare(BasicData o1, BasicData o2) {
+                return o2.getValue()-o1.getValue();
+            }
+        });
         Map map = new HashMap();
         map.put("listWords",listWords);
-        map.put("temStrList",temStrList);
+        map.put("basicDataList",basicDataList);
         map.put("sentiments",sentiments);
         map.put("sentiment",(float)sentimentsAll/sentimentsCount);
         return map;

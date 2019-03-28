@@ -2,8 +2,10 @@ package cn.mxmefly.app.Common;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+
 /*md5 加密*/
-public class Md5 {
+public class GeneralMethod {
     public  String md5Password(String password) {
         try {
             // 得到一个信息摘要器
@@ -27,5 +29,8 @@ public class Md5 {
             return "";
         }
     }
-
+    public String getRandomStr(){
+        long time=new Date().getTime();
+        return Integer.toHexString((int)time);
+    }
 }

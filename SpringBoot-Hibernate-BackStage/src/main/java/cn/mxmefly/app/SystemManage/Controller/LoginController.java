@@ -9,7 +9,7 @@ import cn.mxmefly.app.SystemManage.Bean.PfTourist;
 import cn.mxmefly.app.SystemManage.Bean.TreeNode;
 import cn.mxmefly.app.SystemManage.Bean.pfUser;
 import cn.mxmefly.app.Common.CreateResult;
-import cn.mxmefly.app.Common.Md5;
+import cn.mxmefly.app.Common.GeneralMethod;
 import cn.mxmefly.app.Common.Results;
 import cn.mxmefly.app.SystemManage.Dao.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class LoginController {
     public Results login(@RequestBody Map map, HttpServletRequest request){
         String id = (String) map.get("id");
         String pwd=(String)map.get("pwd");
-        pfUser user = pfUserRepository.findByIdAndPwd(id,new Md5().md5Password(pwd));
+        pfUser user = pfUserRepository.findByIdAndPwd(id,new GeneralMethod().md5Password(pwd));
         if(user==null){
             return createResult.getResults(false,"账号或密码错误");
         }else {
