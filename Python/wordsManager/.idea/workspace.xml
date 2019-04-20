@@ -2,13 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21ee865f-b463-427b-a4a7-491ac65db222" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/venv/src/wordsPinyin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Bean/WordLeaf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/test2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/venv/ScrapyTest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/venv/baikeDemo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/venv/dbTest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/venv/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Test/venv/test3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/WeiboSpider.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/.idea/sina.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/account_build/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/account_build/account.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/account_build/account_used.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/account_build/login.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/pipelines.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/src/wordsSentiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/src/wordsSentiments.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Bean/BaseWords.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Bean/BaseWords.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Controller/wordsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Controller/wordsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/BaseWordsRespository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/BaseWordsRespository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,25 +42,28 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/wordsManager$wordsPinyin.coverage" NAME="wordsPinyin Coverage Results" MODIFIED="1553413639669" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
-    <SUITE FILE_PATH="coverage/wordsManager$wordsSentiments.coverage" NAME="wordsSentiments Coverage Results" MODIFIED="1553412085650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
+    <SUITE FILE_PATH="coverage/wordsManager$wordsPinyin.coverage" NAME="wordsPinyin Coverage Results" MODIFIED="1555039990818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
+    <SUITE FILE_PATH="coverage/wordsManager$wordsSentiments.coverage" NAME="wordsSentiments Coverage Results" MODIFIED="1555040000939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/src/wordsSentiments.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="10" column="30" lean-forward="true" selection-end-line="38" />
+            <state relative-caret-position="150">
+              <caret line="5" column="53" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="53" />
+              <folding>
+                <element signature="e#13#27#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/src/wordsPinyin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+            <state relative-caret-position="90">
+              <caret line="3" column="12" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -44,7 +71,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
+            <state relative-caret-position="9240">
               <caret line="309" selection-start-line="309" selection-end-line="309" />
             </state>
           </provider>
@@ -65,16 +92,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/venv/src/wordsSentiments.py" />
         <option value="$PROJECT_DIR$/venv/src/wordsPinyin.py" />
+        <option value="$PROJECT_DIR$/venv/src/wordsSentiments.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="1940" />
-    <option name="height" value="1100" />
+    <option name="x" value="350" />
+    <option name="y" value="205" />
+    <option name="width" value="1460" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -82,7 +109,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -105,32 +131,16 @@
               <item name="wordsManager" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
-            <path>
-              <item name="wordsManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (wordsManager) &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="wordsManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (wordsManager) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wordsManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (wordsManager) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -147,7 +157,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.wordsPinyin">
+  <component name="RunManager" selected="Python.wordsSentiments">
     <configuration name="wordsPinyin" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="wordsManager" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -194,8 +204,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.wordsPinyin" />
         <item itemvalue="Python.wordsSentiments" />
+        <item itemvalue="Python.wordsPinyin" />
       </list>
     </recent_temporary>
   </component>
@@ -210,24 +220,27 @@
       <option name="presentableId" value="Default" />
       <updated>1553314404105</updated>
       <workItem from="1553314431848" duration="6388000" />
-      <workItem from="1553411635637" duration="3190000" />
+      <workItem from="1553411635637" duration="4813000" />
+      <workItem from="1554167476538" duration="1194000" />
+      <workItem from="1554894339003" duration="3295000" />
+      <workItem from="1554962667865" duration="5111000" />
+      <workItem from="1555389348855" duration="590000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9578000" />
+    <option name="totallyTimeSpent" value="21391000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1488" height="878" extended-state="7" />
+    <frame x="179" y="105" width="1168" height="702" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25314686" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26846847" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" weight="0.3297587" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3297587" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3994638" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4377224" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3994638" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -237,6 +250,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.3297587" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -250,22 +264,25 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/src/wordsSentiments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="30" lean-forward="true" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="309" selection-start-line="309" selection-end-line="309" />
+        <state relative-caret-position="150">
+          <caret line="5" column="53" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="53" />
+          <folding>
+            <element signature="e#13#27#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/src/wordsPinyin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+        <state relative-caret-position="90">
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9240">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
         </state>
       </provider>
     </entry>
