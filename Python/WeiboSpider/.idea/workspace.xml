@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="918c47e7-a356-49fc-a5aa-4f77f911b476" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../wordsManager/venv/src/weiboInfoSentence.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetData.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/sina/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/sina/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../wordsManager/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wordsManager/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="276" column="16" selection-start-line="276" selection-start-column="16" selection-end-line="276" selection-end-column="16" />
+            <state relative-caret-position="7020">
+              <caret line="234" column="40" lean-forward="true" selection-start-line="234" selection-start-column="40" selection-end-line="234" selection-end-column="40" />
               <folding>
                 <element signature="e#40#49#0" expanded="true" />
               </folding>
@@ -248,16 +245,15 @@
       <updated>1554769583535</updated>
       <workItem from="1554769611034" duration="9922000" />
       <workItem from="1554962667592" duration="31308000" />
-      <workItem from="1555389348669" duration="39640000" />
+      <workItem from="1555389348669" duration="40989000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80870000" />
+    <option name="totallyTimeSpent" value="82219000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1488" height="878" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18041958" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -265,7 +261,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.35120642" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3297587" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.26541555" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -477,8 +473,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
-          <caret line="276" column="16" selection-start-line="276" selection-start-column="16" selection-end-line="276" selection-end-column="16" />
+        <state relative-caret-position="7020">
+          <caret line="234" column="40" lean-forward="true" selection-start-line="234" selection-start-column="40" selection-end-line="234" selection-end-column="40" />
           <folding>
             <element signature="e#40#49#0" expanded="true" />
           </folding>
