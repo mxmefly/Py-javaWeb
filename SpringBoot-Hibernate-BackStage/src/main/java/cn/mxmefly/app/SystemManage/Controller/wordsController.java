@@ -107,7 +107,7 @@ public class wordsController {
                             }else if(cursor+2+baseWords.getWordLength()-maxMatchLen==oprStrLen){
                                 temStr=oprStr.substring(cursor);
                             }else {
-                                break;
+                                continue;
                             }
                             if(temStr.equals(baseWords.getWord())){
                                 candidateStr=temStr;
@@ -135,7 +135,7 @@ public class wordsController {
         /*断词词语list*/
         List<BaseWords> listWords = new ArrayList<>();
         /*存储疑似词库*/
-        List<String> temStrList = new ArrayList<>();
+        /*List<String> temStrList = new ArrayList<>();*/
         /*统计词语频次*/
         Map<String,Integer> wordsCount = new HashMap<>();
         String dataType="user_get";
@@ -164,7 +164,7 @@ public class wordsController {
                         }
                         listWords.add(baseWords);
                     }
-                    /*拼接疑似新词*/
+                    /*拼接疑似新词*//*
                     if(temStr.length()==0){
                         temStr+=str;
                     }
@@ -177,7 +177,7 @@ public class wordsController {
                                 temStr="";
                             }
                         }
-                    }
+                    }*/
                 }
                 if (str.length()>1){
                     if(baseWordsRespository.findByWord(str)!=null){
@@ -201,7 +201,7 @@ public class wordsController {
                 }
             }
         }
-        for(int i=0;i<temStrList.size();i++){
+        /*for(int i=0;i<temStrList.size();i++){
             NewWords newWords = newWordsRespository.findByWord(temStrList.get(i));
             if(newWords==null){
                 newWordsRespository.save(new NewWords(temStrList.get(i),0));
@@ -209,12 +209,12 @@ public class wordsController {
                 newWords.setCount(newWords.getCount()+1);
                 newWordsRespository.save(newWords);
             }
-        }
+        }*/
         List<BasicData> basicDataList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : wordsCount.entrySet()){
             basicDataList.add(new BasicData(entry.getKey(),dataType,dataType,entry.getValue(),date));
         }
-        basicDataRespository.save(basicDataList);
+        /*basicDataRespository.save(basicDataList);*/
         /*排序*/
         Collections.sort(basicDataList, new Comparator<BasicData>() {
             @Override

@@ -27,7 +27,9 @@ class WeiboSpider(Spider):
         start_uids = [
            #'2803301701',  # 人民日报
            #'1699432410'  # 新华社
-           '5676095533'
+           #'5676095533'
+            #'6019685514'
+            '1749127163'
         ]
         for uid in start_uids:
             yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
@@ -146,14 +148,16 @@ class WeiboSpider(Spider):
                       callback=self.parse_tweet,
                       priority=1)
 
-        # 获取关注列表
-        yield Request(url=self.base_url + '/{}/follow?page=1'.format(information_item['_id']),
-                      callback=self.parse_follow,
-                      dont_filter=True)
         # 获取粉丝列表
         yield Request(url=self.base_url + '/{}/fans?page=1'.format(information_item['_id']),
                       callback=self.parse_fans,
                       dont_filter=True)
+        
+        # 获取关注列表
+        yield Request(url=self.base_url + '/{}/follow?page=1'.format(information_item['_id']),
+                      callback=self.parse_follow,
+                      dont_filter=True)
+        
 
     def parse_tweet(self, response):
         if response.url.endswith('page=1'):
@@ -301,6 +305,17 @@ class WeiboSpider(Spider):
                 pass
             #yield relationships_item
             print(relationships_item)
+        """
+                for uid in uids:
+            sql="SELECT count(1) FROM weibo_user_info WHERE _id='%s'"%(uid)
+            self.cursor.execute(sql)
+            size= self.cursor.fetchone()[0]
+            if(int(size)>0):
+                yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
+                break
+        """
+
+
 
     def parse_fans(self, response):
         """
@@ -338,6 +353,7 @@ class WeiboSpider(Spider):
                 # 数据有重复
                 pass
             print(relationships_item)
+
             #yield relationships_item
 
     def parse_comment(self, response):
