@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="21ee865f-b463-427b-a4a7-491ac65db222" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/WeiboDataGet.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetData.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetData.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/pip-selfcheck.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -29,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/src/wordsSentiments.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+            <state relative-caret-position="240">
+              <caret line="14" selection-start-line="14" selection-end-line="15" selection-end-column="30" />
               <folding>
                 <element signature="e#13#27#0" expanded="true" />
               </folding>
@@ -77,10 +73,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="336" />
-    <option name="y" value="236" />
-    <option name="width" value="934" />
-    <option name="height" value="563" />
+    <option name="x" value="-1449" />
+    <option name="y" value="67" />
+    <option name="width" value="1458" />
+    <option name="height" value="868" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -204,18 +200,18 @@
       <workItem from="1554894339003" duration="3295000" />
       <workItem from="1554962667865" duration="5111000" />
       <workItem from="1555389348855" duration="590000" />
-      <workItem from="1555834893078" duration="2401000" />
+      <workItem from="1555834893078" duration="4645000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23792000" />
+    <option name="totallyTimeSpent" value="26036000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1488" height="878" extended-state="7" />
+    <frame x="-1447" y="69" width="1166" height="694" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2118881" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2734657" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -245,8 +241,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/src/wordsSentiments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+        <state relative-caret-position="240">
+          <caret line="14" selection-start-line="14" selection-end-line="15" selection-end-column="30" />
           <folding>
             <element signature="e#13#27#0" expanded="true" />
           </folding>

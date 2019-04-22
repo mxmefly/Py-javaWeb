@@ -69,28 +69,32 @@
                 </el-row>
                 <el-card shadow="hover" style="height:403px;">
                     <div slot="header" class="clearfix">
-                        <span>待办事项</span>
-                        <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
+                    	<el-input placeholder="请输入待办事项" v-model="todoListItem">
+                    		<template slot="prepend">待办事项</template>
+                    		<template slot="append" style="align-content: center;">
+                    			<el-button type="success" @click="handleAddTodoList">添加</el-button>
+                    		</template>
+                    	</el-input>
+                    
                     </div>
-                    <el-table :data="todoList" :show-header="false" height="304" style="width: 100%;font-size:14px;">
-                        <el-table-column width="40">
-                            <template slot-scope="scope">
-                                <el-checkbox v-model="scope.row.status"></el-checkbox>
-                            </template>
-                        </el-table-column>
-                        <el-table-column>
-                            <template slot-scope="scope">
-                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}">
-                                    {{scope.row.title}}
-                                </div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column width="60">
-                            <template slot-scope="scope">
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
-                            </template>
-                        </el-table-column>
+                    <el-table :data="todoList" :show-header="false" height="250" style="width: 100%;font-size:14px;">
+                    	<el-table-column width="40">
+                    		<template slot-scope="scope">
+                    			<el-checkbox v-model="scope.row.status"></el-checkbox>
+                    		</template>
+                    	</el-table-column>
+                    	<el-table-column>
+                    		<template slot-scope="scope">
+                    			<div class="todo-item" :class="{'todo-item-del': scope.row.status}">
+                    				{{scope.row.title}}
+                    			</div>
+                    		</template>
+                    	</el-table-column>
+                    	<el-table-column width="60">
+                    		<template slot-scope="scope">
+                    			<el-button type="text" icon="el-icon-delete" size="small" @click="handleDelClick(scope.row)"></el-button>
+                    		</template>
+                    	</el-table-column>
                     </el-table>
                 </el-card>
             </el-col>
@@ -104,30 +108,8 @@
         data: function () {
             return {
                 name: localStorage.getItem('ms_username'),
-                todoList: [{
-                    title: '今天要修复100个bug',
-                    status: false,
-                },
-                    {
-                        title: '今天要修复100个bug',
-                        status: false,
-                    },
-                    {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: false,
-                    }, {
-                        title: '今天要修复100个bug',
-                        status: false,
-                    },
-                    {
-                        title: '今天要修复100个bug',
-                        status: true,
-                    },
-                    {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: true,
-                    }
-                ],
+                todoList: [],
+				todoListItem: '',
                 data: [{
                     name: '2018/09/04',
                     value: 1083
@@ -181,41 +163,34 @@
             }
         },
         created: function () {
-            this.handleListener();
-//            this.changeDate();
+            
         },
         activated: function () {
-            this.handleListener();
+            
         },
         deactivated: function () {
-            window.removeEventListener('resize', this.renderChart);
-            this.$off('collapse', this.handleBus);
+          
         },
         methods: {
-            /*changeDate: function () {
-                const now = new Date().getTime();
-                this.data.forEach(function (item, index) {
-                    const date = new Date(now - (6 - index) * 86400000);
-                    item.name = `${date.getFullYear()}
-                    /${date.getMonth()+1}/
-                    ${date.getDate()}
-                    `
-                })
-            },*/
-            handleListener: function () {
-                this.$on('collapse', this.handleBus);
-                // 调用renderChart方法对图表进行重新渲染
-                window.addEventListener('resize', this.renderChart)
+            handleDelClick: function(row) {
+            	if (row.status == true) {
+            		newTodoList = [];
+            		for (var i = 0; i < this.todoList.length; i++) {
+            			if (this.todoList[i].title != row.title) {
+            				newTodoList.push(this.todoList[i])
+            			}
+            		}
+            		this.todoList = newTodoList;
+            	}
             },
-            handleBus: function (msg) {
-                setTimeout(function () {
-                    this.renderChart()
-                }, 300);
+            handleAddTodoList: function() {
+            	var arr = {
+            		title: this.todoListItem,
+            		status: false
+            	}
+            	this.todoList.push(arr)
+            	this.todoListItem = ''
             },
-            renderChart: function () {
-                this.$refs.bar.renderChart();
-                this.$refs.line.renderChart();
-            }
         }
     }
 

@@ -13,6 +13,7 @@ class TweetsItem(Item):
     content = Field()  # 微博内容
     user_id = Field()  # 发表该微博用户的id
     crawl_time = Field()  # 抓取时间戳
+    sentiments=Field()
 
 
 class InformationItem(Item):

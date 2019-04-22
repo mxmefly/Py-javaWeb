@@ -12,6 +12,7 @@ from sina.settings import  MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD,MYSQL_DB
 from sina.spiders.utils import time_fix
 import time
 import pymysql
+from snownlp import SnowNLP
 
 
 class WeiboSpider(Spider):
@@ -29,7 +30,8 @@ class WeiboSpider(Spider):
            #'1699432410'  # 新华社
            #'5676095533'
             #'6019685514'
-            '1749127163'
+            #'1749127163'
+            '5779062415'
         ]
         for uid in start_uids:
             yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
@@ -213,10 +215,12 @@ class WeiboSpider(Spider):
                         all_content_text = all_content_text.split('转发理由:')[1]
                     all_content_text = all_content_text.split('\xa0', maxsplit=1)[0]
                     tweet_item['content'] = all_content_text.strip()
+                    s = SnowNLP(tweet_item['content'])
+                    tweet_item['sentiments']=s.sentiments*10
                     #yield tweet_item
                     print(tweet_item)
                     try:
-                        sql = "INSERT INTO `sbhdb`.`weibo_info`(`_id`, `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s, %s, %s)"%(
+                        sql = "INSERT INTO `sbhdb`.`weibo_info`(`_id`, `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)"%(
                                   tweet_item['_id'],
                                   tweet_item['weibo_url'],
                                   tweet_item['user_id'],
@@ -225,7 +229,8 @@ class WeiboSpider(Spider):
                                   tweet_item['repost_num'],
                                   tweet_item['comment_num'],
                                   tweet_item['like_num'],
-                                  tweet_item['crawl_time']
+                                  tweet_item['crawl_time'],
+                                  tweet_item['sentiments']
                               )
                         self.cursor.execute(sql)
                         self.db.commit()
@@ -248,8 +253,12 @@ class WeiboSpider(Spider):
         all_content_text = content_node.xpath('string(.)').split(':', maxsplit=1)[1]
         all_content_text = all_content_text.split('\xa0')[0]
         tweet_item['content'] = all_content_text.strip()
+        s = SnowNLP(tweet_item['content'])
+        tweet_item['sentiments'] = s.sentiments * 10
+        # yield tweet_item
+        print(tweet_item)
         try:
-            sql = "INSERT INTO `sbhdb`.`weibo_info`(`_id`, `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s, %s, %s)" % (
+            sql = "INSERT INTO `sbhdb`.`weibo_info`(`_id`, `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)" % (
                 tweet_item['_id'],
                 tweet_item['weibo_url'],
                 tweet_item['user_id'],
@@ -258,7 +267,8 @@ class WeiboSpider(Spider):
                 tweet_item['repost_num'],
                 tweet_item['comment_num'],
                 tweet_item['like_num'],
-                tweet_item['crawl_time']
+                tweet_item['crawl_time'],
+                tweet_item['sentiments']
             )
             self.cursor.execute(sql)
             self.db.commit()
