@@ -31,10 +31,18 @@ class WeiboSpider(Spider):
            #'5676095533'
             #'6019685514'
             #'1749127163'
-            '5779062415'
+            #'5779062415'
+            '1409340537'
         ]
-        for uid in start_uids:
-            yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
+        for i in range(10):
+            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 10")
+            randomUids=self.cursor.fetchall();
+            for uid in randomUids:
+                yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
+
+        #for uid in start_uids:
+            #yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
+
 
     def parse_information(self, response):
         """ 抓取个人信息 """
