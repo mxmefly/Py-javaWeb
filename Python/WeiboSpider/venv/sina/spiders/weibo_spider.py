@@ -9,9 +9,11 @@ from scrapy.http import Request
 from scrapy.utils.project import get_project_settings
 from sina.items import TweetsItem, InformationItem, RelationshipsItem, CommentItem
 from sina.settings import  MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD,MYSQL_DB
+from sina.settings import MAX_WEIBO_PAGES,MAX_COMMENT_PAGES
 from sina.spiders.utils import time_fix
 import time
 import pymysql
+import copy
 from snownlp import SnowNLP
 
 
@@ -26,12 +28,6 @@ class WeiboSpider(Spider):
 
     def start_requests(self):
         start_uids = [
-           #'2803301701',  # 人民日报
-           #'1699432410'  # 新华社
-           #'5676095533'
-            #'6019685514'
-            #'1749127163'
-            #'5779062415'
             '1409340537'
         ]
         for i in range(10):
@@ -176,6 +172,8 @@ class WeiboSpider(Spider):
             if all_page:
                 all_page = all_page.group(1)
                 all_page = int(all_page)
+                if(all_page>MAX_WEIBO_PAGES):
+                    all_page=MAX_WEIBO_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
                     yield Request(page_url, self.parse_tweet, dont_filter=True, meta=response.meta)
@@ -224,7 +222,7 @@ class WeiboSpider(Spider):
                     all_content_text = all_content_text.split('\xa0', maxsplit=1)[0]
                     tweet_item['content'] = all_content_text.strip()
                     s = SnowNLP(tweet_item['content'])
-                    tweet_item['sentiments']=s.sentiments*10
+                    tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
                     #yield tweet_item
                     print(tweet_item)
                     try:
@@ -244,6 +242,7 @@ class WeiboSpider(Spider):
                         self.db.commit()
                     except:
                         # 数据有重复
+                        continue
                         pass
 
                 # 抓取该微博的评论信息
@@ -262,7 +261,7 @@ class WeiboSpider(Spider):
         all_content_text = all_content_text.split('\xa0')[0]
         tweet_item['content'] = all_content_text.strip()
         s = SnowNLP(tweet_item['content'])
-        tweet_item['sentiments'] = s.sentiments * 10
+        tweet_item['sentiments'] = str(s.sentiments*10)[0:8]
         # yield tweet_item
         print(tweet_item)
         try:
@@ -323,17 +322,6 @@ class WeiboSpider(Spider):
                 pass
             #yield relationships_item
             print(relationships_item)
-        """
-                for uid in uids:
-            sql="SELECT count(1) FROM weibo_user_info WHERE _id='%s'"%(uid)
-            self.cursor.execute(sql)
-            size= self.cursor.fetchone()[0]
-            if(int(size)>0):
-                yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
-                break
-        """
-
-
 
     def parse_fans(self, response):
         """
@@ -381,6 +369,8 @@ class WeiboSpider(Spider):
             if all_page:
                 all_page = all_page.group(1)
                 all_page = int(all_page)
+                if(all_page>MAX_COMMENT_PAGES):
+                    all_page=MAX_COMMENT_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
                     yield Request(page_url, self.parse_comment, dont_filter=True, meta=response.meta)
@@ -398,20 +388,25 @@ class WeiboSpider(Spider):
             comment_item['_id'] = comment_node.xpath('./@id').extract_first()
             created_at = comment_node.xpath('.//span[@class="ct"]/text()').extract_first()
             comment_item['created_at'] = time_fix(created_at.split('\xa0')[0])
+            s = SnowNLP(comment_item['content'])
+            comment_item['sentiments']= str(s.sentiments * 10)[0:8]
             try:
-                sql = "INSERT INTO `sbhdb`.`weibo_comment`(`_id`, `comment_user_id`, `content`, `weibo_url`, `created_at`, `crawl_time`) VALUES ('%s', '%s', '%s', '%s', '%s', %s)"%(
+                sql = "INSERT INTO `sbhdb`.`weibo_comment`(`_id`, `comment_user_id`, `content`, `weibo_url`, `created_at`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s)"%(
                     comment_item['_id'],
                     comment_item['comment_user_id'],
                     comment_item['content'],
                     comment_item['weibo_url'],
                     comment_item['created_at'],
-                    comment_item['crawl_time']
+                    comment_item['crawl_time'],
+                    comment_item['sentiments']
                 )
                 self.cursor.execute(sql)
                 self.db.commit()
             except:
                 # 数据有重复
+                continue
                 pass
+
             #yield comment_item
             print(comment_item)
 

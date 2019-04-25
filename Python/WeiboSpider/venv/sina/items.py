@@ -56,3 +56,4 @@ class CommentItem(Item):
     weibo_url = Field()  # 评论的微博的url
     created_at = Field()  # 评论发表时间
     crawl_time = Field()  # 抓取时间戳
+    sentiments = Field()
