@@ -23,7 +23,7 @@ class CookieMiddleware(object):
             raise Exception('当前账号池为空')
         self.cursor.execute("SELECT * FROM account_pool WHERE status='success' ORDER  BY  rand() LIMIT 1")
         random_account = self.cursor.fetchall()
-        time.sleep(0.8)
+        time.sleep(0.4)
         request.headers.setdefault('Cookie', str(random_account[0][3]))
         request.meta['account'] = random_account[0]
 
@@ -54,8 +54,8 @@ class RedirectMiddleware(object):
                 self.db.rollback()
             return request
         elif http_code == 418:
-            time.sleep(5)
-            spider.logger.error('ip 被封了!!!请更换ip,或者停止程序...')
+            time.sleep(180)
+            spider.logger.error('IP暂时被封,不慌,等待180秒....')
             return request
         else:
             return response

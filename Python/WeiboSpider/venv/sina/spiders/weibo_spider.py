@@ -30,8 +30,8 @@ class WeiboSpider(Spider):
         start_uids = [
             '1409340537'
         ]
-        for i in range(10):
-            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 10")
+        for i in range(1):
+            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 5")
             randomUids=self.cursor.fetchall();
             for uid in randomUids:
                 yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
@@ -115,7 +115,7 @@ class WeiboSpider(Spider):
         request_meta['item'] = information_item
         yield Request(self.base_url + '/u/{}'.format(information_item['_id']),
                       callback=self.parse_further_information,
-                      meta=request_meta, dont_filter=True, priority=1)
+                      meta=copy.copy(request_meta), dont_filter=True, priority=1)
 
     def parse_further_information(self, response):
         text = response.text
@@ -176,7 +176,7 @@ class WeiboSpider(Spider):
                     all_page=MAX_WEIBO_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
-                    yield Request(page_url, self.parse_tweet, dont_filter=True, meta=response.meta)
+                    yield Request(page_url, self.parse_tweet, dont_filter=True, meta=copy.copy(response.meta))
         """
         解析本页的数据
         """
@@ -212,7 +212,7 @@ class WeiboSpider(Spider):
                 all_content_link = tweet_node.xpath('.//a[text()="全文" and contains(@href,"ckAll=1")]')
                 if all_content_link:
                     all_content_url = self.base_url + all_content_link[0].xpath('./@href')[0]
-                    yield Request(all_content_url, callback=self.parse_all_content, meta={'item': tweet_item},
+                    yield Request(all_content_url, callback=self.parse_all_content, meta=copy.copy({'item': tweet_item}),
                                   priority=1)
 
                 else:
@@ -221,8 +221,11 @@ class WeiboSpider(Spider):
                         all_content_text = all_content_text.split('转发理由:')[1]
                     all_content_text = all_content_text.split('\xa0', maxsplit=1)[0]
                     tweet_item['content'] = all_content_text.strip()
-                    s = SnowNLP(tweet_item['content'])
-                    tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
+                    try:
+                        s = SnowNLP(tweet_item['content'])
+                        tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
+                    except:
+                        tweet_item['sentiments'] = '5.0'
                     #yield tweet_item
                     print(tweet_item)
                     try:
@@ -247,7 +250,7 @@ class WeiboSpider(Spider):
 
                 # 抓取该微博的评论信息
                 comment_url = self.base_url + '/comment/' + tweet_item['weibo_url'].split('/')[-1] + '?page=1'
-                yield Request(url=comment_url, callback=self.parse_comment, meta={'weibo_url': tweet_item['weibo_url']})
+                yield Request(url=comment_url, callback=self.parse_comment, meta=copy.copy({'weibo_url': tweet_item['weibo_url']}))
 
             except Exception as e:
                 self.logger.error(e)
@@ -260,8 +263,11 @@ class WeiboSpider(Spider):
         all_content_text = content_node.xpath('string(.)').split(':', maxsplit=1)[1]
         all_content_text = all_content_text.split('\xa0')[0]
         tweet_item['content'] = all_content_text.strip()
-        s = SnowNLP(tweet_item['content'])
-        tweet_item['sentiments'] = str(s.sentiments*10)[0:8]
+        try:
+            s = SnowNLP(tweet_item['content'])
+            tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
+        except:
+            tweet_item['sentiments'] = '5.0'
         # yield tweet_item
         print(tweet_item)
         try:
@@ -335,7 +341,7 @@ class WeiboSpider(Spider):
                 all_page = int(all_page)
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
-                    yield Request(page_url, self.parse_fans, dont_filter=True, meta=response.meta)
+                    yield Request(page_url, self.parse_fans, dont_filter=True, meta=copy.copy(response.meta))
         selector = Selector(response)
         urls = selector.xpath('//a[text()="关注他" or text()="关注她" or text()="移除"]/@href').extract()
         uids = re.findall('uid=(\d+)', ";".join(urls), re.S)
@@ -373,7 +379,7 @@ class WeiboSpider(Spider):
                     all_page=MAX_COMMENT_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
-                    yield Request(page_url, self.parse_comment, dont_filter=True, meta=response.meta)
+                    yield Request(page_url, self.parse_comment, dont_filter=True, meta=copy.copy(response.meta))
         selector = Selector(response)
         comment_nodes = selector.xpath('//div[@class="c" and contains(@id,"C_")]')
         for comment_node in comment_nodes:
@@ -388,8 +394,11 @@ class WeiboSpider(Spider):
             comment_item['_id'] = comment_node.xpath('./@id').extract_first()
             created_at = comment_node.xpath('.//span[@class="ct"]/text()').extract_first()
             comment_item['created_at'] = time_fix(created_at.split('\xa0')[0])
-            s = SnowNLP(comment_item['content'])
-            comment_item['sentiments']= str(s.sentiments * 10)[0:8]
+            try:
+                s = SnowNLP(comment_item['content'])
+                comment_item['sentiments'] = str(s.sentiments * 10)[0:8]
+            except:
+                comment_item['sentiments'] = '5.0'
             try:
                 sql = "INSERT INTO `sbhdb`.`weibo_comment`(`_id`, `comment_user_id`, `content`, `weibo_url`, `created_at`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s)"%(
                     comment_item['_id'],
@@ -416,4 +425,4 @@ if __name__ == "__main__":
     process.crawl('weibo_spider')
     process.start()
 
-
+  
