@@ -10,17 +10,17 @@ import javax.persistence.Table;
 public class AccountPool {
     @Id
     @GeneratedValue
-    String id;
+    String _ip;
     String password;
     String status;
     String cookie;
 
-    public String getId() {
-        return id;
+    public String get_ip() {
+        return _ip;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_ip(String _ip) {
+        this._ip = _ip;
     }
 
     public String getPassword() {

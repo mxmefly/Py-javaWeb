@@ -5,6 +5,7 @@ const BASE_API = 'http://localhost:8080';
 const LoginApi = BASE_API + '/login';
 const LogoutApi = BASE_API + '/logout';
 const getInfoApi =BASE_API+'/getInfo';
+const getDataSizeApi=BASE_API+'/getDataSize';
 const touristLoginApi = BASE_API+'/touristLogin';
 const SysMsg_Apis={
 	getMsgNum:BASE_API+'/getMsgNum',

@@ -30,7 +30,7 @@ class WeiboSpider(Spider):
         start_uids = [
             '1409340537'
         ]
-        for i in range(1):
+        for i in range(5):
             self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 5")
             randomUids=self.cursor.fetchall();
             for uid in randomUids:

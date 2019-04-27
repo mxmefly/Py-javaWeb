@@ -49,9 +49,20 @@ class getWeiboData():
         return  wordList
     #过滤掉 表情 话题  标点符号断句
     def articleToSentence(self,articleStr):
+        topic=re.findall('#(((?!#(.*)#).)*)#',articleStr)
+        for top in topic:
+            articleStr = articleStr.replace("#"+top[0]+"#","")
+        expression = re.findall('\[(((?!\[(.*)\]).)*)\]', articleStr)
         for exp in expression:
             articleStr = articleStr.replace("["+exp[0]+"]","")
         return re.split('[\s+\.\!\/_,$%^*(+\"\')]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', articleStr)
+
+    def getTopic(self,articleStr):
+        topic = re.findall('#(((?!#(.*)#).)*)#', articleStr)
+        topicList = []
+        for top in topic:
+            topicList.append(top[0])
+        return topicList
 
     def getExpression(self,articleStr):
         expression = re.findall('\[(((?!\[(.*)\]).)*)\]', articleStr)
@@ -118,41 +129,44 @@ class getWeiboData():
 
 
 if __name__ == "__main__":
-    count=0;
-    selectSql="SELECT comment_user_id,content,created_at,_id,weibo_url FROM weibo_comment WHERE isProcess=0 ORDER BY created_at DESC LIMIT 5000"
+    count=0
+    selectSql="SELECT user_id,content,created_at,_id FROM weibo_info WHERE isProcess=0 ORDER BY created_at DESC"
     getWeiboData().dbCursor.execute(selectSql)
     contentResults=getWeiboData().dbCursor.fetchall();
-    print("此次需要处理"+str(len(contentResults))+"条评论数据")
+    print("此次需要处理"+str(len(contentResults))+"条微博数据")
     for content in contentResults:
-        updateSql = "UPDATE `sbhdb`.`weibo_comment` SET `isProcess` = 1 WHERE `_id` = '%s'" % (content[3])
+        count=count+1
+        print(str(count)+"  "+content[1])
+        updateSql = "UPDATE `sbhdb`.`weibo_info` SET `isProcess` = 1 WHERE `_id` = '%s'" % (content[3])
         try:
             getWeiboData().dbCursor.execute(updateSql)
             getWeiboData().db.commit()
         except:
             getWeiboData().db.rollback()
-        #过滤掉@用户 转发微博
-        text =re.sub(r'(回复@.*:)|(@.*\s?)|转发微博|转发',"",content[1])
-        count=count+1
-        print(str(count)+"  "+text)
-        # 长度小于2直接跳过
-        if(len(text)<2):
-            continue
         weiboDate=content[2][0:10]
         userId=content[0]
-        upUserId=content[4][18:28]
-
+        #获取话题
+        topicList=getWeiboData().getTopic(content[1])
+        for topic in topicList:
+            insertSql = "INSERT INTO `sbhdb`.`weibo_topic`(`topic`, `userId`, `date`) VALUES ('%s', '%s', '%s')" % (
+                topic,userId, weiboDate)
+            try:
+                getWeiboData().dbCursor.execute(insertSql)
+                getWeiboData().db.commit()
+            except:
+                getWeiboData().db.rollback()
         #获取分词
-        wordCount=getWeiboData().getWordsCount(getWeiboData().getSepWords(text))
+        wordCount=getWeiboData().getWordsCount(getWeiboData().getSepWords(content[1]))
         # 获取表情
-        expressionList = getWeiboData().getExpression(text)
+        expressionList = getWeiboData().getExpression(content[1])
         for expression in expressionList:
-            selectSql = "SELECT id,counts FROM weibo_base_data WHERE type='expression' AND user_id='%s' AND date='%s' AND name='%s' AND up_user='%s'" % (
-            userId, weiboDate, expression,upUserId)
+            selectSql = "SELECT id,counts FROM weibo_base_data WHERE type='expression' AND user_id='%s' AND date='%s' AND name='%s' AND up_user='0'" % (
+            userId, weiboDate, expression)
             getWeiboData().dbCursor.execute(selectSql)
             wordsResults = getWeiboData().dbCursor.fetchall()
             if (len(wordsResults) == 0):
-                insertSql = "INSERT INTO `sbhdb`.`weibo_base_data`(`user_id`, `name`, `counts`, `type`, `date`,`up_user`) VALUES ('%s', '%s', %s, 'expression', '%s','%s')" % (
-                userId, expression, 1, weiboDate,upUserId)
+                insertSql = "INSERT INTO `sbhdb`.`weibo_base_data`(`user_id`, `name`, `counts`, `type`, `date`) VALUES ('%s', '%s', %s, 'expression', '%s')" % (
+                userId, expression, 1, weiboDate)
                 try:
                     getWeiboData().dbCursor.execute(insertSql)
                     getWeiboData().db.commit()
@@ -178,11 +192,11 @@ if __name__ == "__main__":
                     getWeiboData().db.commit()
                 except:
                     getWeiboData().db.rollback()
-            selectSql = "SELECT id,counts FROM weibo_base_data WHERE type='word' AND user_id='%s' AND date='%s' AND name='%s' AND up_user='%s'" % (userId,weiboDate,key,upUserId)
+            selectSql = "SELECT id,counts FROM weibo_base_data WHERE type='word' AND user_id='%s' AND date='%s' AND name='%s' AND up_user='0'" % (userId,weiboDate,key)
             getWeiboData().dbCursor.execute(selectSql)
             wordsResults = getWeiboData().dbCursor.fetchall()
             if(len(wordsResults)==0):
-                insertSql="INSERT INTO `sbhdb`.`weibo_base_data`(`user_id`, `name`, `counts`, `type`, `date`,`up_user`) VALUES ('%s', '%s', %s, 'word', '%s','%s')"%(userId,key,wordCount[key],weiboDate,upUserId)
+                insertSql="INSERT INTO `sbhdb`.`weibo_base_data`(`user_id`, `name`, `counts`, `type`, `date`) VALUES ('%s', '%s', %s, 'word', '%s')"%(userId,key,wordCount[key],weiboDate)
                 try:
                     getWeiboData().dbCursor.execute(insertSql)
                     getWeiboData().db.commit()

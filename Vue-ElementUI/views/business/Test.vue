@@ -28,7 +28,7 @@
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: getWordsInfoApi,
+                    url: BASE_API+'/getDataSize',
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);

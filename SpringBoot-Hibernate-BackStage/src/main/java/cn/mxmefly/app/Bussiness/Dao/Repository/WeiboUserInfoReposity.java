@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface WeiboUserInfoReposity extends JpaRepository<WeiboUserInfo,Integer> {
     public List<WeiboUserInfo> findAllBy_id(String _id);
+
 }
