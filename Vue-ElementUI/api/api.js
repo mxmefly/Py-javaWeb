@@ -6,6 +6,9 @@ const LoginApi = BASE_API + '/login';
 const LogoutApi = BASE_API + '/logout';
 const getInfoApi =BASE_API+'/getInfo';
 const getDataSizeApi=BASE_API+'/getDataSize';
+const getCpuUsdApi=BASE_API+'/getCpuUsd';
+const getUserlineDateApi=BASE_API+'/getUserlineDate';
+const getWeiboDataLineDataApi=BASE_API+'/getWeiboDataLineData';
 const touristLoginApi = BASE_API+'/touristLogin';
 const SysMsg_Apis={
 	getMsgNum:BASE_API+'/getMsgNum',

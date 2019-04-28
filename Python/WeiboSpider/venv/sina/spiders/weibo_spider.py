@@ -28,14 +28,15 @@ class WeiboSpider(Spider):
 
     def start_requests(self):
         start_uids = [
-            '1409340537'
+            '5779062415'
         ]
-        for i in range(5):
+
+        for i in range(10):
             self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 5")
             randomUids=self.cursor.fetchall();
             for uid in randomUids:
                 yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
-
+        #测试用
         #for uid in start_uids:
             #yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
 
@@ -191,7 +192,6 @@ class WeiboSpider(Spider):
                 tweet_item['weibo_url'] = 'https://weibo.com/{}/{}'.format(user_tweet_id.group(2),
                                                                            user_tweet_id.group(1))
                 tweet_item['user_id'] = user_tweet_id.group(2)
-                tweet_item['_id'] = '{}_{}'.format(user_tweet_id.group(2), user_tweet_id.group(1))
                 create_time_info = tweet_node.xpath('.//span[@class="ct"]/text()')[-1]
                 if "来自" in create_time_info:
                     tweet_item['created_at'] = time_fix(create_time_info.split('来自')[0].strip())
@@ -229,8 +229,7 @@ class WeiboSpider(Spider):
                     #yield tweet_item
                     print(tweet_item)
                     try:
-                        sql = "INSERT INTO `sbhdb`.`weibo_info`(`_id`, `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)"%(
-                                  tweet_item['_id'],
+                        sql = "INSERT INTO `sbhdb`.`weibo_info`( `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)"%(
                                   tweet_item['weibo_url'],
                                   tweet_item['user_id'],
                                   tweet_item['content'],
@@ -271,8 +270,7 @@ class WeiboSpider(Spider):
         # yield tweet_item
         print(tweet_item)
         try:
-            sql = "INSERT INTO `sbhdb`.`weibo_info`(`_id`, `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)" % (
-                tweet_item['_id'],
+            sql = "INSERT INTO `sbhdb`.`weibo_info`( `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)" % (
                 tweet_item['weibo_url'],
                 tweet_item['user_id'],
                 tweet_item['content'],
@@ -391,7 +389,6 @@ class WeiboSpider(Spider):
             comment_item['weibo_url'] = response.meta['weibo_url']
             comment_item['comment_user_id'] = re.search(r'/u/(\d+)', comment_user_url).group(1)
             comment_item['content'] = comment_node.xpath('.//span[@class="ctt"]').xpath('string(.)').extract_first()
-            comment_item['_id'] = comment_node.xpath('./@id').extract_first()
             created_at = comment_node.xpath('.//span[@class="ct"]/text()').extract_first()
             comment_item['created_at'] = time_fix(created_at.split('\xa0')[0])
             try:
@@ -400,8 +397,7 @@ class WeiboSpider(Spider):
             except:
                 comment_item['sentiments'] = '5.0'
             try:
-                sql = "INSERT INTO `sbhdb`.`weibo_comment`(`_id`, `comment_user_id`, `content`, `weibo_url`, `created_at`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', '%s', %s,%s)"%(
-                    comment_item['_id'],
+                sql = "INSERT INTO `sbhdb`.`weibo_comment`( `comment_user_id`, `content`, `weibo_url`, `created_at`, `crawl_time`, `sentiments`) VALUES ( '%s', '%s', '%s', '%s', %s,%s)"%(
                     comment_item['comment_user_id'],
                     comment_item['content'],
                     comment_item['weibo_url'],
@@ -413,10 +409,7 @@ class WeiboSpider(Spider):
                 self.db.commit()
             except:
                 # 数据有重复
-                continue
                 pass
-
-            #yield comment_item
             print(comment_item)
 
 

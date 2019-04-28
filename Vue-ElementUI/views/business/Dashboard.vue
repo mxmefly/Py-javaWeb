@@ -57,7 +57,7 @@
 								<i class="el-icon-lx-notice grid-con-icon"></i>
 
 								<div class="grid-cont-right">
-									<div class="grid-num">{{showData.weiboToProcessNum}}</div>
+									<div class="grid-num">{{weiboToProcessNum}}</div>
 									<div>待处理数据量</div>
 								</div>
 							</div>
@@ -78,46 +78,49 @@
 				</el-row>
 				<el-row :gutter="20" class="mgb20">
 					<el-col :span="8">
-						<el-card shadow="hover" style="height:320px;">
-							
+						<el-card shadow="hover" style="height:360px;">
+							<div slot="header" class="clearfix">
+								<span>相关进度/使用率</span>
+							</div>
+							<div class="mgb15">
+								微博处理
+								<el-progress :percentage="weiboInfoProgressData" color="#42b983"></el-progress>
+							</div>
+							<div class="mgb15">
+								评论处理
+								<el-progress :percentage="weiboCommentProgressData" color="#f1e05a"></el-progress>
+							</div>
+							<div class="mgb15">
+								账号池利用率
+								<el-progress :percentage="showData.accountPro"></el-progress>
+							</div>
+							<div class="mgb15">
+								服务器负载
+								<el-progress :percentage="cpuUsed" color="#f56c6c"></el-progress>
+							</div>
 						</el-card>
 					</el-col>
 					<el-col :span="16">
-						<el-card shadow="hover" style="height:320px;">
-							
+						<el-card shadow="hover" style="height:360px;">
+							<div slot="header" class="clearfix">
+								<span>抓取用户日图（近10天）</span>
+							</div>
+							<ve-line :data="weiboUserlineDate" height="280px"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-card shadow="hover" style="height:403px;">
-					<div slot="header" class="clearfix">
-						<el-input placeholder="请输入待办事项" v-model="todoListItem">
-							<template slot="prepend">待办事项</template>
-							<template slot="append" style="align-content: center;">
-								<el-button type="success" @click="handleAddTodoList">添加</el-button>
-							</template>
-						</el-input>
+				<el-row :gutter="20" class="mgb20">
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:400px;">
+							<div slot="header" class="clearfix">
+								<span>抓取微博日图（近10天）</span>
+							</div>
+							<ve-line v-loading="loading" :data="weiboDataLineData" height="320px"></ve-line>
+						</el-card>
+					</el-col>
+				</el-row>
 
-					</div>
-					<el-table :data="todoList" :show-header="false" height="250" style="width: 100%;font-size:14px;">
-						<el-table-column width="40">
-							<template slot-scope="scope">
-								<el-checkbox v-model="scope.row.status"></el-checkbox>
-							</template>
-						</el-table-column>
-						<el-table-column>
-							<template slot-scope="scope">
-								<div class="todo-item" :class="{'todo-item-del': scope.row.status}">
-									{{scope.row.title}}
-								</div>
-							</template>
-						</el-table-column>
-						<el-table-column width="60">
-							<template slot-scope="scope">
-								<el-button type="text" icon="el-icon-delete" size="small" @click="handleDelClick(scope.row)"></el-button>
-							</template>
-						</el-table-column>
-					</el-table>
-				</el-card>
+
 			</el-col>
 		</el-row>
 	</div>
@@ -129,25 +132,60 @@
 		data: function() {
 			return {
 				name: localStorage.getItem('ms_username'),
-				todoList: [],
-				todoListItem: '',
-				showData:{
+				chartSetting:{
+					labelMap:{
+						
+					}
+				},
+				weiboUserlineDate: {
+					columns: ['时间','爬取用户数'],
+					rows: []
+				},
+				weiboDataLineData:{
+					columns: ['时间','爬取微博数','爬取评论数'],
+					rows: []
+				},
+				showData: {
 					touristNum: 0,
 					weiboBaseDataNum: 0,
 					weiboCommentNum: 0,
 					weiboInfoNum: 0,
-					weiboToProcessNum: 0,
 					weiboUserNum: 0,
-				}
+					weiboInfoTodoNum: 0,
+					weiboCommentTodoNum: 0,
+					accountPro: 0
+				},
+				cpuUsed: 0,
+				loading: true
 			}
 		},
 		computed: {
 			role: function() {
 				return this.name === 'admin' ? '超级管理员' : '普通用户';
+			},
+			weiboToProcessNum: function() {
+				return this.showData.weiboCommentTodoNum + this.showData.weiboInfoTodoNum;
+			},
+			weiboInfoProgressData: function() {
+				if (this.showData.weiboInfoNum == 0) {
+					return 100;
+				}
+				return Math.round((this.showData.weiboInfoNum - this.showData.weiboInfoTodoNum) / this.showData.weiboInfoNum *
+					100)
+			},
+			weiboCommentProgressData: function() {
+				if (this.showData.weiboCommentNum == 0) {
+					return 100;
+				}
+				return Math.round((this.showData.weiboCommentNum - this.showData.weiboCommentTodoNum) / this.showData.weiboCommentNum *
+					100)
 			}
 		},
 		created: function() {
 			this.handleGetDataSize()
+			setInterval(this.handleGetCpuUsd, 2000)
+			this.handleGetUserlineDate()
+			this.handleGetWeiboDataLineData()
 		},
 		activated: function() {
 
@@ -156,30 +194,11 @@
 
 		},
 		methods: {
-			handleDelClick: function(row) {
-				if (row.status == true) {
-					newTodoList = [];
-					for (var i = 0; i < this.todoList.length; i++) {
-						if (this.todoList[i].title != row.title) {
-							newTodoList.push(this.todoList[i])
-						}
-					}
-					this.todoList = newTodoList;
-				}
-			},
-			handleAddTodoList: function() {
-				var arr = {
-					title: this.todoListItem,
-					status: false
-				}
-				this.todoList.push(arr)
-				this.todoListItem = ''
-			},
 			handleGetDataSize: function() {
-				var _this=this;
+				var _this = this;
 				const loading = this.$loading({
 					lock: true,
-					text: '数据量过大，请耐心等待',
+					text: '数据量过大，请耐心等待...',
 					spinner: 'el-icon-loading',
 					background: 'rgba(0, 0, 0, 0.7)'
 				});
@@ -190,7 +209,53 @@
 					data: obj
 				}).then(function(res) {
 					loading.close()
-                    _this.showData=res.data.data;
+					_this.showData = res.data.data;
+				}).catch(function() {
+					console.log("请求失败");
+				});
+			},
+			handleGetCpuUsd: function() {
+				var _this = this;
+				var obj = {};
+				this.$axios({
+					method: 'post',
+					url: getCpuUsdApi,
+					data: obj
+				}).then(function(res) {
+					var s = res.data.cpu
+					s = Math.round(s * 100)
+					if (s < 100 && s > 0) {
+						_this.cpuUsed = s
+					}
+
+				}).catch(function() {
+					console.log("请求失败");
+				});
+			},
+			handleGetUserlineDate: function() {
+				var _this = this;
+				var obj = {};
+				this.$axios({
+					method: 'post',
+					url: getUserlineDateApi,
+					data: obj
+				}).then(function(res) {
+					_this.weiboUserlineDate.rows=res.data.data;
+				}).catch(function() {
+					console.log("请求失败");
+				});
+			},
+			handleGetWeiboDataLineData: function() {
+				var _this = this;
+				var obj = {};
+				this.$axios({
+					method: 'post',
+					url: getWeiboDataLineDataApi,
+					data: obj
+				}).then(function(res) {
+					//console.log(res)
+					_this.loading=false;
+					_this.weiboDataLineData.rows=res.data.data;
 				}).catch(function() {
 					console.log("请求失败");
 				});
@@ -294,6 +359,10 @@
 
 	.mgb20 {
 		margin-bottom: 20px;
+	}
+
+	.mgb15 {
+		margin-bottom: 15px;
 	}
 
 	.todo-item {

@@ -130,14 +130,14 @@ class getWeiboData():
 
 if __name__ == "__main__":
     count=0
-    selectSql="SELECT user_id,content,created_at,_id FROM weibo_info WHERE isProcess=0 ORDER BY created_at DESC"
+    selectSql="SELECT user_id,content,created_at,id FROM weibo_info WHERE isProcess=0 ORDER BY created_at DESC"
     getWeiboData().dbCursor.execute(selectSql)
     contentResults=getWeiboData().dbCursor.fetchall();
     print("此次需要处理"+str(len(contentResults))+"条微博数据")
     for content in contentResults:
         count=count+1
         print(str(count)+"  "+content[1])
-        updateSql = "UPDATE `sbhdb`.`weibo_info` SET `isProcess` = 1 WHERE `_id` = '%s'" % (content[3])
+        updateSql = "UPDATE `sbhdb`.`weibo_info` SET `isProcess` = 1 WHERE `id` = '%s'" % (content[3])
         try:
             getWeiboData().dbCursor.execute(updateSql)
             getWeiboData().db.commit()

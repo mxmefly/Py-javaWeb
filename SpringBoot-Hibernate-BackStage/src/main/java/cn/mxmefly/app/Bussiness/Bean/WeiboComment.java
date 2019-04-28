@@ -10,21 +10,21 @@ import javax.persistence.Table;
 public class WeiboComment {
     @Id
     @GeneratedValue
-    String _id;
+    int id;
     String commentUserId;
     String content;
     String weiboUrl;
     String createdAt;
     int crawlTime;
-    int isProcess;
+    int isprocess;
     float sentiments;
 
-    public String get_id() {
-        return _id;
+    public int getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCommentUserId() {
@@ -67,12 +67,12 @@ public class WeiboComment {
         this.crawlTime = crawlTime;
     }
 
-    public int getIsProcess() {
-        return isProcess;
+    public int getIsprocess() {
+        return isprocess;
     }
 
-    public void setIsProcess(int isProcess) {
-        this.isProcess = isProcess;
+    public void setIsprocess(int isprocess) {
+        this.isprocess = isprocess;
     }
 
     public float getSentiments() {

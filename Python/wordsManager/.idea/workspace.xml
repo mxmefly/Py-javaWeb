@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="21ee865f-b463-427b-a4a7-491ac65db222" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Test/venv/reTest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetInfotData.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboDataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Test/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetCommentData.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetCommentData.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/account_build/account.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/account_build/account.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Bean/AccountPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Bean/AccountPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboCommentReposity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboCommentReposity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboUserInfoReposity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboUserInfoReposity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/api/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/._.DS_Store" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" afterDir="false" />
-    </list>
+    <list default="true" id="21ee865f-b463-427b-a4a7-491ac65db222" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,7 +306,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32171583" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3994638" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3994638" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />

@@ -49,6 +49,7 @@ class getWeiboData():
         return  wordList
     #过滤掉 表情 话题  标点符号断句
     def articleToSentence(self,articleStr):
+        expression = re.findall('\[(((?!\[(.*)\]).)*)\]', articleStr)
         for exp in expression:
             articleStr = articleStr.replace("["+exp[0]+"]","")
         return re.split('[\s+\.\!\/_,$%^*(+\"\')]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', articleStr)
@@ -119,19 +120,19 @@ class getWeiboData():
 
 if __name__ == "__main__":
     count=0;
-    selectSql="SELECT comment_user_id,content,created_at,_id,weibo_url FROM weibo_comment WHERE isProcess=0 ORDER BY created_at DESC LIMIT 5000"
+    selectSql="SELECT comment_user_id,content,created_at,id,weibo_url FROM weibo_comment WHERE isProcess=0 ORDER BY created_at DESC LIMIT 5000"
     getWeiboData().dbCursor.execute(selectSql)
     contentResults=getWeiboData().dbCursor.fetchall();
     print("此次需要处理"+str(len(contentResults))+"条评论数据")
     for content in contentResults:
-        updateSql = "UPDATE `sbhdb`.`weibo_comment` SET `isProcess` = 1 WHERE `_id` = '%s'" % (content[3])
+        updateSql = "UPDATE `sbhdb`.`weibo_comment` SET `isProcess` = 1 WHERE `id` = '%s'" % (content[3])
         try:
             getWeiboData().dbCursor.execute(updateSql)
             getWeiboData().db.commit()
         except:
             getWeiboData().db.rollback()
         #过滤掉@用户 转发微博
-        text =re.sub(r'(回复@.*:)|(@.*\s?)|转发微博|转发',"",content[1])
+        text =re.sub(r'(回复@.*:)|(@.*\s?)|(转发微博)|(转发)',"",content[1])
         count=count+1
         print(str(count)+"  "+text)
         # 长度小于2直接跳过

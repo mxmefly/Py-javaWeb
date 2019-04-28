@@ -2,7 +2,11 @@ package cn.mxmefly.app.Common;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /*md5 加密*/
 public class GeneralMethod {
@@ -32,5 +36,25 @@ public class GeneralMethod {
     public String getRandomStr(){
         long time=new Date().getTime();
         return Integer.toHexString((int)time);
+    }
+    /*获取过去几天*/
+    public  ArrayList<String> getPastDateList(int intervals ) {
+        ArrayList<String> pastDaysList = new ArrayList<>();
+        for (int i = 0; i <intervals; i++) {
+            pastDaysList.add(getPastDate(i));
+        }
+        ArrayList<String> stringList = new ArrayList<>();
+        for(int i=0;i<intervals;i++){
+            stringList.add(pastDaysList.get(intervals-i-1));
+        }
+        return stringList;
+    }
+    public static String getPastDate(int past) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        Date today = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String result = format.format(today);
+        return result;
     }
 }

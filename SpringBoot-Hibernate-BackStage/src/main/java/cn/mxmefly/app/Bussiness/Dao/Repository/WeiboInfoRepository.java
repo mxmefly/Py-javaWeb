@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WeiboInfoRepository extends JpaRepository<WeiboInfo, Integer> {
-    public List<WeiboInfo> findAllBy_id(String _id);
-    public long countByIsProcess(int isProcess);
+    public List<WeiboInfo> findAllById(int id);
+    public long countByIsprocess(int isprocess);
+    public long countByCrawlTimeBetween(int t1,int t2);
 }
