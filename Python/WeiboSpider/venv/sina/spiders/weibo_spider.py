@@ -9,7 +9,7 @@ from scrapy.http import Request
 from scrapy.utils.project import get_project_settings
 from sina.items import TweetsItem, InformationItem, RelationshipsItem, CommentItem
 from sina.settings import  MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD,MYSQL_DB
-from sina.settings import MAX_WEIBO_PAGES,MAX_COMMENT_PAGES
+from sina.settings import MAX_WEIBO_PAGES,MAX_COMMENT_PAGES,MIN_WEIBO_DATE
 from sina.spiders.utils import time_fix
 import time
 import pymysql
@@ -28,14 +28,17 @@ class WeiboSpider(Spider):
 
     def start_requests(self):
         start_uids = [
-            '5779062415'
+            '1537790411'
+            '2812335943',
         ]
 
-        for i in range(10):
-            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 5")
+        for i in range(20):
+            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 1")
             randomUids=self.cursor.fetchall();
             for uid in randomUids:
                 yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
+        
+
         #测试用
         #for uid in start_uids:
             #yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
@@ -116,7 +119,7 @@ class WeiboSpider(Spider):
         request_meta['item'] = information_item
         yield Request(self.base_url + '/u/{}'.format(information_item['_id']),
                       callback=self.parse_further_information,
-                      meta=copy.copy(request_meta), dont_filter=True, priority=1)
+                      meta=request_meta, dont_filter=True, priority=1)
 
     def parse_further_information(self, response):
         text = response.text
@@ -136,8 +139,7 @@ class WeiboSpider(Spider):
             information_item['fans_num'] = int(fans_num[0])
         else:
             information_item['fans_num'] =0
-        #yield information_item
-        print(information_item)
+        yield information_item
         #写入数据库
         try:
             sql="INSERT INTO `sbhdb`.`weibo_user_info`(`_id`, `nick_name`, `gender`, `province`, `city`, `brief_introduction`, `birthday`, `tweets_num`, `follows_num`, `fans_num`, `sex_orientation`, `sentiment`, `vip_level`, `authentication`, `person_url`, `crawl_time`, `labels`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', '%s', %s, '%s')"%(
@@ -164,7 +166,7 @@ class WeiboSpider(Spider):
         yield Request(url=self.base_url + '/{}/follow?page=1'.format(information_item['_id']),
                       callback=self.parse_follow,
                       dont_filter=True)
-        
+
 
     def parse_tweet(self, response):
         if response.url.endswith('page=1'):
@@ -177,7 +179,7 @@ class WeiboSpider(Spider):
                     all_page=MAX_WEIBO_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
-                    yield Request(page_url, self.parse_tweet, dont_filter=True, meta=copy.copy(response.meta))
+                    yield Request(page_url, self.parse_tweet, dont_filter=True, meta=response.meta)
         """
         解析本页的数据
         """
@@ -197,59 +199,64 @@ class WeiboSpider(Spider):
                     tweet_item['created_at'] = time_fix(create_time_info.split('来自')[0].strip())
                 else:
                     tweet_item['created_at'] = time_fix(create_time_info.strip())
-
-                like_num = tweet_node.xpath('.//a[contains(text(),"赞[")]/text()')[-1]
-                tweet_item['like_num'] = int(re.search('\d+', like_num).group())
-
-                repost_num = tweet_node.xpath('.//a[contains(text(),"转发[")]/text()')[-1]
-                tweet_item['repost_num'] = int(re.search('\d+', repost_num).group())
-
-                comment_num = tweet_node.xpath(
-                    './/a[contains(text(),"评论[") and not(contains(text(),"原文"))]/text()')[-1]
-                tweet_item['comment_num'] = int(re.search('\d+', comment_num).group())
-
-                # 检测由没有阅读全文:
-                all_content_link = tweet_node.xpath('.//a[text()="全文" and contains(@href,"ckAll=1")]')
-                if all_content_link:
-                    all_content_url = self.base_url + all_content_link[0].xpath('./@href')[0]
-                    yield Request(all_content_url, callback=self.parse_all_content, meta=copy.copy({'item': tweet_item}),
-                                  priority=1)
-
+                #时间最低日期
+                if(tweet_item['created_at']<MIN_WEIBO_DATE):
+                    1
                 else:
-                    all_content_text = tweet_node.xpath('string(.)')
-                    if '转发理由:' in all_content_text:
-                        all_content_text = all_content_text.split('转发理由:')[1]
-                    all_content_text = all_content_text.split('\xa0', maxsplit=1)[0]
-                    tweet_item['content'] = all_content_text.strip()
-                    try:
-                        s = SnowNLP(tweet_item['content'])
-                        tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
-                    except:
-                        tweet_item['sentiments'] = '5.0'
-                    #yield tweet_item
-                    print(tweet_item)
-                    try:
-                        sql = "INSERT INTO `sbhdb`.`weibo_info`( `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)"%(
-                                  tweet_item['weibo_url'],
-                                  tweet_item['user_id'],
-                                  tweet_item['content'],
-                                  tweet_item['created_at'],
-                                  tweet_item['repost_num'],
-                                  tweet_item['comment_num'],
-                                  tweet_item['like_num'],
-                                  tweet_item['crawl_time'],
-                                  tweet_item['sentiments']
-                              )
-                        self.cursor.execute(sql)
-                        self.db.commit()
-                    except:
-                        # 数据有重复
-                        continue
-                        pass
+                    like_num = tweet_node.xpath('.//a[contains(text(),"赞[")]/text()')[-1]
+                    tweet_item['like_num'] = int(re.search('\d+', like_num).group())
 
-                # 抓取该微博的评论信息
-                comment_url = self.base_url + '/comment/' + tweet_item['weibo_url'].split('/')[-1] + '?page=1'
-                yield Request(url=comment_url, callback=self.parse_comment, meta=copy.copy({'weibo_url': tweet_item['weibo_url']}))
+                    repost_num = tweet_node.xpath('.//a[contains(text(),"转发[")]/text()')[-1]
+                    tweet_item['repost_num'] = int(re.search('\d+', repost_num).group())
+
+                    comment_num = tweet_node.xpath(
+                        './/a[contains(text(),"评论[") and not(contains(text(),"原文"))]/text()')[-1]
+                    tweet_item['comment_num'] = int(re.search('\d+', comment_num).group())
+
+                    # 检测由没有阅读全文:
+                    all_content_link = tweet_node.xpath('.//a[text()="全文" and contains(@href,"ckAll=1")]')
+                    if all_content_link:
+                        all_content_url = self.base_url + all_content_link[0].xpath('./@href')[0]
+                        yield Request(all_content_url, callback=self.parse_all_content,
+                                      meta={'item': tweet_item},
+                                      priority=1)
+
+                    else:
+                        all_content_text = tweet_node.xpath('string(.)')
+                        if '转发理由:' in all_content_text:
+                            all_content_text = all_content_text.split('转发理由:')[1]
+                        all_content_text = all_content_text.split('\xa0', maxsplit=1)[0]
+                        tweet_item['content'] = all_content_text.strip()
+                        try:
+                            s = SnowNLP(tweet_item['content'])
+                            tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
+                        except:
+                            tweet_item['sentiments'] = '5.0'
+
+                        try:
+                            sql = "INSERT INTO `sbhdb`.`weibo_info`( `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)" % (
+                                tweet_item['weibo_url'],
+                                tweet_item['user_id'],
+                                tweet_item['content'],
+                                tweet_item['created_at'],
+                                tweet_item['repost_num'],
+                                tweet_item['comment_num'],
+                                tweet_item['like_num'],
+                                tweet_item['crawl_time'],
+                                tweet_item['sentiments']
+                            )
+                            self.cursor.execute(sql)
+                            self.db.commit()
+                        except:
+                            # 数据有重复
+                            continue
+                            pass
+                    yield tweet_item
+
+                    # 抓取该微博的评论信息
+                    comment_url = self.base_url + '/comment/' + tweet_item['weibo_url'].split('/')[-1] + '?page=1'
+                    yield Request(url=comment_url, callback=self.parse_comment,
+                                  meta={'weibo_url': tweet_item['weibo_url']})
 
             except Exception as e:
                 self.logger.error(e)
@@ -267,8 +274,7 @@ class WeiboSpider(Spider):
             tweet_item['sentiments'] = str(s.sentiments * 10)[0:8]
         except:
             tweet_item['sentiments'] = '5.0'
-        # yield tweet_item
-        print(tweet_item)
+        yield tweet_item
         try:
             sql = "INSERT INTO `sbhdb`.`weibo_info`( `weibo_url`, `user_id`, `content`, `created_at`, `repost_num`, `comment_num`, `like_num`, `crawl_time`, `sentiments`) VALUES ('%s', '%s', '%s', '%s', %s,%s, %s, %s,%s)" % (
                 tweet_item['weibo_url'],
@@ -286,8 +292,7 @@ class WeiboSpider(Spider):
         except:
             # 数据有重复
             pass
-        #yield tweet_item
-        print(tweet_item)
+        yield tweet_item
 
     def parse_follow(self, response):
         """
@@ -324,8 +329,7 @@ class WeiboSpider(Spider):
             except:
                 # 数据有重复
                 pass
-            #yield relationships_item
-            print(relationships_item)
+            yield relationships_item
 
     def parse_fans(self, response):
         """
@@ -339,7 +343,7 @@ class WeiboSpider(Spider):
                 all_page = int(all_page)
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
-                    yield Request(page_url, self.parse_fans, dont_filter=True, meta=copy.copy(response.meta))
+                    yield Request(page_url, self.parse_fans, dont_filter=True, meta=response.meta)
         selector = Selector(response)
         urls = selector.xpath('//a[text()="关注他" or text()="关注她" or text()="移除"]/@href').extract()
         uids = re.findall('uid=(\d+)', ";".join(urls), re.S)
@@ -362,9 +366,8 @@ class WeiboSpider(Spider):
             except:
                 # 数据有重复
                 pass
-            print(relationships_item)
 
-            #yield relationships_item
+            yield relationships_item
 
     def parse_comment(self, response):
         # 如果是第1页，一次性获取后面的所有页
@@ -377,7 +380,7 @@ class WeiboSpider(Spider):
                     all_page=MAX_COMMENT_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
-                    yield Request(page_url, self.parse_comment, dont_filter=True, meta=copy.copy(response.meta))
+                    yield Request(page_url, self.parse_comment, dont_filter=True, meta=response.meta)
         selector = Selector(response)
         comment_nodes = selector.xpath('//div[@class="c" and contains(@id,"C_")]')
         for comment_node in comment_nodes:
@@ -410,7 +413,7 @@ class WeiboSpider(Spider):
             except:
                 # 数据有重复
                 pass
-            print(comment_item)
+            yield comment_item
 
 
 if __name__ == "__main__":

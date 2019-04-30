@@ -2,18 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c88c91b3-a1b9-40d5-8684-39485627dff7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Common/CPUMonitorCalc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Bean/userHotData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboUserInfoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/reTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/reTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetCommentData.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetCommentData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetInfotData.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboDataGet/venv/src/GetInfotData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wordsManager/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wordsManager/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboUserInfoReposity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboUserInfoReposity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/modules/e-charts/echarts.common.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/modules/e-charts/echarts.common.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/modules/v-charts/index.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/modules/v-charts/index.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Dashboard.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" afterDir="false" />
     </list>
@@ -24,7 +29,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Test$reTest.coverage" NAME="reTest Coverage Results" MODIFIED="1556328931264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
+    <SUITE FILE_PATH="coverage/Test$reTest.coverage" NAME="reTest Coverage Results" MODIFIED="1556606017436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
     <SUITE FILE_PATH="coverage/Test$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1554190695871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Test$baikeDemo.coverage" NAME="baikeDemo Coverage Results" MODIFIED="1554194917646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
     <SUITE FILE_PATH="coverage/Test$ScrapyTest.coverage" NAME="ScrapyTest Coverage Results" MODIFIED="1555040769613" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
@@ -37,7 +42,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
+            <state relative-caret-position="-60">
               <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
@@ -71,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/venv/dbTest.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
-              <caret line="9" column="10" lean-forward="true" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+              <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -79,8 +84,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/reTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+            <state relative-caret-position="90">
+              <caret line="3" column="68" selection-start-line="3" selection-start-column="68" selection-end-line="3" selection-end-column="68" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -152,7 +160,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1911" />
     <option name="y" value="-9" />
     <option name="width" value="1618" />
@@ -180,17 +188,6 @@
               <item name="Test" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
-            <path>
-              <item name="Test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (Test) &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="Test" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (Test) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -200,7 +197,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../WeiboDataGet" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -353,15 +350,15 @@
       <workItem from="1554769530375" duration="3715000" />
       <workItem from="1554962667400" duration="2503000" />
       <workItem from="1555389348120" duration="590000" />
-      <workItem from="1556326494055" duration="2899000" />
+      <workItem from="1556326494055" duration="5540000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22561000" />
+    <option name="totallyTimeSpent" value="25202000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1913" y="-7" width="1294" height="694" extended-state="7" />
+    <frame x="1913" y="-7" width="1294" height="694" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19417475" />
@@ -369,7 +366,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2758007" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31850535" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3994638" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -413,16 +410,6 @@
         <state relative-caret-position="-6750" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/test3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -437,13 +424,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9600">
           <caret line="321" selection-start-line="321" selection-end-line="321" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/ScrapyTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -477,14 +457,34 @@
     <entry file="file://$PROJECT_DIR$/venv/dbTest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="9" column="10" lean-forward="true" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/ScrapyTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-60">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/reTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+        <state relative-caret-position="90">
+          <caret line="3" column="68" selection-start-line="3" selection-start-column="68" selection-end-line="3" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

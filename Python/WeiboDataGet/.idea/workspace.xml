@@ -2,18 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="825bdd67-0c21-418c-a86b-a59c523cc6ba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Common/CPUMonitorCalc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Bean/userHotData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboUserInfoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Test/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Test/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Test/venv/pip-selfcheck.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Test/venv/reTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Test/venv/reTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/src/GetCommentData.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/src/GetCommentData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/src/GetInfotData.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/src/GetInfotData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/middlewares.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/../WeiboSpider/venv/sina/spiders/weibo_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../wordsManager/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../wordsManager/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboInfoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboInfoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboUserInfoReposity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboUserInfoReposity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/modules/e-charts/echarts.common.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/modules/e-charts/echarts.common.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/modules/v-charts/index.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/modules/v-charts/index.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Dashboard.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" afterDir="false" />
     </list>
@@ -24,17 +29,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/WeiboDataGet$GetInfotData.coverage" NAME="GetInfotData Coverage Results" MODIFIED="1556419812840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
-    <SUITE FILE_PATH="coverage/WeiboDataGet$GetCommentData.coverage" NAME="GetCommentData Coverage Results" MODIFIED="1556417247790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
+    <SUITE FILE_PATH="coverage/WeiboDataGet$GetInfotData.coverage" NAME="GetInfotData Coverage Results" MODIFIED="1556593086273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
+    <SUITE FILE_PATH="coverage/WeiboDataGet$GetCommentData.coverage" NAME="GetCommentData Coverage Results" MODIFIED="1556605599656" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
     <SUITE FILE_PATH="coverage/WeiboDataGet$GetData.coverage" NAME="GetData Coverage Results" MODIFIED="1556185736160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/src" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/src/GetCommentData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="138" column="24" lean-forward="true" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
+            <state relative-caret-position="2970">
+              <caret line="240" column="96" lean-forward="true" selection-start-line="240" selection-start-column="96" selection-end-line="240" selection-end-column="96" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -43,19 +48,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pymysql/err.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="108" selection-start-line="108" selection-end-line="108" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/src/GetInfotData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1120">
-              <caret line="139" column="76" lean-forward="true" selection-start-line="139" selection-start-column="76" selection-end-line="139" selection-end-column="76" />
+            <state relative-caret-position="2850">
+              <caret line="226" column="12" lean-forward="true" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -72,6 +71,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>articleToSentence</find>
+      <find>insertNewWord</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -81,12 +81,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/venv/src/GetData.py" />
-        <option value="$PROJECT_DIR$/venv/src/GetCommentData.py" />
         <option value="$PROJECT_DIR$/venv/src/GetInfotData.py" />
+        <option value="$PROJECT_DIR$/venv/src/GetCommentData.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1860" />
@@ -98,6 +98,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -120,12 +121,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -147,7 +147,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.GetInfotData">
+  <component name="RunManager" selected="Python.GetCommentData">
     <configuration name="GetCommentData" type="PythonConfigurationType" factoryName="Python">
       <module name="WeiboDataGet" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -232,24 +232,25 @@
       <option name="presentableId" value="Default" />
       <updated>1555837723827</updated>
       <workItem from="1555837764980" duration="35389000" />
-      <workItem from="1556094786058" duration="45738000" />
+      <workItem from="1556094786058" duration="62403000" />
+      <workItem from="1556582505496" duration="10086000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81127000" />
+    <option name="totallyTimeSpent" value="107878000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1488" height="878" extended-state="7" />
+    <frame x="-7" y="-7" width="1488" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15944056" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16153847" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4993007" visible="true" weight="0.28016084" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.30563003" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4993007" visible="true" weight="0.33914208" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37131366" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -257,7 +258,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3297587" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5006993" side_tool="true" weight="0.36193028" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3297587" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -294,8 +295,40 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pymysql/err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="108" selection-start-line="108" selection-end-line="108" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/re.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -305,32 +338,35 @@
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="311" selection-start-line="311" selection-end-line="311" />
+        <state relative-caret-position="163">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pymysql/err.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="108" selection-start-line="108" selection-end-line="108" />
+        <state relative-caret-position="265">
+          <caret line="1740" selection-start-line="1740" selection-end-line="1740" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/src/GetCommentData.py">
+    <entry file="file://$PROJECT_DIR$/venv/src/GetInfotData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="138" column="24" lean-forward="true" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
+        <state relative-caret-position="2850">
+          <caret line="226" column="12" lean-forward="true" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="12" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/src/GetInfotData.py">
+    <entry file="file://$PROJECT_DIR$/venv/src/GetCommentData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1120">
-          <caret line="139" column="76" lean-forward="true" selection-start-line="139" selection-start-column="76" selection-end-line="139" selection-end-column="76" />
+        <state relative-caret-position="2970">
+          <caret line="240" column="96" lean-forward="true" selection-start-line="240" selection-start-column="96" selection-end-line="240" selection-end-column="96" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

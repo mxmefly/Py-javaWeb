@@ -1,0 +1,403 @@
+<template>
+	<div>
+		<el-row :gutter="20">
+			<el-col :span="24">
+				<el-row :gutter="20" class="mgb20">
+					<el-col :span="24">
+						<el-card shadow="hover" class="mgb15" style="height:150px;">
+							<div slot="header" class="clearfix">
+								<span>条件查询</span>
+							</div>
+							<el-col :span="8">
+								<div class="block">
+									<el-date-picker v-model="dateRange" type="daterange" align="right" unlink-panels range-separator="至"
+									 start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" style="width: 100%;">
+									</el-date-picker>
+								</div>
+							</el-col>
+							<el-col :span="6">
+								<div>
+									<el-input v-model="input" placeholder="请输入内容">
+										<template slot="prepend">昵称</template>
+									</el-input>
+								</div>
+							</el-col>
+							<el-col :span="6">
+								<div>
+									<el-select v-model="value" placeholder="领域" disabled>
+										<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">>
+
+										</el-option>
+									</el-select>
+								</div>
+							</el-col>
+							<el-col :span="4">
+								<div>
+									<el-button type="primary" icon="el-icon-search" style="float: right;" @click="handleSerch">查询</el-button>
+								</div>
+							</el-col>
+						</el-card>
+						<el-card shadow="hover">
+							<div slot="header" class="clearfix">
+								<span>微博用户热度排行（No.15）</span>
+							</div>
+							<el-table v-loading="tableLoading" :data="userTableData" :row-class-name="tableRowClassName">
+								</el-table-column>
+								<el-table-column label="排名" prop="order" width="70px">
+								</el-table-column>
+								<el-table-column label="昵称" prop="name" width="240px">
+								</el-table-column>
+								<el-table-column label="简介" prop="authentication" width="450px">
+								</el-table-column>
+								<el-table-column label="热度" prop="hotData" width="180px">
+								</el-table-column>
+								<el-table-column label="操作" width="200px">
+									<template slot-scope="scope">
+										<el-button size="mini" @click="handleGoHome(scope.row)">直达</el-button>
+										<el-button size="mini" type="primary" @click="handleDetal(scope.row)">详细</el-button>
+									</template>
+								</el-table-column>
+							</el-table>
+						</el-card>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20" class="mgb20">
+					<el-col :span="12">
+						<el-card shadow="hover" style="height:400px;">
+							<ve-wordcloud :data="chartData" :settings="chartSettings"></ve-wordcloud>
+						</el-card>
+					</el-col>
+					<el-col :span="12">
+						<el-card shadow="hover" style="height:400px;">
+
+						</el-card>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20" class="mgb20">
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:400px;">
+
+						</el-card>
+					</el-col>
+				</el-row>
+
+
+			</el-col>
+		</el-row>
+	</div>
+</template>
+
+<script>
+	module.exports = {
+		name: 'WeiboUser',
+		data: function() {
+			return {
+				userData: [],
+				tableData: [],
+				pickerOptions: {
+					shortcuts: [{
+						text: '最近一周',
+						onClick(picker) {
+							const end = new Date();
+							const start = new Date();
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+							picker.$emit('pick', [start, end]);
+						}
+					}, {
+						text: '最近一个月',
+						onClick(picker) {
+							const end = new Date();
+							const start = new Date();
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+							picker.$emit('pick', [start, end]);
+						}
+					}, {
+						text: '最近三个月',
+						onClick(picker) {
+							const end = new Date();
+							const start = new Date();
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+							picker.$emit('pick', [start, end]);
+						}
+					}]
+				},
+				dateRange: '',
+				input: '',
+				options: [{
+					value: '选项1',
+					label: '科技'
+				}, {
+					value: '选项2',
+					label: '演绎'
+				}],
+				value: '',
+				tableLoading: false,
+				chartSettings: {
+					
+				},
+				chartData: {
+					columns: ['word', 'count'],
+					rows: [{
+						'word': 'visualMap',
+						'count': 22199
+					}, {
+						'word': 'continuous',
+						'count': 10288
+					}, {
+						'word': 'contoller',
+						'count': 620
+					}, {
+						'word': 'series',
+						'count': 274470
+					}, {
+						'word': 'gauge',
+						'count': 12311
+					}, {
+						'word': 'detail',
+						'count': 1206
+					}, {
+						'word': 'piecewise',
+						'count': 4885
+					}, {
+						'word': 'textStyle',
+						'count': 32294
+					}, {
+						'word': 'markPoint',
+						'count': 18574
+					}, {
+						'word': 'pie',
+						'count': 38929
+					}, {
+						'word': 'roseType',
+						'count': 969
+					}, {
+						'word': 'label',
+						'count': 37517
+					}, {
+						'word': 'emphasis',
+						'count': 12053
+					}, {
+						'word': 'yAxis',
+						'count': 57299
+					}, {
+						'word': 'name',
+						'count': 15418
+					}, {
+						'word': 'type',
+						'count': 22905
+					}, {
+						'word': 'gridIndex',
+						'count': 5146
+					}, {
+						'word': 'normal',
+						'count': 49487
+					}, {
+						'word': 'itemStyle',
+						'count': 33837
+					}, {
+						'word': 'min',
+						'count': 4500
+					}, {
+						'word': 'silent',
+						'count': 5744
+					}, {
+						'word': 'animation',
+						'count': 4840
+					}, {
+						'word': 'offsetCenter',
+						'count': 232
+					}, {
+						'word': 'inverse',
+						'count': 3706
+					}, {
+						'word': 'borderColor',
+						'count': 4812
+					}, {
+						'word': 'markLine',
+						'count': 16578
+					}, {
+						'word': 'line',
+						'count': 76970
+					}, {
+						'word': 'radiusAxis',
+						'count': 6704
+					}, {
+						'word': 'radar',
+						'count': 15964
+					}, {
+						'word': 'data',
+						'count': 60679
+					}, {
+						'word': 'dataZoom',
+						'count': 24347
+					}, {
+						'word': 'tooltip',
+						'count': 43420
+					}, {
+						'word': 'toolbox',
+						'count': 25222
+					}, {
+						'word': 'geo',
+						'count': 16904
+					}, {
+						'word': 'parallelAxis',
+						'count': 4029
+					}]
+				}
+			}
+		},
+		computed: {
+			startTime: function() {
+				if (this.dateRange == "") {
+					var end = new Date();
+					var start = new Date();
+					start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+					this.dateRange = [start, end];
+				}
+				var time = this.formatDate(this.dateRange[0]);
+
+				return time.substring(0, 10) + " 00:00:00";
+			},
+			endTime: function() {
+				if (this.dateRange == "") {
+					var end = new Date();
+					var start = new Date();
+					start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+					this.dateRange = [start, end];
+				}
+				return this.formatDate(this.dateRange[1]);
+			},
+			userTableData: function() {
+				if (this.userData == []) {
+					return []
+				} else {
+					var data = [];
+					var size = (this.userData.length > 15) ? 15 : this.userData.length;
+					for (var i = 0; i < size; i++) {
+						var arr = {
+							id: this.userData[i].weiboUsr._id,
+							order: i + 1,
+							name: this.userData[i].weiboUsr.nickName,
+							authentication: this.userData[i].weiboUsr.authentication,
+							hotData: this.userData[i].hotData
+						}
+						data.push(arr)
+					}
+					return data;
+				}
+			},
+
+
+		},
+		created: function() {
+
+			this.handleGetUserHotData();
+		},
+		activated: function() {
+
+		},
+		deactivated: function() {
+
+		},
+		methods: {
+			handleSerch: function() {
+				this.handleGetUserHotData()
+			},
+			//设置默认查询
+			handleSetDefaltTime: function() {
+				var end = new Date();
+				var start = new Date();
+				start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+				this.dateRange = [start, end];
+			},
+			formatDate: function(date) {
+				var y = date.getFullYear();
+				var m = date.getMonth() + 1;
+				m = m < 10 ? ('0' + m) : m;
+				var d = date.getDate();
+				d = d < 10 ? ('0' + d) : d;
+				var h = date.getHours();
+				var minute = date.getMinutes();
+				minute = minute < 10 ? ('0' + minute) : minute;
+				var second = date.getSeconds();
+				second = minute < 10 ? ('0' + second) : second;
+				return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+			},
+			tableRowClassName: function({
+				row,
+				rowIndex
+			}) {
+				if (rowIndex === 0) {
+					return 'first-row';
+				} else if (rowIndex === 1) {
+					return 'secend-row';
+				} else if (rowIndex == 2) {
+					return 'third-row'
+				} else
+					return '';
+			},
+			handleGetUserHotData: function() {
+				var _this = this;
+				this.tableLoading = true;
+				if (this.dateRange == "") {
+					this.handleSetDefaltTime();
+				}
+				var obj = {
+					startTime: this.startTime,
+					endTime: this.endTime
+				};
+
+				// obj = JSON.stringify(obj);
+				this.$axios({
+					method: 'post',
+					url: BASE_API + '/getUserHotData',
+					data: obj
+				}).then(function(res) {
+					_this.tableLoading = false
+					_this.userData = res.data.data;
+				}).catch(function() {
+					console.log("请求失败");
+				});
+			},
+			handleGoHome: function(row) {
+				console.log(row)
+				window.open("https://weibo.com/u/" + row.id);
+			},
+			handleDetal: function(row) {
+				console.log(row)
+			}
+
+		}
+	}
+</script>
+
+
+<style scoped>
+	.el-row {
+		margin-bottom: 20px;
+	}
+
+	.mgb20 {
+		margin-bottom: 20px;
+	}
+
+	.mgb15 {
+		margin-bottom: 15px;
+	}
+
+	.el-table .first-row {
+		background: #ef3d2f;
+		color: #0D2650;
+		font-size: 17px;
+	}
+
+	.el-table .secend-row {
+		background: #e3e8ec;
+		font-size: 16px;
+	}
+
+	.el-table .third-row {
+		background: #f1f2f6;
+		font-size: 15px;
+	}
+</style>

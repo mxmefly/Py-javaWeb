@@ -9,4 +9,5 @@ public interface WeiboInfoRepository extends JpaRepository<WeiboInfo, Integer> {
     public List<WeiboInfo> findAllById(int id);
     public long countByIsprocess(int isprocess);
     public long countByCrawlTimeBetween(int t1,int t2);
+    public long countByUserIdAndCreatedAtBetween(String id,String t1,String t2);
 }

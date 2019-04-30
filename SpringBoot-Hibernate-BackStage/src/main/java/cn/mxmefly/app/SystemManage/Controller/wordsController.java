@@ -41,13 +41,19 @@ public class wordsController {
             while((word = bufferedReader.readLine()) != null)
             {
                 System.err.println(count+" : "+word);
-                BaseWords baseWords =new BaseWords();
-                baseWords.setWord(word);
-                baseWords.setType(type);
-                baseWords.setCounts(0);
-                baseWords.setIsShow(1);
-                baseWords.setSentiments(-1);
-                baseWords.setWordLength(word.length());
+                BaseWords baseWords = new BaseWords();
+                baseWords = baseWordsRespository.findByWord(word);
+                if(baseWords==null){
+                    baseWords = new BaseWords();
+                    baseWords.setWord(word);
+                    baseWords.setType(type);
+                    baseWords.setCounts(0);
+                    baseWords.setIsShow(1);
+                    baseWords.setSentiments(5);
+                    baseWords.setWordLength(word.length());
+                }else{
+                    baseWords.setType(type);
+                }
                 baseWordsRespository.save(baseWords);
                 count++;
             }

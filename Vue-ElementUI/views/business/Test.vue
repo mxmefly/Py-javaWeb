@@ -23,12 +23,13 @@
             /* 测试 axios 请求 */
             handleTest: function () {
                 var obj = {
-					
+					startTime:'2018-01-25 08:28:16',
+					endTime:'2019-06-25 08:28:16'
 			    };
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: BASE_API+'/getDataSize',
+                    url: BASE_API+'/getUserHotData',
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);
