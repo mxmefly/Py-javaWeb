@@ -29,7 +29,7 @@ class getWeiboData():
                 if (temstr in self.words.keys()):
                     wordsResults = self.words[temstr]
                 else:
-                    selectSql = "SELECT word FROM base_words WHERE word LIKE '%s'" % (temstr + "%")
+                    selectSql = "SELECT word,is_show FROM base_words WHERE word LIKE '%s'" % (temstr + "%")
                     self.dbCursor.execute(selectSql)
                     wordsResults = self.dbCursor.fetchall()
                     self.words[temstr] = wordsResults
@@ -38,6 +38,7 @@ class getWeiboData():
                     cursor = cursor + 1
                 else:
                     candidateStr = temstr
+                    isAdded = 1
                     maxMatchLen = 2
                     for word in wordsResults:
                         wordLen = len(word[0])
@@ -48,9 +49,11 @@ class getWeiboData():
                                 continue
                             if (temstr == word[0]):
                                 candidateStr = temstr
+                                isAdded = word[1]
                                 maxMatchLen = wordLen
                                 continue
-                    wordList.append(candidateStr)
+                    if (isAdded == 1):
+                        wordList.append(candidateStr)
                     cursor += maxMatchLen
             wordList.append("++")
         return wordList
@@ -133,6 +136,7 @@ if __name__ == "__main__":
     count=0
     a=10
     while(a):
+        getWeiboData.words = {}
         selectSql = "SELECT user_id,content,created_at,id FROM weibo_info WHERE isProcess=0 ORDER BY created_at DESC limit 1000"
         getWeiboData().dbCursor.execute(selectSql)
         contentResults = getWeiboData().dbCursor.fetchall();
@@ -228,7 +232,13 @@ if __name__ == "__main__":
                 getWeiboData().db.commit()
             except:
                 print("事务提交出错")
-    
+        MsgSql = "INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')" % (
+        "处理" + str(len(contentResults)) + "条评论", time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
+        try:
+            getWeiboData().dbCursor.execute(MsgSql)
+            getWeiboData().db.commit()
+        except:
+            getWeiboData().db.rollback()
         
 
 

@@ -30,7 +30,7 @@ class getWeiboData():
                 if(temstr in self.words.keys()):
                     wordsResults=self.words[temstr]
                 else:
-                    selectSql = "SELECT word FROM base_words WHERE word LIKE '%s'" % (temstr + "%")
+                    selectSql = "SELECT word,is_show FROM base_words WHERE word LIKE '%s'" % (temstr + "%")
                     self.dbCursor.execute(selectSql)
                     wordsResults = self.dbCursor.fetchall()
                     self.words[temstr]=wordsResults
@@ -39,6 +39,7 @@ class getWeiboData():
                     cursor = cursor + 1
                 else:
                     candidateStr = temstr
+                    isAdded=1
                     maxMatchLen = 2
                     for word in wordsResults:
                         wordLen = len(word[0])
@@ -49,9 +50,11 @@ class getWeiboData():
                                 continue
                             if (temstr == word[0]):
                                 candidateStr = temstr
+                                isAdded=word[1]
                                 maxMatchLen = wordLen
                                 continue
-                    wordList.append(candidateStr)
+                    if(isAdded==1):
+                        wordList.append(candidateStr)
                     cursor += maxMatchLen
             wordList.append("++")
         return  wordList
@@ -59,8 +62,6 @@ class getWeiboData():
     def articleToSentence(self,articleStr):
         articleStr=re.sub(r'#(((?!#(.*)#).)*)#',"",articleStr)
         articleStr = re.sub(r'\[(((?!\[(.*)\]).)*)\]', "",articleStr)
-
-        print("过滤后"+articleStr)
         return re.split('[\s+\.\!\/_,$%^*(+\"\')]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+|[a-zA-Z0-9]+', articleStr)
 
     def getExpression(self,articleStr):
@@ -142,7 +143,7 @@ if __name__ == "__main__":
                 getWeiboData().db.rollback()
         if(len(newWords)>0):
             try:
-                getWeiboData().dbCursor.execute("INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')"%("添加"+str(len(newWords))+"条新词入词库",time.time()))
+                getWeiboData().dbCursor.execute("INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')"%("添加"+str(len(newWords))+"条新词入词库",time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))))
                 getWeiboData().dbCursor.execute("DELETE FROM new_words WHERE count>100")
             except:
                 getWeiboData().db.rollback()
@@ -238,7 +239,7 @@ if __name__ == "__main__":
                 getWeiboData().db.commit()
             except:
                 print("事务提交出错")
-        MsgSql="INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')"%("处理"+str(len(contentResults))+"条评论",time.time())
+        MsgSql="INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')"%("处理"+str(len(contentResults))+"条评论",time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time())))
         try:
             getWeiboData().dbCursor.execute(MsgSql)
             getWeiboData().db.commit()
