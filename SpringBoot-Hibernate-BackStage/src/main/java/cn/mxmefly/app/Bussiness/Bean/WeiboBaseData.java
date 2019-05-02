@@ -15,6 +15,7 @@ public class WeiboBaseData {
     String name;
     int counts;
     String type;
+    String date;
     String upUser;
 
     public int getId() {
@@ -63,5 +64,13 @@ public class WeiboBaseData {
 
     public void setUpUser(String upUser) {
         this.upUser = upUser;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -28,20 +28,19 @@ class WeiboSpider(Spider):
 
     def start_requests(self):
         start_uids = [
-            '1537790411'
-            '2812335943',
+            
         ]
-
-        for i in range(20):
-            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 1")
+        
+        for i in range(30):
+            self.cursor.execute("SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 2")
             randomUids=self.cursor.fetchall();
             for uid in randomUids:
                 yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
         
 
         #测试用
-        #for uid in start_uids:
-            #yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
+        for uid in start_uids:
+            yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
 
 
     def parse_information(self, response):
@@ -147,6 +146,8 @@ class WeiboSpider(Spider):
                 information_item['sex_orientation'],information_item['sentiment'],information_item['vip_level'],information_item['authentication'],'',information_item['crawl_time'],information_item['labels']
             )
             self.cursor.execute(sql)
+            self.cursor.execute("INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')" % (
+        "获取" + information_item['nick_name'] + "微博信息", time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))))
             self.db.commit()
         except:
             # 数据有重复
