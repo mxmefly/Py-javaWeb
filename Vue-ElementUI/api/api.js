@@ -8,7 +8,8 @@ const getInfoApi =BASE_API+'/getInfo';
 const getDataSizeApi=BASE_API+'/getDataSize';
 const getCpuUsdApi=BASE_API+'/getCpuUsd';
 const getUserlineDateApi=BASE_API+'/getUserlineDate';
-const getWeiboDataLineDataApi=BASE_API+'/getWeiboDataLineData';
+const getWeiboLineDataApi=BASE_API+'/getWeiboLineData';
+const getWeiboCommentLineDataApi=BASE_API+'/getWeiboCommentLineData';
 const touristLoginApi = BASE_API+'/touristLogin';
 const SysMsg_Apis={
 	getMsgNum:BASE_API+'/getMsgNum',

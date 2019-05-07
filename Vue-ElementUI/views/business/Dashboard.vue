@@ -115,7 +115,17 @@
 							<div slot="header" class="clearfix">
 								<span>抓取微博日图（近10天）</span>
 							</div>
-							<ve-line v-loading="loading" :data="weiboDataLineData" height="320px"></ve-line>
+							<ve-line v-loading="loading1" :data="weiboLineData" height="320px"></ve-line>
+						</el-card>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20" class="mgb20">
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:400px;">
+							<div slot="header" class="clearfix">
+								<span>抓取评论日图（近10天）</span>
+							</div>
+							<ve-line v-loading="loading2" :data="weiboCommentLineData" height="320px"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
@@ -141,8 +151,12 @@
 					columns: ['时间','爬取用户数'],
 					rows: []
 				},
-				weiboDataLineData:{
-					columns: ['时间','爬取微博数','爬取评论数'],
+				weiboLineData:{
+					columns: ['时间','爬取微博数'],
+					rows: []
+				},
+				weiboCommentLineData:{
+					columns: ['时间','爬取评论数'],
 					rows: []
 				},
 				showData: {
@@ -156,7 +170,8 @@
 					accountPro: 0
 				},
 				cpuUsed: 0,
-				loading: true
+				loading1: true,
+				loading2: true,
 			}
 		},
 		computed: {
@@ -185,7 +200,7 @@
 			this.handleGetDataSize()
 			setInterval(this.handleGetCpuUsd, 2000)
 			this.handleGetUserlineDate()
-			this.handleGetWeiboDataLineData()
+			this.handleGetWeiboLineData()
 		},
 		activated: function() {
 
@@ -245,17 +260,31 @@
 					console.log("请求失败");
 				});
 			},
-			handleGetWeiboDataLineData: function() {
+			handleGetWeiboLineData: function() {
 				var _this = this;
 				var obj = {};
 				this.$axios({
 					method: 'post',
-					url: getWeiboDataLineDataApi,
+					url: getWeiboLineDataApi,
 					data: obj
 				}).then(function(res) {
 					//console.log(res)
-					_this.loading=false;
-					_this.weiboDataLineData.rows=res.data.data;
+					_this.loading1=false;
+					_this.weiboLineData.rows=res.data.data;
+				}).catch(function() {
+					console.log("请求失败");
+				});
+			},
+			handleGetWeiboCommentLineData: function() {
+				var _this = this;
+				var obj = {};
+				this.$axios({
+					method: 'post',
+					url: getWeiboCommentLineDataApi,
+					data: obj
+				}).then(function(res) {
+					_this.loading2=false;
+					_this.weiboCommentLineData.rows=res.data.data;
 				}).catch(function() {
 					console.log("请求失败");
 				});

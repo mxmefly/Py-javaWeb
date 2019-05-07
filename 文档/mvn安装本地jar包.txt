@@ -1,0 +1,2 @@
+
+mvn install:install-file -Dfile=jdmp-complete-0.1.1-apidocs.jar -DgroupId=cn.mxmefly -DartifactId=mxmefly -Dversion=0.1.1 -Dpackaging=jar

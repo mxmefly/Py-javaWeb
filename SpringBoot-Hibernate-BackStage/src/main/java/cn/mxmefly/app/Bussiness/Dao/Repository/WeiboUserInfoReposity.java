@@ -18,6 +18,11 @@ public interface WeiboUserInfoReposity extends JpaRepository<WeiboUserInfo,Integ
 
 
 
-    @Query(value = "SELECT * from weibo_user_info WHERE fans_num>5000000 ORDER BY fans_num DESC",nativeQuery = true)
+    @Query(value = "SELECT * from weibo_user_info WHERE fans_num>5000000 ORDER BY fans_num DESC LIMIT 40",nativeQuery = true)
     public List<WeiboUserInfo> findAllBigV();
+
+    @Query(value = "SELECT a.* from weibo_user_info AS a LEFT JOIN weibo_user_rela AS b ON a._id=b.fan_id WHERE b.followed_id=:id",nativeQuery = true)
+    public List<WeiboUserInfo> findFansByFollowedId(@Param("id")String followedId);
+
+
 }

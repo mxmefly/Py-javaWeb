@@ -29,19 +29,14 @@ class WeiboSpider(Spider):
     def start_requests(self):
         
         start_uids = [
-
+            '1749127163'
         ]
 
-        for i in range(30):
-            self.cursor.execute(
-                "SELECT followed_id FROM weibo_user_rela WHERE followed_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 2")
-            randomUids = self.cursor.fetchall();
-            for uid in randomUids:
-                yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
-
-        # 测试用
         for uid in start_uids:
-            yield Request(url="https://weibo.cn/%s/info" % uid, callback=self.parse_information)
+            self.cursor.execute("SELECT fan_id FROM weibo_user_rela WHERE followed_id = '%s' LIMIT 100"%(uid))
+            fansUids = self.cursor.fetchall();
+            for funId in fansUids:
+                yield Request(url="https://weibo.cn/%s/info" % funId[0], callback=self.parse_information)
 
     def parse_information(self, response):
         """ 抓取个人信息 """
@@ -138,7 +133,6 @@ class WeiboSpider(Spider):
             information_item['fans_num'] = int(fans_num[0])
         else:
             information_item['fans_num'] = 0
-        yield information_item
         # 写入数据库
         try:
             sql = "INSERT INTO `sbhdb`.`weibo_user_info`(`_id`, `nick_name`, `gender`, `province`, `city`, `brief_introduction`, `birthday`, `tweets_num`, `follows_num`, `fans_num`, `sex_orientation`, `sentiment`, `vip_level`, `authentication`, `person_url`, `crawl_time`, `labels`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', '%s', %s, '%s')" % (
@@ -157,6 +151,8 @@ class WeiboSpider(Spider):
         except:
             # 数据有重复
             pass
+
+        yield information_item
 
 
 

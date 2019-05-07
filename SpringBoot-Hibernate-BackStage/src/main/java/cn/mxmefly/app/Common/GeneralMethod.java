@@ -1,5 +1,7 @@
 package cn.mxmefly.app.Common;
 
+import cn.mxmefly.app.Common.Arima.ARIMA;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -56,5 +58,19 @@ public class GeneralMethod {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String result = format.format(today);
         return result;
+    }
+    public List<Double> getArimaData(List<Double> data,int num){
+        List<Double> doubleList = new ArrayList<>();
+        for(int i=0;i<num;i++){
+            double[] dataArray=new double[data.size()];
+            for(int j=0;j<data.size();j++)
+                dataArray[j]=data.get(j);
+            ARIMA arima = new ARIMA(dataArray);
+            int []model=arima.getARIMAmodel();
+            double arimaValue=arima.aftDeal(arima.predictValue(model[0],model[1]));
+            doubleList.add(arimaValue);
+            data.add(arimaValue);
+        }
+        return doubleList;
     }
 }

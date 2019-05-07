@@ -62,7 +62,17 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <!--引入本地的Jama Jdmp 用于实现Arima模型预测时间线性-->
+        <dependency>
+            <groupId>cn.mxmefly</groupId>
+            <artifactId>Jama</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.mxmefly</groupId>
+            <artifactId>Jdmp</artifactId>
+            <version>0.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

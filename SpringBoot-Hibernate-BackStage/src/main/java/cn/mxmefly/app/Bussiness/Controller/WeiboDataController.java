@@ -1,9 +1,10 @@
 package cn.mxmefly.app.Bussiness.Controller;
 
 import cn.mxmefly.app.Bussiness.Dao.Repository.*;
-import cn.mxmefly.app.Common.*;
+import cn.mxmefly.app.Common.CPUMonitorCalc;
+import cn.mxmefly.app.Common.CreateResult;
+import cn.mxmefly.app.Common.GeneralMethod;
 import cn.mxmefly.app.Common.Results;
-import cn.mxmefly.app.SystemManage.Bean.PfTourist;
 import cn.mxmefly.app.SystemManage.Dao.Repository.PfTouristRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,8 +78,8 @@ public class WeiboDataController {
         return createResult.getResults(mapList);
     }
 
-    @PostMapping("getWeiboDataLineData")
-    public Results getWeiboDataLineData() throws ParseException {
+    @PostMapping("getWeiboLineData")
+    public Results getWeiboLineData() throws ParseException {
         List<Map> mapList =new ArrayList<>();
         Date nowDate = new Date();
         long d=nowDate.getTime();
@@ -93,12 +94,35 @@ public class WeiboDataController {
             datet2=fmt.parse(dateStr+" 00:00:00").getTime()/1000;
             map.put("时间",dateList.get(i).substring(5));
             map.put("爬取微博数",weiboInfoRepository.countByCrawlTimeBetween((int)datet1,(int)datet2));
-            map.put("爬取评论数",weiboCommentReposity.countByCrawlTimeBetween((int)datet1,(int)datet2));
             mapList.add(map);
         }
         Map map = new HashMap();
         map.put("时间","今日");
         map.put("爬取微博数",weiboInfoRepository.countByCrawlTimeBetween((int)datet2,(int)d));
+        mapList.add(map);
+        return createResult.getResults(mapList);
+    }
+
+    @PostMapping("getWeiboCommentLineData")
+    public Results getWeiboCommentLineData() throws ParseException {
+        List<Map> mapList =new ArrayList<>();
+        Date nowDate = new Date();
+        long d=nowDate.getTime();
+        DateFormat fmt =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<String> dateList = new GeneralMethod().getPastDateList(10);
+        long datet2=0;
+        for(int i=0;i<dateList.size()-1;i++){
+            Map map = new HashMap();
+            String dateStr=dateList.get(i);
+            long datet1=fmt.parse(dateStr+" 00:00:00").getTime()/1000;
+            dateStr=dateList.get(i+1);
+            datet2=fmt.parse(dateStr+" 00:00:00").getTime()/1000;
+            map.put("时间",dateList.get(i).substring(5));
+            map.put("爬取评论数",weiboCommentReposity.countByCrawlTimeBetween((int)datet1,(int)datet2));
+            mapList.add(map);
+        }
+        Map map = new HashMap();
+        map.put("时间","今日");
         map.put("爬取评论数",weiboCommentReposity.countByCrawlTimeBetween((int)datet2,(int)d));
         mapList.add(map);
         return createResult.getResults(mapList);

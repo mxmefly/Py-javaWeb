@@ -61,12 +61,21 @@
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20" class="mgb20">
+				<el-row :gutter="20" class="mgb20" v-if="(selected.name!='')">
 					<el-col :span="12">
 						<el-card shadow="hover" style="height:500px;">
 							<div slot="header" class="clearfix">
 								<span>详细资料---{{selected.name}}</span>
 							</div>
+							<div class="user-info-list">昵称：<span>{{selectedUserInfo.nickName}}</span></div>
+							<div class="user-info-list">性别：<span>{{selectedUserInfo.gender}}</span></div>
+							<div class="user-info-list">位置：<span>{{selectedUserInfo.province+selectedUserInfo.city}}</span></div>
+							<div class="user-info-list">生日：<span>{{selectedUserInfo.birthday}}</span></div>
+							<div class="user-info-list">微博：<span>{{selectedUserInfo.tweetsNum}}</span></div>
+							<div class="user-info-list">关注：<span>{{selectedUserInfo.followsNum}}</span></div>
+							<div class="user-info-list">粉丝：<span>{{selectedUserInfo.fansNum}}</span></div>
+							<div class="user-info-list">简介：<span>{{selectedUserInfo.authentication}}</span></div>
+							<div class="user-info-list">标签：<span>{{selectedUserInfo.labels}}</span></div>
 						</el-card>
 					</el-col>
 					<el-col :span="12">
@@ -79,9 +88,38 @@
 					</el-col>
 
 				</el-row>
-				<el-row :gutter="20" class="mgb20">
-					<el-col :span="24">
+				<el-row :gutter="20" class="mgb20" v-if="(selected.name!='')">
+					<el-col :span="12">
+						<el-card shadow="hover" style="height:500px;">
+							<div slot="header" class="clearfix">
+								<span>粉丝地区分布</span>
+							</div>
+							<ve-map :data="fansPositionData"></ve-map>
+						</el-card>
+					</el-col>
+					<el-col :span="12">
+						<el-card shadow="hover" style="height:500px;">
+							<div slot="header" class="clearfix">
+								<span>粉丝性别/年龄分布</span>
+							</div>
+							<ve-pie :data="genderOrAgeData" :settings="chartSettings"></ve-pie>
+						</el-card>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20" class="mgb20" v-if="(selected.name!='')">
+					<el-col :span="12">
 						<el-card shadow="hover" style="height:400px;">
+							<div slot="header" class="clearfix">
+								<span>微博情感倾向</span>
+							</div>
+							<ve-line :data="weiboSentimentData" :settings="chartSettings1" height="320px"></ve-line>
+						</el-card>
+					</el-col>
+					<el-col :span="12">
+						<el-card shadow="hover" style="height:400px;">
+							<div slot="header" class="clearfix">
+								<span>评论情感倾向</span>
+							</div>
 
 						</el-card>
 					</el-col>
@@ -139,7 +177,10 @@
 				value: '',
 				tableLoading: false,
 				chartSettings: {
-
+					level: [
+						['70后', '80后', '90后', '00后', '其他'],
+						['男', '女', '未知']
+					]
 				},
 				wordsCloudData: {
 					columns: ['word', 'count'],
@@ -148,6 +189,37 @@
 				selected: {
 					id: "",
 					name: ""
+				},
+				selectedUserInfo: {
+					authentication: "",
+					birthday: "",
+					briefIntroduction: "",
+					city: "",
+					fansNum: "",
+					followsNum: "",
+					gender: "",
+					labels: "",
+					nickName: "",
+					province: "",
+					tweetsNum: "",
+				},
+				fansPositionData: {
+					columns: ['位置', '人数'],
+					rows: []
+				},
+				genderOrAgeData: {
+					columns: ['数据', '人数'],
+					rows: []
+				},
+				weiboSentimentData: {
+					columns: ['情感值', '出现次数'],
+					rows: []
+				},
+				chartSettings1: {
+					stack: {
+						'次数': ['出现次数']
+					},
+					area: true
 				}
 			}
 		},
@@ -192,7 +264,6 @@
 				}
 			},
 
-
 		},
 		created: function() {
 
@@ -210,9 +281,9 @@
 			},
 			//设置默认查询
 			handleSetDefaltTime: function() {
-				var end = new Date();
+				var end = new Date(2019, 03, 25, 00, 00, 00);
 				var start = new Date();
-				start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+				start.setTime(end.getTime() - 3600 * 1000 * 24 * 30);
 				this.dateRange = [start, end];
 			},
 			formatDate: function(date) {
@@ -251,15 +322,21 @@
 					startTime: this.startTime,
 					endTime: this.endTime
 				};
-
-				// obj = JSON.stringify(obj);
 				this.$axios({
 					method: 'post',
 					url: BASE_API + '/getUserHotData',
 					data: obj
 				}).then(function(res) {
+					//console.log("res", res)
 					_this.tableLoading = false
 					_this.userData = res.data.data;
+
+					_this.selected.id = _this.userData[0].weiboUsr._id;
+					_this.selected.name = _this.userData[0].weiboUsr.nickName;
+					_this.selectedUserInfo = _this.userData[0].weiboUsr;
+					_this.handleGetWordsCloudData();
+					_this.handlegetFansInfo();
+					_this.handleGetUserWeiboSetimentData();
 				}).catch(function() {
 					console.log("请求失败");
 				});
@@ -271,7 +348,15 @@
 				this.selected.id = row.id;
 				this.selected.name = row.name;
 				console.log("selected", this.selected)
+				for (var i = 0; i < this.userData.length; i++) {
+					if (this.userData[i].weiboUsr._id == row.id) {
+						this.selectedUserInfo = this.userData[i].weiboUsr;
+						break;
+					}
+				}
 				this.handleGetWordsCloudData();
+				this.handlegetFansInfo();
+				this.handleGetUserWeiboSetimentData();
 			},
 			handleGetWordsCloudData: function() {
 				var _this = this;
@@ -285,12 +370,46 @@
 					url: BASE_API + '/getUserPortrait',
 					data: obj
 				}).then(function(res) {
-					console.log("res", res);
 					_this.wordsCloudData.rows = res.data.data;
 				}).catch(function() {
 					Console.log("请求失败");
 				});
 			},
+			handlegetFansInfo: function() {
+				var _this = this;
+				var obj = {
+					id: this.selected.id
+				};
+				this.$axios({
+					method: 'post',
+					url: BASE_API + '/getFansInfo',
+					data: obj
+				}).then(function(res) {
+					_this.fansPositionData.rows = res.data.data.locationList;
+					_this.genderOrAgeData.rows = res.data.data.genderOrAgeList;
+				}).catch(function() {
+					Console.log("请求失败");
+				});
+			},
+			handleGetUserWeiboSetimentData: function () {
+				var _this=this;
+			    var obj = {
+					id: this.selected.id,
+					startTime: this.startTime,
+					endTime: this.endTime
+			    };
+				// obj = JSON.stringify(obj);
+			    this.$axios({
+			        method: 'post',
+			        url: BASE_API+'/getUserWeiboSetimentData',
+			        data: obj
+			    }).then(function (res) {
+			        console.log("res", res);
+					_this.weiboSentimentData.rows=res.data.data.dataList;
+			    }).catch(function () {
+			        Console.log("请求失败");
+			    });
+			}
 
 		}
 	}
@@ -324,5 +443,16 @@
 	.el-table .third-row {
 		background: #f1f2f6;
 		font-size: 15px;
+	}
+
+	.user-info-list {
+		font-size: 16px;
+		color: #303133;
+		line-height: 25px;
+		margin-bottom: 22px;
+	}
+
+	.user-info-list span {
+		margin-left: 70px;
 	}
 </style>

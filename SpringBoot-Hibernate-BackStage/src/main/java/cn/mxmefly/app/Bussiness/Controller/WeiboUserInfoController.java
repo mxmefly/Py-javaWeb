@@ -1,6 +1,7 @@
 package cn.mxmefly.app.Bussiness.Controller;
 
 import cn.mxmefly.app.Bussiness.Bean.WeiboBaseData;
+import cn.mxmefly.app.Bussiness.Bean.WeiboInfo;
 import cn.mxmefly.app.Bussiness.Bean.WeiboUserInfo;
 import cn.mxmefly.app.Bussiness.Bean.WordsCounts;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboBaseDataRepository;
@@ -8,7 +9,6 @@ import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboInfoRepository;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboUserInfoReposity;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Results;
-import org.python.core.AstList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -112,5 +112,89 @@ public class WeiboUserInfoController {
             }
             return objects;
         }
+    }
+
+    @PostMapping("/getFansInfo")
+    public Results getFansInfo(@RequestBody Map map){
+        String id=(String) map.get("id");
+        Map<String,Integer> locationMap = new HashMap<>();
+        Map<String,Integer> genderOrAgeMap= new HashMap<>();
+        genderOrAgeMap.put("其他",0);
+        genderOrAgeMap.put("70后",0);
+        genderOrAgeMap.put("80后",0);
+        genderOrAgeMap.put("90后",0);
+        genderOrAgeMap.put("00后",0);
+        List<WeiboUserInfo> weiboUserInfos = weiboUserInfoReposity.findFansByFollowedId(id);
+        for(int i=0;i<weiboUserInfos.size();i++){
+            WeiboUserInfo weiboUserInfo = weiboUserInfos.get(i);
+            if(locationMap.containsKey(weiboUserInfo.getProvince())){
+                locationMap.put(weiboUserInfo.getProvince(),locationMap.get(weiboUserInfo.getProvince())+1);
+            }else {
+                locationMap.put(weiboUserInfo.getProvince(),1);
+            }
+            if(genderOrAgeMap.containsKey(weiboUserInfo.getGender())){
+                genderOrAgeMap.put(weiboUserInfo.getGender(),genderOrAgeMap.get(weiboUserInfo.getGender())+1);
+            }else {
+                genderOrAgeMap.put(weiboUserInfo.getGender(),1);
+            }
+            if(weiboUserInfo.getBirthday().length()==10){
+                if(weiboUserInfo.getBirthday().compareTo("1970-01-01")<0){
+                    genderOrAgeMap.put("其他",genderOrAgeMap.get("其他")+1);
+                }else if(weiboUserInfo.getBirthday().compareTo("1970-01-01")>=0&&weiboUserInfo.getBirthday().compareTo("1980-01-01")<0){
+                    genderOrAgeMap.put("70后",genderOrAgeMap.get("70后")+1);
+                }else if(weiboUserInfo.getBirthday().compareTo("1980-01-01")>=0&&weiboUserInfo.getBirthday().compareTo("1990-01-01")<0){
+                    genderOrAgeMap.put("80后",genderOrAgeMap.get("80后")+1);
+                }else if(weiboUserInfo.getBirthday().compareTo("1990-01-01")>=0&&weiboUserInfo.getBirthday().compareTo("2000-01-01")<0){
+                    genderOrAgeMap.put("90后",genderOrAgeMap.get("90后")+1);
+                }else{
+                    genderOrAgeMap.put("00后",genderOrAgeMap.get("00后")+1);
+                }
+            }
+        }
+        List<Map> locationList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : locationMap.entrySet()){
+            Map tempMap = new HashMap();
+            tempMap.put("位置",entry.getKey());
+            tempMap.put("人数",entry.getValue());
+            locationList.add(tempMap);
+        }
+        List<Map> genderOrAgeList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : genderOrAgeMap.entrySet()){
+            Map tempMap = new HashMap();
+            tempMap.put("数据",entry.getKey());
+            tempMap.put("人数",entry.getValue());
+            genderOrAgeList.add(tempMap);
+        }
+        Map returnMap = new HashMap();
+        returnMap.put("locationList",locationList);
+        returnMap.put("genderOrAgeList",genderOrAgeList);
+        return createResult.getResults(returnMap);
+    }
+
+    @PostMapping("getUserWeiboSetimentData")
+    public Results getUserWeiboSetimentData(@RequestBody Map map){
+        String id=(String) map.get("id");
+        String t1=(String) map.get("startTime");
+        String t2=(String) map.get("endTime");
+        List<WeiboInfo> weiboInfoList=weiboInfoRepository.findByUserIdAndCreatedAtBetween(id,t1,t2);
+        float sum=0;
+        int []counts={0,0,0,0,0,0,0,0,0,0,0};
+        for(int i=0;i<weiboInfoList.size();i++){
+            WeiboInfo weiboInfo = weiboInfoList.get(i);
+            sum+=weiboInfo.getSentiments();
+            int value = Math.round(weiboInfo.getSentiments());
+            counts[value]++;
+        }
+        List<Map> maps = new ArrayList<>();
+        for(int i=0;i<11;i++){
+            Map tempMap = new HashMap();
+            tempMap.put("情感值",i);
+            tempMap.put("出现次数",counts[i]);
+            maps.add(tempMap);
+        }
+        Map returnMap=new HashMap();
+        returnMap.put("dataList",maps);
+        returnMap.put("avg",sum/weiboInfoList.size());
+        return createResult.getResults(returnMap);
     }
 }
