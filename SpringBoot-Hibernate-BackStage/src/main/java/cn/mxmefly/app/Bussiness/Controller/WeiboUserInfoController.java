@@ -1,19 +1,20 @@
 package cn.mxmefly.app.Bussiness.Controller;
 
-import cn.mxmefly.app.Bussiness.Bean.WeiboBaseData;
-import cn.mxmefly.app.Bussiness.Bean.WeiboInfo;
-import cn.mxmefly.app.Bussiness.Bean.WeiboUserInfo;
-import cn.mxmefly.app.Bussiness.Bean.WordsCounts;
+import cn.mxmefly.app.Bussiness.Bean.*;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboBaseDataRepository;
+import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboCommentReposity;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboInfoRepository;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboUserInfoReposity;
 import cn.mxmefly.app.Common.CreateResult;
+import cn.mxmefly.app.Common.GeneralMethod;
+import cn.mxmefly.app.Common.LinearRegression.MyLinearRegression;
 import cn.mxmefly.app.Common.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.*;
 
 @RestController
@@ -24,21 +25,29 @@ public class WeiboUserInfoController {
     private WeiboInfoRepository weiboInfoRepository;
     @Autowired
     private WeiboBaseDataRepository weiboBaseDataRepository;
+    @Autowired
+    private WeiboCommentReposity weiboCommentReposity;
 
     CreateResult createResult = new CreateResult();
 
     @PostMapping("/getUserHotData")
     public Results getUserHotData(@RequestBody Map map){
+        String name =(String)map.get("name");
         String t1=(String) map.get("startTime");
         String t2=(String) map.get("endTime");
         List<Map> data = new ArrayList<>();
-        List<WeiboUserInfo> bigVlist = weiboUserInfoReposity.findAllBigV();
-        for(int i=0;i<bigVlist.size();i++){
+        List<WeiboUserInfo> weiboUserInfos= new ArrayList<>();
+        if(name.length()==0){
+            weiboUserInfos= weiboUserInfoReposity.findAllBigV();
+        }else {
+            weiboUserInfos=weiboUserInfoReposity.findByNickNameLike("%"+name+"%");
+        }
+        for(int i=0;i<weiboUserInfos.size();i++){
              Map m= new HashMap();
-             m.put("weiboUsr",bigVlist.get(i));
+             m.put("weiboUsr",weiboUserInfos.get(i));
              float value= (float) 0;
              try {
-                 value=weiboUserInfoReposity.getUserHotData(bigVlist.get(i).get_id(),t1,t2);
+                 value=weiboUserInfoReposity.getUserHotData(weiboUserInfos.get(i).get_id(),t1,t2);
                  //long count=weiboInfoRepository.countByUserIdAndCreatedAtBetween(bigVlist.get(i).get_id(),t1,t2);
                  m.put("hotData",value);
                  data.add(m);
@@ -197,4 +206,109 @@ public class WeiboUserInfoController {
         returnMap.put("avg",sum/weiboInfoList.size());
         return createResult.getResults(returnMap);
     }
+    @PostMapping("getFansWeiboSetimentData")
+    public Results getFansWeiboSetimentData(@RequestBody Map map){
+        String id=(String) map.get("id");
+        String t1=(String) map.get("startTime");
+        String t2=(String) map.get("endTime");
+        String url="https://weibo.com/"+id+"%";
+        List<WeiboComment> weiboComments = weiboCommentReposity.findByWeiboUrlLikeAndCreatedAtBetween(url,t1,t2);
+        float sum=0;
+        int []counts={0,0,0,0,0,0,0,0,0,0,0};
+        for(int i=0;i<weiboComments.size();i++){
+            WeiboComment weiboComment = weiboComments.get(i);
+            sum+=weiboComment.getSentiments();
+            int value = Math.round(weiboComment.getSentiments());
+            counts[value]++;
+        }
+        List<Map> maps = new ArrayList<>();
+        for(int i=0;i<11;i++){
+            Map tempMap = new HashMap();
+            tempMap.put("情感值",i);
+            tempMap.put("出现次数",counts[i]);
+            maps.add(tempMap);
+        }
+        Map returnMap=new HashMap();
+        returnMap.put("dataList",maps);
+        returnMap.put("avg",sum/weiboComments.size());
+        return createResult.getResults(returnMap);
+    }
+    @PostMapping("/getUserHotlineDate")
+    public Results getUserHotlineDate(@RequestBody Map map) throws ParseException {
+        String id=(String) map.get("id");
+        String t1=(String) map.get("startTime");
+        String t2=(String) map.get("endTime");
+        ArrayList<String> dateList = new GeneralMethod().getDateArrBySAndE(t1,t2);
+        Map<String,List<Float>> dateMap=new HashMap<>();
+        for(int i=0;i<dateList.size();i++){
+            List<Float> floats = new ArrayList<>();
+            dateMap.put(dateList.get(i),floats);
+        }
+        List<WeiboInfo> weiboInfoList =weiboInfoRepository.findByUserIdAndCreatedAtBetween(id,t1+" 00:00:00",t2+" 00:00:00");
+        for(int i=0;i<weiboInfoList.size();i++){
+            WeiboInfo weiboInfo = weiboInfoList.get(i);
+            String dateStr=weiboInfo.getCreatedAt().substring(0,10);
+            List<Float> floats = dateMap.get(dateStr);
+            try {
+                floats.add((float)(weiboInfo.getRepostNum()*1.2+weiboInfo.getLikeNum()*1.0+weiboInfo.getCommentNum()*1.1));
+                dateMap.put(dateStr,floats);
+            }catch (Exception e){
+                continue;
+            }
+        }
+        List<Map> maps = new ArrayList<>();
+        for(int i=0;i<dateList.size();i++){
+            Map map1 = new HashMap<>();
+            map1.put("时间",dateList.get(i));
+            map1.put("热度",0);
+            maps.add(map1);
+        }
+        List<Double> doubles = new ArrayList<>();
+        for(int i=0;i<maps.size();i++){
+            Map map1 = maps.get(i);
+            float value=0;
+            for (Map.Entry<String, List<Float>> entry : dateMap.entrySet()){
+                if(entry.getKey()==map1.get("时间")){
+                    if(entry.getValue().size()==0){
+                        if(i!=0){
+                            value=(float)maps.get(i-1).get("热度");
+                        }
+                    }else {
+                        float sum = 0;
+                        for(int j=0;j<entry.getValue().size();j++){
+                            sum+=entry.getValue().get(j);
+                        }
+                        value = sum/entry.getValue().size();
+                    }
+                    map1.put("热度",value);
+                    doubles.add((double)value);
+                    maps.set(i,map1);
+                    break;
+                }
+            }
+        }
+
+        /*Collections.sort(maps, new Comparator<Map>() {
+            @Override
+            public int compare(Map o1, Map o2) {
+                String str1 = (String)o1.get("时间");
+                String str2 = (String)o2.get("时间");
+                return str1.compareTo(str2);
+            }
+        });*/
+        Map lastMap= maps.get(maps.size()-1);
+        lastMap.put("预测",lastMap.get("热度"));
+        maps.remove(maps.size()-1);
+        maps.add(lastMap);
+        MyLinearRegression myLinearRegression = new MyLinearRegression(doubles);
+        List<Double> doubleList=myLinearRegression.getPrediction(5);
+        for(int i=0;i<5;i++){
+            Map map1 = new HashMap<>();
+            map1.put("时间","预测"+(i+1));
+            map1.put("预测",doubleList.get(i));
+            maps.add(map1);
+        }
+        return createResult.getResults(maps);
+    }
+
 }

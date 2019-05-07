@@ -11,7 +11,7 @@ cursor.execute("SELECT count(*) FROM `weibo_comment` where sentiments = 0")
 lengthData = cursor.fetchone()
 length=int(lengthData[0])
 print("需要修改的总评论条数%d"%length)
-selectSql="select _id,content from `weibo_comment` where sentiments = 0 "
+selectSql="select id,content from `weibo_comment` where sentiments = 0 "
 cursor.execute(selectSql)
 wordsResults=cursor.fetchall()
 count=0;
@@ -19,7 +19,7 @@ for row in wordsResults:
     try:
         s = SnowNLP(str(row[1]))
         updateCursor = db.cursor()
-        updateSql = "UPDATE `sbhdb`.`weibo_comment` SET `sentiments` = %s WHERE `_id` = '%s'" % (
+        updateSql = "UPDATE `sbhdb`.`weibo_comment` SET `sentiments` = %s WHERE `id` = '%s'" % (
         str(s.sentiments * 10)[0:8], row[0])
         try:
             # 执行SQL语句

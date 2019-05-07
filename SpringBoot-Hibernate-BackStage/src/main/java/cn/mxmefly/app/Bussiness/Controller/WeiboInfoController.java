@@ -5,6 +5,7 @@ import cn.mxmefly.app.Bussiness.Bean.WeiboUserInfo;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboInfoRepository;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboUserInfoReposity;
 import cn.mxmefly.app.Common.CreateResult;
+import cn.mxmefly.app.Common.GeneralMethod;
 import cn.mxmefly.app.Common.LinearRegression.MyLinearRegression;
 import cn.mxmefly.app.Common.Results;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,11 @@ public class WeiboInfoController {
         MyLinearRegression myLinearRegression = new MyLinearRegression(doubles);
 
         return  createResult.getResults(myLinearRegression.getPrediction(5));
+    }
+    @PostMapping("/dateTest")
+    public Results dateTest(@RequestBody Map map) throws ParseException {
+        ArrayList<String> strings = new GeneralMethod().getDateArrBySAndE("2018-05-06","2018-06-01");
+        return createResult.getResults(strings);
     }
 
 

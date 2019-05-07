@@ -17,7 +17,7 @@
 							</el-col>
 							<el-col :span="6">
 								<div>
-									<el-input v-model="input" placeholder="请输入内容">
+									<el-input v-model="inputNickName" placeholder="请输入内容">
 										<template slot="prepend">昵称</template>
 									</el-input>
 								</div>
@@ -61,7 +61,7 @@
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20" class="mgb20" v-if="(selected.name!='')">
+				<el-row :gutter="20"  v-if="(selected.name!='')">
 					<el-col :span="12">
 						<el-card shadow="hover" style="height:500px;">
 							<div slot="header" class="clearfix">
@@ -83,18 +83,26 @@
 							<div slot="header" class="clearfix">
 								<span>人物画像</span>
 							</div>
-							<ve-wordcloud :data="wordsCloudData" :settings="chartSettings"></ve-wordcloud>
+							<ve-wordcloud :data="wordsCloudData" :settings="chartSettings" v-loading="(wordsCloudData.rows.length==0)"></ve-wordcloud>
 						</el-card>
 					</el-col>
 
 				</el-row>
-				<el-row :gutter="20" class="mgb20" v-if="(selected.name!='')">
+				<el-row :gutter="20"  v-if="(selected.name!='')">
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:70px;">
+							<div class="moudelTitle">
+								微博粉丝的地区分布和性别年龄段分布，可以<span>直观的分析该大V影响力受众人群</span>
+								<br>由于权限问题样本容量只能获取到100左右，样本是具备随机性的，故也具备一定的分析参考性。
+							</div>
+						</el-card>
+					</el-col>
 					<el-col :span="12">
 						<el-card shadow="hover" style="height:500px;">
 							<div slot="header" class="clearfix">
 								<span>粉丝地区分布</span>
 							</div>
-							<ve-map :data="fansPositionData"></ve-map>
+							<ve-map :data="fansPositionData" v-loading="(fansPositionData.rows.length==0)"></ve-map>
 						</el-card>
 					</el-col>
 					<el-col :span="12">
@@ -102,17 +110,26 @@
 							<div slot="header" class="clearfix">
 								<span>粉丝性别/年龄分布</span>
 							</div>
-							<ve-pie :data="genderOrAgeData" :settings="chartSettings"></ve-pie>
+							<ve-pie :data="genderOrAgeData" :settings="chartSettings" v-loading="(genderOrAgeData.rows.length==0)"></ve-pie>
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20" class="mgb20" v-if="(selected.name!='')">
+				<el-row :gutter="20"  v-if="(selected.name!='')">
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:100px;">
+							<div class="moudelTitle">
+								微博的情感倾向分布一定程度说明大V想塑造的形象，评论分布则体现粉丝对该大V的评价，两曲线差异与形象评价差异相关
+								<br>范围0~1，越接近1倾向越积极，越接近0态度越消极，<span>曲线两边高中间低说明人物争议较大，反之表明人物多陈述客观事实</span>
+							    <br>微博情感倾向平均为： <span>{{sentiments1}}</span>  ；评论情感倾向平均为 <span>{{sentiments2}}</span>
+							</div>
+						</el-card>
+					</el-col>
 					<el-col :span="12">
 						<el-card shadow="hover" style="height:400px;">
 							<div slot="header" class="clearfix">
 								<span>微博情感倾向</span>
 							</div>
-							<ve-line :data="weiboSentimentData" :settings="chartSettings1" height="320px"></ve-line>
+							<ve-line :data="weiboSentimentData" :settings="chartSettings1" height="320px" v-loading="(weiboSentimentData.rows.length==0)"></ve-line>
 						</el-card>
 					</el-col>
 					<el-col :span="12">
@@ -120,9 +137,20 @@
 							<div slot="header" class="clearfix">
 								<span>评论情感倾向</span>
 							</div>
-
+							<ve-line :data="fansSentimentData" :settings="chartSettings1" height="320px" v-loading="(fansSentimentData.rows.length==0)"></ve-line>
 						</el-card>
 					</el-col>
+				</el-row>
+				<el-row :gutter="20"  v-if="(selected.name!='')">
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:360px;">
+							<div slot="header" class="clearfix">
+								<span>热度趋势及预测</span>
+							</div>
+							<ve-line :data="userHotlineDate" height="280px" v-loading="(userHotlineDate.rows.length==0)"></ve-line>
+						</el-card>
+					</el-col>
+					
 				</el-row>
 
 
@@ -166,7 +194,7 @@
 					}]
 				},
 				dateRange: '',
-				input: '',
+				inputNickName: '',
 				options: [{
 					value: '选项1',
 					label: '科技'
@@ -220,6 +248,16 @@
 						'次数': ['出现次数']
 					},
 					area: true
+				},
+				fansSentimentData: {
+					columns: ['情感值', '出现次数'],
+					rows: []
+				},
+				sentiments1:0,
+				sentiments2:0,
+				userHotlineDate:{
+					columns: ['时间','热度','预留','预测'],
+					rows: []
 				}
 			}
 		},
@@ -314,11 +352,13 @@
 			},
 			handleGetUserHotData: function() {
 				var _this = this;
+				this.handleRefresh();
 				this.tableLoading = true;
 				if (this.dateRange == "") {
 					this.handleSetDefaltTime();
 				}
 				var obj = {
+					name:this.inputNickName,
 					startTime: this.startTime,
 					endTime: this.endTime
 				};
@@ -330,13 +370,14 @@
 					//console.log("res", res)
 					_this.tableLoading = false
 					_this.userData = res.data.data;
-
 					_this.selected.id = _this.userData[0].weiboUsr._id;
 					_this.selected.name = _this.userData[0].weiboUsr.nickName;
 					_this.selectedUserInfo = _this.userData[0].weiboUsr;
 					_this.handleGetWordsCloudData();
 					_this.handlegetFansInfo();
 					_this.handleGetUserWeiboSetimentData();
+					_this.handleGetFansWeiboSetimentData();
+					_this.handleGetUserHotlineDate();
 				}).catch(function() {
 					console.log("请求失败");
 				});
@@ -347,16 +388,18 @@
 			handleDetal: function(row) {
 				this.selected.id = row.id;
 				this.selected.name = row.name;
-				console.log("selected", this.selected)
 				for (var i = 0; i < this.userData.length; i++) {
 					if (this.userData[i].weiboUsr._id == row.id) {
 						this.selectedUserInfo = this.userData[i].weiboUsr;
 						break;
 					}
 				}
+				this.handleRefresh();
 				this.handleGetWordsCloudData();
 				this.handlegetFansInfo();
 				this.handleGetUserWeiboSetimentData();
+				this.handleGetFansWeiboSetimentData();
+				this.handleGetUserHotlineDate();
 			},
 			handleGetWordsCloudData: function() {
 				var _this = this;
@@ -398,17 +441,60 @@
 					startTime: this.startTime,
 					endTime: this.endTime
 			    };
-				// obj = JSON.stringify(obj);
 			    this.$axios({
 			        method: 'post',
 			        url: BASE_API+'/getUserWeiboSetimentData',
 			        data: obj
 			    }).then(function (res) {
-			        console.log("res", res);
 					_this.weiboSentimentData.rows=res.data.data.dataList;
+					_this.sentiments1=res.data.data.avg;
 			    }).catch(function () {
 			        Console.log("请求失败");
 			    });
+			},
+			handleGetFansWeiboSetimentData: function () {
+				var _this=this;
+			    var obj = {
+					id: this.selected.id,
+					startTime: this.startTime,
+					endTime: this.endTime
+			    };
+			    this.$axios({
+			        method: 'post',
+			        url: BASE_API+'/getFansWeiboSetimentData',
+			        data: obj
+			    }).then(function (res) {
+					_this.fansSentimentData.rows=res.data.data.dataList;
+					_this.sentiments2=res.data.data.avg;
+			    }).catch(function () {
+			        Console.log("请求失败");
+			    });
+			},
+			handleGetUserHotlineDate: function () {
+				var _this=this;
+			    var obj = {
+					id: this.selected.id,
+					startTime: this.startTime.substring(0, 10),
+					endTime: this.endTime.substring(0, 10)
+			    };
+			    this.$axios({
+			        method: 'post',
+			        url: BASE_API+'/getUserHotlineDate',
+			        data: obj
+			    }).then(function (res) {
+					_this.userHotlineDate.rows=res.data.data;
+					
+			    }).catch(function () {
+			        console.log("请求失败");
+			    });
+			},
+			handleRefresh:function(){
+				this.wordsCloudData.rows=[];
+				this.fansPositionData.rows=[];
+				this.genderOrAgeData.rows=[];
+				this.weiboSentimentData.rows=[];
+				this.fansSentimentData.rows=[];
+				this.userHotlineDate.rows=[];
 			}
 
 		}
@@ -418,9 +504,14 @@
 
 <style scoped>
 	.el-row {
-		margin-bottom: 20px;
+		margin-bottom: 15px;
 	}
-
+	.el-col {
+		padding-left: 4px!important;
+        padding-right: 4px!important;
+		padding-top: 1px!important;
+		padding-bottom: 1px!important;
+	}
 	.mgb20 {
 		margin-bottom: 20px;
 	}
@@ -428,7 +519,13 @@
 	.mgb15 {
 		margin-bottom: 15px;
 	}
-
+    .moudelTitle{
+		color:#1482F0
+	}
+	.moudelTitle span{
+		color:#E6A23C;
+		font-size: 18px;
+	}
 	.el-table .first-row {
 		background: #ef3d2f;
 		color: #0D2650;

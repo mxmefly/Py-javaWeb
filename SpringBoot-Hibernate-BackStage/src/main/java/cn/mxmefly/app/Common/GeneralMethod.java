@@ -1,14 +1,13 @@
 package cn.mxmefly.app.Common;
 
-import cn.mxmefly.app.Common.Arima.ARIMA;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /*md5 加密*/
 public class GeneralMethod {
@@ -59,18 +58,21 @@ public class GeneralMethod {
         String result = format.format(today);
         return result;
     }
-    public List<Double> getArimaData(List<Double> data,int num){
-        List<Double> doubleList = new ArrayList<>();
-        for(int i=0;i<num;i++){
-            double[] dataArray=new double[data.size()];
-            for(int j=0;j<data.size();j++)
-                dataArray[j]=data.get(j);
-            ARIMA arima = new ARIMA(dataArray);
-            int []model=arima.getARIMAmodel();
-            double arimaValue=arima.aftDeal(arima.predictValue(model[0],model[1]));
-            doubleList.add(arimaValue);
-            data.add(arimaValue);
+    public ArrayList<String> getDateArrBySAndE(String startStr,String endStr) throws ParseException {
+        ArrayList<String> arrayList = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date beginDate = dateFormat1.parse(startStr);
+        Date endDate = dateFormat1.parse(endStr);
+        Date date = beginDate;
+        while (!date.equals(endDate)) {
+            arrayList.add(dateFormat1.format(date));
+            c.setTime(date);
+            c.add(Calendar.DATE, 1); // 日期加1天
+            date = c.getTime();
         }
-        return doubleList;
+        arrayList.add(endStr);
+        return  arrayList;
     }
+
 }
