@@ -31,7 +31,7 @@
 				// obj = JSON.stringify(obj);
                 this.$axios({
                     method: 'post',
-                    url: BASE_API+'/getUserHotlineDate',
+                    url: BASE_API+'/getHotOderTest',
                     data: obj
                 }).then(function (res) {
                     console.log("res", res);

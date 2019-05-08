@@ -66,6 +66,11 @@ public class WeiboInfoController {
         ArrayList<String> strings = new GeneralMethod().getDateArrBySAndE("2018-05-06","2018-06-01");
         return createResult.getResults(strings);
     }
+    @PostMapping("/getHotOderTest")
+    public Results getHotOder(){
+        return  createResult.getResults(weiboUserInfoReposity.getHotOder("2019-01-06","2019-06-01"));
+    }
+
 
 
 }

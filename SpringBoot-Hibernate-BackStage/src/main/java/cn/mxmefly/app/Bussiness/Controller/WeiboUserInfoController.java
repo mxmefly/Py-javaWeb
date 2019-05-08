@@ -30,6 +30,12 @@ public class WeiboUserInfoController {
 
     CreateResult createResult = new CreateResult();
 
+    @PostMapping("/getWeiboUserInfo")
+    public Results getWeiboUserInfo(@RequestBody Map map){
+        String id = (String) map.get("id");
+        return createResult.getResults(weiboUserInfoReposity.findBy_id(id));
+    }
+
     @PostMapping("/getUserHotData")
     public Results getUserHotData(@RequestBody Map map){
         String name =(String)map.get("name");
@@ -38,35 +44,35 @@ public class WeiboUserInfoController {
         List<Map> data = new ArrayList<>();
         List<WeiboUserInfo> weiboUserInfos= new ArrayList<>();
         if(name.length()==0){
-            weiboUserInfos= weiboUserInfoReposity.findAllBigV();
+            return createResult.getResults(weiboUserInfoReposity.getHotOder(t1,t2));
         }else {
             weiboUserInfos=weiboUserInfoReposity.findByNickNameLike("%"+name+"%");
-        }
-        for(int i=0;i<weiboUserInfos.size();i++){
-             Map m= new HashMap();
-             m.put("weiboUsr",weiboUserInfos.get(i));
-             float value= (float) 0;
-             try {
-                 value=weiboUserInfoReposity.getUserHotData(weiboUserInfos.get(i).get_id(),t1,t2);
-                 //long count=weiboInfoRepository.countByUserIdAndCreatedAtBetween(bigVlist.get(i).get_id(),t1,t2);
-                 m.put("hotData",value);
-                 data.add(m);
-             }catch (Exception e){
-                 value=0;
-             }
-
-        }
-        Collections.sort(data, new Comparator<Map>() {
-            @Override
-            public int compare(Map o1, Map o2) {
-                if((float)o2.get("hotData")-(float)o1.get("hotData")>0){
-                    return 1;
-                }else{
-                    return -1;
+            for(int i=0;i<weiboUserInfos.size();i++){
+                Map m= new HashMap();
+                m.put("weiboUsr",weiboUserInfos.get(i));
+                float value= (float) 0;
+                try {
+                    value=weiboUserInfoReposity.getUserHotData(weiboUserInfos.get(i).get_id(),t1,t2);
+                    //long count=weiboInfoRepository.countByUserIdAndCreatedAtBetween(bigVlist.get(i).get_id(),t1,t2);
+                    m.put("hotData",value);
+                    data.add(m);
+                }catch (Exception e){
+                    value=0;
                 }
+
             }
-        });
-        return createResult.getResults(data);
+            Collections.sort(data, new Comparator<Map>() {
+                @Override
+                public int compare(Map o1, Map o2) {
+                    if((float)o2.get("hotData")-(float)o1.get("hotData")>0){
+                        return 1;
+                    }else{
+                        return -1;
+                    }
+                }
+            });
+            return createResult.getResults(data);
+        }
     }
 
     @PostMapping("/getUserPortrait")
@@ -315,22 +321,22 @@ public class WeiboUserInfoController {
         long allUserCounts= weiboUserInfoReposity.count();
         /*获取1000名用户做样本*/
         List<WeiboUserInfo> weiboUserInfos = weiboUserInfoReposity.getUserRandom();
-        Map fansNumMap = new HashMap();
+        Map<String, Integer> fansNumMap = new HashMap();
         fansNumMap.put("<100",0);
         fansNumMap.put("100-1000",0);
         fansNumMap.put("1000-10000",0);
         fansNumMap.put("10000-100000",0);
         fansNumMap.put("100000-1000000",0);
         fansNumMap.put(">1000000",0);
-        Map ageNumMap = new HashMap();
+        Map<String, Integer> ageNumMap = new HashMap();
         ageNumMap.put("其他",0);
         ageNumMap.put("70后",0);
         ageNumMap.put("80后",0);
         ageNumMap.put("90后",0);
         ageNumMap.put("00后",0);
-        Map genderNumMap = new HashMap();
-        Map provinceNumMap = new HashMap();
-        Map vipLevelNumMap = new HashMap();
+        Map<String, Integer> genderNumMap = new HashMap();
+        Map<String, Integer> provinceNumMap = new HashMap();
+        Map<String, Integer> vipLevelNumMap = new HashMap();
         for(int i=0;i<weiboUserInfos.size();i++){
             WeiboUserInfo weiboUserInfo = weiboUserInfos.get(i);
             double lg=Math.log((double) weiboUserInfo.getFansNum());
@@ -383,11 +389,78 @@ public class WeiboUserInfoController {
             }
         }
         Map returnMap = new HashMap();
-        returnMap.put("fansNumMap",fansNumMap);
-        returnMap.put("ageNumMap",ageNumMap);
-        returnMap.put("genderNumMap",genderNumMap);
-        returnMap.put("provinceNumMap",provinceNumMap);
-        returnMap.put("vipLevelNumMap",vipLevelNumMap);
+        List<Map> fansNumMapList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : fansNumMap.entrySet()){
+            Map map1 = new HashMap();
+            map1.put("name",entry.getKey());
+            map1.put("num",entry.getValue());
+            map1.put("proportion",entry.getValue()/10+"%");
+            fansNumMapList.add(map1);
+        }
+
+        List<Map> ageNumMapList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : ageNumMap.entrySet()){
+            Map map1 = new HashMap();
+            map1.put("name",entry.getKey());
+            map1.put("num",entry.getValue());
+            ageNumMapList.add(map1);
+        }
+        Collections.sort(ageNumMapList, new Comparator<Map>() {
+            @Override
+            public int compare(Map o1, Map o2) {
+                String str1 = (String)o1.get("name");
+                if(str1=="00后"){
+                    str1="95后";
+                }
+                if(str1=="其他"){
+                    str1="00";
+                }
+                String str2 = (String)o2.get("name");
+                if(str2=="00后"){
+                    str2="95后";
+                }
+                if(str2=="其他"){
+                    str2="00";
+                }
+                return str1.compareTo(str2);
+            }
+        });
+        List<Map> genderNumMapList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : genderNumMap.entrySet()){
+            Map map1 = new HashMap();
+            map1.put("name",entry.getKey());
+            map1.put("num",entry.getValue());
+            genderNumMapList.add(map1);
+        }
+        List<Map> provinceNumMapList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : provinceNumMap.entrySet()){
+            Map map1 = new HashMap();
+            map1.put("name",entry.getKey());
+            map1.put("num",entry.getValue());
+            provinceNumMapList.add(map1);
+        }
+        List<Map> vipLevelNumMapList = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : vipLevelNumMap.entrySet()){
+            Map map1 = new HashMap();
+            map1.put("name",entry.getKey());
+            map1.put("num",entry.getValue());
+            map1.put("proportion",entry.getValue()/10+"%");
+            vipLevelNumMapList.add(map1);
+        }
+        Collections.sort(vipLevelNumMapList, new Comparator<Map>() {
+            @Override
+            public int compare(Map o1, Map o2) {
+                String str1 = (String)o1.get("name");
+                String str2 = (String)o2.get("name");
+                return str1.compareTo(str2);
+            }
+        });
+        returnMap.put("fansNumMap",fansNumMapList);
+        returnMap.put("ageNumMap",ageNumMapList);
+        returnMap.put("genderNumMap",genderNumMapList);
+        returnMap.put("provinceNumMap",provinceNumMapList);
+        returnMap.put("vipLevelNumMap",vipLevelNumMapList);
+        returnMap.put("allUserCounts",allUserCounts);
         return createResult.getResults(returnMap);
     }
 

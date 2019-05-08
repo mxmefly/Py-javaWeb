@@ -61,13 +61,13 @@
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20" v-if="(selected.name!='')">
+				<el-row :gutter="20" v-if="(selected.id!='')">
 					<el-col :span="12">
 						<el-card shadow="hover" style="height:500px;">
 							<div slot="header" class="clearfix">
 								<span>详细资料---{{selected.name}}</span>
 							</div>
-							<div class="user-info-list">昵称：<span>{{selectedUserInfo.nickName}}</span></div>
+							<div class="user-info-list">签名：<span>{{selectedUserInfo.briefIntroduction}}</span></div>
 							<div class="user-info-list">性别：<span>{{selectedUserInfo.gender}}</span></div>
 							<div class="user-info-list">位置：<span>{{selectedUserInfo.province+selectedUserInfo.city}}</span></div>
 							<div class="user-info-list">生日：<span>{{selectedUserInfo.birthday}}</span></div>
@@ -114,7 +114,7 @@
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20" v-if="(selected.name!='')">
+				<el-row :gutter="20" v-if="(selected.id!='')">
 					<el-col :span="24">
 						<el-card shadow="hover" style="height:100px;">
 							<div class="moudelTitle">
@@ -267,7 +267,8 @@
 					feature: {
 						saveAsImage: {}
 					}
-				}
+				},
+				type:0
 			}
 		},
 		computed: {
@@ -295,19 +296,35 @@
 				if (this.userData == []) {
 					return []
 				} else {
-					var data = [];
-					var size = (this.userData.length > 15) ? 15 : this.userData.length;
-					for (var i = 0; i < size; i++) {
-						var arr = {
-							id: this.userData[i].weiboUsr._id,
-							order: i + 1,
-							name: this.userData[i].weiboUsr.nickName,
-							authentication: this.userData[i].weiboUsr.authentication,
-							hotData: this.userData[i].hotData
+					if(this.type>0){
+						var data = [];
+						var size = (this.userData.length > 15) ? 15 : this.userData.length;
+						for (var i = 0; i < size; i++) {
+							var arr = {
+								id: this.userData[i].weiboUsr._id,
+								order: i + 1,
+								name: this.userData[i].weiboUsr.nickName,
+								authentication: this.userData[i].weiboUsr.authentication,
+								hotData: this.userData[i].hotData
+							}
+							data.push(arr)
 						}
-						data.push(arr)
+						return data;                           
+					}else{
+						var data = [];
+						var size = (this.userData.length > 15) ? 15 : this.userData.length;
+						for (var i = 0; i < size; i++) {
+							var arr = {
+								id: this.userData[i][0],
+								order: i + 1,
+								name: this.userData[i][1],
+								authentication: this.userData[i][2],
+								hotData: this.userData[i][3]
+							}
+							data.push(arr)
+						}
+						return data
 					}
-					return data;
 				}
 			},
 
@@ -379,9 +396,15 @@
 					//console.log("res", res)
 					_this.tableLoading = false
 					_this.userData = res.data.data;
-					_this.selected.id = _this.userData[0].weiboUsr._id;
-					_this.selected.name = _this.userData[0].weiboUsr.nickName;
-					_this.selectedUserInfo = _this.userData[0].weiboUsr;
+					if(_this.inputNickName.length>0){
+						_this.type=1;
+					}else{
+						_this.type=0;
+					}
+					_this.selected.id = _this.userTableData[0].id;
+					_this.selected.name = _this.userTableData[0].name;
+					//_this.selectedUserInfo = _this.userData[0].weiboUsr;
+					_this.handleGetUserInfo();
 					_this.handleGetWordsCloudData();
 					_this.handlegetFansInfo();
 					_this.handleGetUserWeiboSetimentData();
@@ -397,18 +420,28 @@
 			handleDetal: function(row) {
 				this.selected.id = row.id;
 				this.selected.name = row.name;
-				for (var i = 0; i < this.userData.length; i++) {
-					if (this.userData[i].weiboUsr._id == row.id) {
-						this.selectedUserInfo = this.userData[i].weiboUsr;
-						break;
-					}
-				}
+				this.handleGetUserInfo();
 				this.handleRefresh();
 				this.handleGetWordsCloudData();
 				this.handlegetFansInfo();
 				this.handleGetUserWeiboSetimentData();
 				this.handleGetFansWeiboSetimentData();
 				this.handleGetUserHotlineDate();
+			},
+			handleGetUserInfo: function() {
+				var _this = this;
+				var obj = {
+					id: this.selected.id,
+				};
+				this.$axios({
+					method: 'post',
+					url: BASE_API + '/getWeiboUserInfo',
+					data: obj
+				}).then(function(res) {
+					_this.selectedUserInfo = res.data.data;
+				}).catch(function() {
+					Console.log("请求失败");
+				});
 			},
 			handleGetWordsCloudData: function() {
 				var _this = this;
@@ -565,5 +598,6 @@
 
 	.user-info-list span {
 		margin-left: 70px;
+		display: inline-block;
 	}
 </style>
