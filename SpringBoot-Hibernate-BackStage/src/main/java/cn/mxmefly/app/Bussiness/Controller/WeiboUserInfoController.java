@@ -310,5 +310,86 @@ public class WeiboUserInfoController {
         }
         return createResult.getResults(maps);
     }
+    @PostMapping("/allData/getUserInfo")
+    public Results getUserInfo(@RequestBody Map map){
+        long allUserCounts= weiboUserInfoReposity.count();
+        /*获取1000名用户做样本*/
+        List<WeiboUserInfo> weiboUserInfos = weiboUserInfoReposity.getUserRandom();
+        Map fansNumMap = new HashMap();
+        fansNumMap.put("<100",0);
+        fansNumMap.put("100-1000",0);
+        fansNumMap.put("1000-10000",0);
+        fansNumMap.put("10000-100000",0);
+        fansNumMap.put("100000-1000000",0);
+        fansNumMap.put(">1000000",0);
+        Map ageNumMap = new HashMap();
+        ageNumMap.put("其他",0);
+        ageNumMap.put("70后",0);
+        ageNumMap.put("80后",0);
+        ageNumMap.put("90后",0);
+        ageNumMap.put("00后",0);
+        Map genderNumMap = new HashMap();
+        Map provinceNumMap = new HashMap();
+        Map vipLevelNumMap = new HashMap();
+        for(int i=0;i<weiboUserInfos.size();i++){
+            WeiboUserInfo weiboUserInfo = weiboUserInfos.get(i);
+            double lg=Math.log((double) weiboUserInfo.getFansNum());
+            if(lg<=2){
+                fansNumMap.put("<100",(int)fansNumMap.get("<100")+1);
+            }else if(lg>2&&lg<=3){
+                fansNumMap.put("100-1000",(int)fansNumMap.get("100-1000")+1);
+            }else if(lg>3&&lg<=4){
+                fansNumMap.put("1000-10000",(int)fansNumMap.get("1000-10000")+1);
+            }else if(lg>4&&lg<=5){
+                fansNumMap.put("10000-100000",(int)fansNumMap.get("10000-100000")+1);
+            }else if(lg>5&&lg<=6){
+                fansNumMap.put("100000-1000000",(int)fansNumMap.get("100000-1000000")+1);
+            }else {
+                fansNumMap.put(">1000000",(int)fansNumMap.get(">1000000")+1);
+            }
+            if(weiboUserInfo.getBirthday().length()==10){
+                if(weiboUserInfo.getBirthday().compareTo("1970-01-01")<0){
+                    ageNumMap.put("其他",(int)ageNumMap.get("其他")+1);
+                }else if(weiboUserInfo.getBirthday().compareTo("1970-01-01")>=0&&weiboUserInfo.getBirthday().compareTo("1980-01-01")<0){
+                    ageNumMap.put("70后",(int)ageNumMap.get("70后")+1);
+                }else if(weiboUserInfo.getBirthday().compareTo("1980-01-01")>=0&&weiboUserInfo.getBirthday().compareTo("1990-01-01")<0){
+                    ageNumMap.put("80后",(int)ageNumMap.get("80后")+1);
+                }else if(weiboUserInfo.getBirthday().compareTo("1990-01-01")>=0&&weiboUserInfo.getBirthday().compareTo("2000-01-01")<0){
+                    ageNumMap.put("90后",(int)ageNumMap.get("90后")+1);
+                }else{
+                    ageNumMap.put("00后",(int)ageNumMap.get("00后")+1);
+                }
+            }
+            if(weiboUserInfo.getGender().length()>0){
+                if(genderNumMap.containsKey(weiboUserInfo.getGender())){
+                    genderNumMap.put(weiboUserInfo.getGender(),(int)genderNumMap.get(weiboUserInfo.getGender())+1);
+                }else {
+                    genderNumMap.put(weiboUserInfo.getGender(),1);
+                }
+            }
+            if(weiboUserInfo.getProvince().length()>0){
+                if(provinceNumMap.containsKey(weiboUserInfo.getProvince())){
+                    provinceNumMap.put(weiboUserInfo.getProvince(),(int)provinceNumMap.get(weiboUserInfo.getProvince())+1);
+                }else {
+                    provinceNumMap.put(weiboUserInfo.getProvince(),1);
+                }
+            }
+            if(weiboUserInfo.getVipLevel().length()>0){
+                if(vipLevelNumMap.containsKey(weiboUserInfo.getVipLevel())){
+                    vipLevelNumMap.put(weiboUserInfo.getVipLevel(),(int)vipLevelNumMap.get(weiboUserInfo.getVipLevel())+1);
+                }else {
+                    vipLevelNumMap.put(weiboUserInfo.getVipLevel(),1);
+                }
+            }
+        }
+        Map returnMap = new HashMap();
+        returnMap.put("fansNumMap",fansNumMap);
+        returnMap.put("ageNumMap",ageNumMap);
+        returnMap.put("genderNumMap",genderNumMap);
+        returnMap.put("provinceNumMap",provinceNumMap);
+        returnMap.put("vipLevelNumMap",vipLevelNumMap);
+        return createResult.getResults(returnMap);
+    }
+
 
 }

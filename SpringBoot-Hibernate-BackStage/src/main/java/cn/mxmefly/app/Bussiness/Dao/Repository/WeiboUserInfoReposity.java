@@ -26,5 +26,8 @@ public interface WeiboUserInfoReposity extends JpaRepository<WeiboUserInfo,Integ
 
     public List<WeiboUserInfo> findByNickNameLike(String name);
 
+    @Query(value="SELECT * FROM weibo_user_info ORDER BY RAND() LIMIT 1000",nativeQuery = true)
+    public List<WeiboUserInfo> getUserRandom();
+
 
 }

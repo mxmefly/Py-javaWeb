@@ -13,16 +13,20 @@ lengthData = cursor.fetchone()
 length=int(lengthData[0])
 print("需要修改的总微博条数%d"%length)
 #selectSql="select _id,content from `weibo_info`  where  sentiments=0"
-selectSql="select _id,content from `weibo_info` "
+selectSql="select id,content from `weibo_info` where  sentiments=0"
 cursor.execute(selectSql)
 wordsResults=cursor.fetchall()
 count=0;
 for row in wordsResults:
     try:
-        s = SnowNLP(str(row[1]))
+        try:
+            s = SnowNLP(str(row[1]))
+            value=s.sentiments*10
+        except:
+            value=5
         updateCursor = db.cursor()
-        updateSql = "UPDATE `sbhdb`.`weibo_info` SET `sentiments` = %s WHERE `_id` = '%s'" % (
-        str(s.sentiments*10)[0:8], row[0])
+        updateSql = "UPDATE `sbhdb`.`weibo_info` SET `sentiments` = %s WHERE `id` = '%s'" % (
+        str(value)[0:8], row[0])
         try:
             # 执行SQL语句
             updateCursor.execute(updateSql)
@@ -32,7 +36,7 @@ for row in wordsResults:
         except:
             # 发生错误时回滚
             db.rollback()
-        print(str(row[1]) + "   " + str(s.sentiments)[0:8])
+        print(str(row[1]) + "   " + str(value)[0:8])
     except:
         print(str(row[1]) + "   出现错误" )
 print("共处理了%d条微博数据"%count)

@@ -29,11 +29,20 @@ class WeiboSpider(Spider):
     def start_requests(self):
         
         start_uids = [
-            '1749127163'
+            '1196235387',
+            '1195230310',
+            '1197362373',
+            '1251000504',
+            '1287373332',
+            '1338738570',
+            '1642566747',
+            '1692391497',
+            '1808624312',
+            '5676095533'
         ]
 
         for uid in start_uids:
-            self.cursor.execute("SELECT fan_id FROM weibo_user_rela WHERE followed_id = '%s' LIMIT 100"%(uid))
+            self.cursor.execute("SELECT fan_id FROM weibo_user_rela WHERE followed_id = '%s' ORDER  BY  rand() LIMIT 100"%(uid))
             fansUids = self.cursor.fetchall();
             for funId in fansUids:
                 yield Request(url="https://weibo.cn/%s/info" % funId[0], callback=self.parse_information)

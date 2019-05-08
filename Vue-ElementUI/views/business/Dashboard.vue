@@ -105,7 +105,7 @@
 							<div slot="header" class="clearfix">
 								<span>抓取用户日图（近10天）</span>
 							</div>
-							<ve-line :data="weiboUserlineDate" height="280px"></ve-line>
+							<ve-line :data="weiboUserlineDate" height="280px" :toolbox="toolbox" ></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
@@ -115,7 +115,7 @@
 							<div slot="header" class="clearfix">
 								<span>抓取微博日图（近10天）</span>
 							</div>
-							<ve-line v-loading="loading1" :data="weiboLineData" height="320px"></ve-line>
+							<ve-line v-loading="loading1" :data="weiboLineData" height="320px" :toolbox="toolbox"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
@@ -125,7 +125,7 @@
 							<div slot="header" class="clearfix">
 								<span>抓取评论日图（近10天）</span>
 							</div>
-							<ve-line v-loading="loading2" :data="weiboCommentLineData" height="320px"></ve-line>
+							<ve-line v-loading="loading2" :data="weiboCommentLineData" height="320px" :toolbox="toolbox"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
@@ -172,6 +172,11 @@
 				cpuUsed: 0,
 				loading1: true,
 				loading2: true,
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
+				}
 			}
 		},
 		computed: {

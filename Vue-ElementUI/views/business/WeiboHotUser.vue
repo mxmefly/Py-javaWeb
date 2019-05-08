@@ -61,7 +61,7 @@
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20"  v-if="(selected.name!='')">
+				<el-row :gutter="20" v-if="(selected.name!='')">
 					<el-col :span="12">
 						<el-card shadow="hover" style="height:500px;">
 							<div slot="header" class="clearfix">
@@ -83,12 +83,12 @@
 							<div slot="header" class="clearfix">
 								<span>人物画像</span>
 							</div>
-							<ve-wordcloud :data="wordsCloudData" :settings="chartSettings" v-loading="(wordsCloudData.rows.length==0)"></ve-wordcloud>
+							<ve-wordcloud :data="wordsCloudData" :settings="chartSettings" v-loading="(wordsCloudData.rows.length==0)" :toolbox="toolbox"></ve-wordcloud>
 						</el-card>
 					</el-col>
 
 				</el-row>
-				<el-row :gutter="20"  v-if="(selected.name!='')">
+				<el-row :gutter="20" v-if="(selected.name!='')">
 					<el-col :span="24">
 						<el-card shadow="hover" style="height:70px;">
 							<div class="moudelTitle">
@@ -102,7 +102,7 @@
 							<div slot="header" class="clearfix">
 								<span>粉丝地区分布</span>
 							</div>
-							<ve-map :data="fansPositionData" v-loading="(fansPositionData.rows.length==0)"></ve-map>
+							<ve-map :data="fansPositionData" v-loading="(fansPositionData.rows.length==0)" :toolbox="toolbox"></ve-map>
 						</el-card>
 					</el-col>
 					<el-col :span="12">
@@ -110,17 +110,17 @@
 							<div slot="header" class="clearfix">
 								<span>粉丝性别/年龄分布</span>
 							</div>
-							<ve-pie :data="genderOrAgeData" :settings="chartSettings" v-loading="(genderOrAgeData.rows.length==0)"></ve-pie>
+							<ve-pie :data="genderOrAgeData" :settings="chartSettings" v-loading="(genderOrAgeData.rows.length==0)" :toolbox="toolbox"></ve-pie>
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20"  v-if="(selected.name!='')">
+				<el-row :gutter="20" v-if="(selected.name!='')">
 					<el-col :span="24">
 						<el-card shadow="hover" style="height:100px;">
 							<div class="moudelTitle">
 								微博的情感倾向分布一定程度说明大V想塑造的形象，评论分布则体现粉丝对该大V的评价，两曲线差异与形象评价差异相关
 								<br>范围0~1，越接近1倾向越积极，越接近0态度越消极，<span>曲线两边高中间低说明人物争议较大，反之表明人物多陈述客观事实</span>
-							    <br>微博情感倾向平均为： <span>{{sentiments1}}</span>  ；评论情感倾向平均为 <span>{{sentiments2}}</span>
+								<br>微博情感倾向平均为： <span>{{sentiments1}}</span> ；评论情感倾向平均为 <span>{{sentiments2}}</span>
 							</div>
 						</el-card>
 					</el-col>
@@ -129,7 +129,7 @@
 							<div slot="header" class="clearfix">
 								<span>微博情感倾向</span>
 							</div>
-							<ve-line :data="weiboSentimentData" :settings="chartSettings1" height="320px" v-loading="(weiboSentimentData.rows.length==0)"></ve-line>
+							<ve-line :data="weiboSentimentData" :settings="chartSettings1" height="320px" v-loading="(weiboSentimentData.rows.length==0)" :toolbox="toolbox"></ve-line>
 						</el-card>
 					</el-col>
 					<el-col :span="12">
@@ -137,20 +137,20 @@
 							<div slot="header" class="clearfix">
 								<span>评论情感倾向</span>
 							</div>
-							<ve-line :data="fansSentimentData" :settings="chartSettings1" height="320px" v-loading="(fansSentimentData.rows.length==0)"></ve-line>
+							<ve-line :data="fansSentimentData" :settings="chartSettings1" height="320px" v-loading="(fansSentimentData.rows.length==0)" :toolbox="toolbox"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20"  v-if="(selected.name!='')">
+				<el-row :gutter="20" v-if="(selected.name!='')">
 					<el-col :span="24">
 						<el-card shadow="hover" style="height:360px;">
 							<div slot="header" class="clearfix">
 								<span>热度趋势及预测</span>
 							</div>
-							<ve-line :data="userHotlineDate" height="280px" v-loading="(userHotlineDate.rows.length==0)"></ve-line>
+							<ve-line :data="userHotlineDate" :data-zoom="dataZoom" height="280px" v-loading="(userHotlineDate.rows.length==0)" :toolbox="toolbox" :colors="colors"></ve-line>
 						</el-card>
 					</el-col>
-					
+
 				</el-row>
 
 
@@ -253,11 +253,20 @@
 					columns: ['情感值', '出现次数'],
 					rows: []
 				},
-				sentiments1:0,
-				sentiments2:0,
-				userHotlineDate:{
-					columns: ['时间','热度','预留','预测'],
+				sentiments1: 0,
+				sentiments2: 0,
+				userHotlineDate: {
+					columns: ['时间', '热度', '预测'],
 					rows: []
+				},
+				colors: ['#2f4554','#c23531',],
+				dataZoom: [{
+					type: 'slider',
+				}],
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
 				}
 			}
 		},
@@ -358,7 +367,7 @@
 					this.handleSetDefaltTime();
 				}
 				var obj = {
-					name:this.inputNickName,
+					name: this.inputNickName,
 					startTime: this.startTime,
 					endTime: this.endTime
 				};
@@ -434,67 +443,67 @@
 					Console.log("请求失败");
 				});
 			},
-			handleGetUserWeiboSetimentData: function () {
-				var _this=this;
-			    var obj = {
+			handleGetUserWeiboSetimentData: function() {
+				var _this = this;
+				var obj = {
 					id: this.selected.id,
 					startTime: this.startTime,
 					endTime: this.endTime
-			    };
-			    this.$axios({
-			        method: 'post',
-			        url: BASE_API+'/getUserWeiboSetimentData',
-			        data: obj
-			    }).then(function (res) {
-					_this.weiboSentimentData.rows=res.data.data.dataList;
-					_this.sentiments1=res.data.data.avg;
-			    }).catch(function () {
-			        Console.log("请求失败");
-			    });
+				};
+				this.$axios({
+					method: 'post',
+					url: BASE_API + '/getUserWeiboSetimentData',
+					data: obj
+				}).then(function(res) {
+					_this.weiboSentimentData.rows = res.data.data.dataList;
+					_this.sentiments1 = res.data.data.avg;
+				}).catch(function() {
+					Console.log("请求失败");
+				});
 			},
-			handleGetFansWeiboSetimentData: function () {
-				var _this=this;
-			    var obj = {
+			handleGetFansWeiboSetimentData: function() {
+				var _this = this;
+				var obj = {
 					id: this.selected.id,
 					startTime: this.startTime,
 					endTime: this.endTime
-			    };
-			    this.$axios({
-			        method: 'post',
-			        url: BASE_API+'/getFansWeiboSetimentData',
-			        data: obj
-			    }).then(function (res) {
-					_this.fansSentimentData.rows=res.data.data.dataList;
-					_this.sentiments2=res.data.data.avg;
-			    }).catch(function () {
-			        Console.log("请求失败");
-			    });
+				};
+				this.$axios({
+					method: 'post',
+					url: BASE_API + '/getFansWeiboSetimentData',
+					data: obj
+				}).then(function(res) {
+					_this.fansSentimentData.rows = res.data.data.dataList;
+					_this.sentiments2 = res.data.data.avg;
+				}).catch(function() {
+					Console.log("请求失败");
+				});
 			},
-			handleGetUserHotlineDate: function () {
-				var _this=this;
-			    var obj = {
+			handleGetUserHotlineDate: function() {
+				var _this = this;
+				var obj = {
 					id: this.selected.id,
 					startTime: this.startTime.substring(0, 10),
 					endTime: this.endTime.substring(0, 10)
-			    };
-			    this.$axios({
-			        method: 'post',
-			        url: BASE_API+'/getUserHotlineDate',
-			        data: obj
-			    }).then(function (res) {
-					_this.userHotlineDate.rows=res.data.data;
-					
-			    }).catch(function () {
-			        console.log("请求失败");
-			    });
+				};
+				this.$axios({
+					method: 'post',
+					url: BASE_API + '/getUserHotlineDate',
+					data: obj
+				}).then(function(res) {
+					_this.userHotlineDate.rows = res.data.data;
+
+				}).catch(function() {
+					console.log("请求失败");
+				});
 			},
-			handleRefresh:function(){
-				this.wordsCloudData.rows=[];
-				this.fansPositionData.rows=[];
-				this.genderOrAgeData.rows=[];
-				this.weiboSentimentData.rows=[];
-				this.fansSentimentData.rows=[];
-				this.userHotlineDate.rows=[];
+			handleRefresh: function() {
+				this.wordsCloudData.rows = [];
+				this.fansPositionData.rows = [];
+				this.genderOrAgeData.rows = [];
+				this.weiboSentimentData.rows = [];
+				this.fansSentimentData.rows = [];
+				this.userHotlineDate.rows = [];
 			}
 
 		}
@@ -506,12 +515,14 @@
 	.el-row {
 		margin-bottom: 15px;
 	}
+
 	.el-col {
-		padding-left: 4px!important;
-        padding-right: 4px!important;
-		padding-top: 1px!important;
-		padding-bottom: 1px!important;
+		padding-left: 4px !important;
+		padding-right: 4px !important;
+		padding-top: 1px !important;
+		padding-bottom: 1px !important;
 	}
+
 	.mgb20 {
 		margin-bottom: 20px;
 	}
@@ -519,13 +530,16 @@
 	.mgb15 {
 		margin-bottom: 15px;
 	}
-    .moudelTitle{
-		color:#1482F0
+
+	.moudelTitle {
+		color: #1482F0
 	}
-	.moudelTitle span{
-		color:#E6A23C;
+
+	.moudelTitle span {
+		color: #E6A23C;
 		font-size: 18px;
 	}
+
 	.el-table .first-row {
 		background: #ef3d2f;
 		color: #0D2650;
