@@ -3,6 +3,7 @@ package cn.mxmefly.app.Bussiness.Controller;
 import cn.mxmefly.app.Bussiness.Bean.WeiboInfo;
 import cn.mxmefly.app.Bussiness.Bean.WeiboUserInfo;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboInfoRepository;
+import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboTopicRepository;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboUserInfoReposity;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.GeneralMethod;
@@ -25,6 +26,8 @@ public class WeiboInfoController {
     private WeiboInfoRepository weiboInfoRepository;
     @Autowired
     private WeiboUserInfoReposity weiboUserInfoReposity;
+    @Autowired
+    private WeiboTopicRepository weiboTopicRepository;
 
     private CreateResult createResult = new CreateResult();
     @PostMapping("/weiboInfoTest")
@@ -69,6 +72,10 @@ public class WeiboInfoController {
     @PostMapping("/getHotOderTest")
     public Results getHotOder(){
         return  createResult.getResults(weiboUserInfoReposity.getHotOder("2019-01-06","2019-06-01"));
+    }
+    @PostMapping("/getTopicOderTest")
+    public Results getTopicOderTest(){
+        return  createResult.getResults(weiboTopicRepository.getHotTopicOrder("2019-01-06","2019-06-01"));
     }
 
 

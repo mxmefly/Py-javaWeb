@@ -4,140 +4,38 @@
 			<el-col :span="24">
 				<el-row :gutter="20" class="mgb20">
 					<el-col :span="24">
-						<el-card shadow="hover" class="mgb15" style="height:150px;">
+						<el-card shadow="hover">
 							<div slot="header" class="clearfix">
-								<span>条件查询</span>
+								<span>话题热度排行（No.10）</span>
 							</div>
-							<el-col :span="8">
-								<div class="block">
+							<el-row class="mgb20">
+								<el-col :span="16">
 									<el-date-picker v-model="dateRange" type="daterange" align="right" unlink-panels range-separator="至"
 									 start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" style="width: 100%;">
 									</el-date-picker>
-								</div>
-							</el-col>
-							<el-col :span="6">
-								<div>
-									<el-input v-model="inputNickName" placeholder="请输入内容">
-										<template slot="prepend">昵称</template>
-									</el-input>
-								</div>
-							</el-col>
-							<el-col :span="6">
-								<div>
-									<el-select v-model="value" placeholder="领域" disabled>
-										<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">>
-
-										</el-option>
-									</el-select>
-								</div>
-							</el-col>
-							<el-col :span="4">
-								<div>
-									<el-button type="primary" icon="el-icon-search" style="float: right;" @click="handleSerch">查询</el-button>
-								</div>
-							</el-col>
-						</el-card>
-						<el-card shadow="hover">
-							<div slot="header" class="clearfix">
-								<span>微博用户热度排行（No.15）</span>
-							</div>
+								</el-col>
+								<el-col :span="8">
+									<div>
+										<el-button type="primary" icon="el-icon-search" style="float: right;" @click="handleSerch">查询</el-button>
+									</div>
+								</el-col>
+							</el-row>
 							<el-table v-loading="tableLoading" :data="userTableData" :row-class-name="tableRowClassName">
 								</el-table-column>
-								<el-table-column label="排名" prop="order" width="70px">
+								<el-table-column label="排名" prop="order" >
 								</el-table-column>
-								<el-table-column label="昵称" prop="name" width="240px">
+								<el-table-column label="话题" prop="name" >
 								</el-table-column>
-								<el-table-column label="简介" prop="authentication" width="450px">
+								<el-table-column label="微博数" prop="counts" >
 								</el-table-column>
-								<el-table-column label="热度" prop="hotData" width="180px">
+								<el-table-column label="平均热度" prop="hotData" >
 								</el-table-column>
 								<el-table-column label="操作" width="200px">
 									<template slot-scope="scope">
-										<el-button size="mini" @click="handleGoHome(scope.row)">直达</el-button>
 										<el-button size="mini" type="primary" @click="handleDetal(scope.row)">详细</el-button>
 									</template>
 								</el-table-column>
 							</el-table>
-						</el-card>
-					</el-col>
-				</el-row>
-				<el-row :gutter="20" v-if="(selected.id!='')">
-					<el-col :span="12">
-						<el-card shadow="hover" style="height:500px;">
-							<div slot="header" class="clearfix">
-								<span>详细资料---{{selected.name}}</span>
-							</div>
-							<div class="user-info-list">签名：<span>{{selectedUserInfo.briefIntroduction}}</span></div>
-							<div class="user-info-list">性别：<span>{{selectedUserInfo.gender}}</span></div>
-							<div class="user-info-list">位置：<span>{{selectedUserInfo.province+selectedUserInfo.city}}</span></div>
-							<div class="user-info-list">生日：<span>{{selectedUserInfo.birthday}}</span></div>
-							<div class="user-info-list">微博：<span>{{selectedUserInfo.tweetsNum}}</span></div>
-							<div class="user-info-list">关注：<span>{{selectedUserInfo.followsNum}}</span></div>
-							<div class="user-info-list">粉丝：<span>{{selectedUserInfo.fansNum}}</span></div>
-							<div class="user-info-list">简介：<span>{{selectedUserInfo.authentication}}</span></div>
-							<div class="user-info-list">标签：<span>{{selectedUserInfo.labels}}</span></div>
-						</el-card>
-					</el-col>
-					<el-col :span="12">
-						<el-card shadow="hover" style="height:500px;">
-							<div slot="header" class="clearfix">
-								<span>人物画像</span>
-							</div>
-							<ve-wordcloud :data="wordsCloudData" :settings="chartSettings" v-loading="(wordsCloudData.rows.length==0)" :toolbox="toolbox"></ve-wordcloud>
-						</el-card>
-					</el-col>
-
-				</el-row>
-				<el-row :gutter="20" v-if="(selected.name!='')">
-					<el-col :span="24">
-						<el-card shadow="hover" style="height:70px;">
-							<div class="moudelTitle">
-								微博粉丝的地区分布和性别年龄段分布，可以<span>直观的分析该大V影响力受众人群</span>
-								<br>由于权限问题样本容量只能获取到100左右，样本是具备随机性的，故也具备一定的分析参考性。
-							</div>
-						</el-card>
-					</el-col>
-					<el-col :span="12">
-						<el-card shadow="hover" style="height:500px;">
-							<div slot="header" class="clearfix">
-								<span>粉丝地区分布</span>
-							</div>
-							<ve-map :data="fansPositionData" v-loading="(fansPositionData.rows.length==0)" :toolbox="toolbox"></ve-map>
-						</el-card>
-					</el-col>
-					<el-col :span="12">
-						<el-card shadow="hover" style="height:500px;">
-							<div slot="header" class="clearfix">
-								<span>粉丝性别/年龄分布</span>
-							</div>
-							<ve-pie :data="genderOrAgeData" :settings="chartSettings" v-loading="(genderOrAgeData.rows.length==0)" :toolbox="toolbox"></ve-pie>
-						</el-card>
-					</el-col>
-				</el-row>
-				<el-row :gutter="20" v-if="(selected.id!='')">
-					<el-col :span="24">
-						<el-card shadow="hover" style="height:100px;">
-							<div class="moudelTitle">
-								微博的情感倾向分布一定程度说明大V想塑造的形象，评论分布则体现粉丝对该大V的评价，两曲线差异与形象评价差异相关
-								<br>范围0~1，越接近1倾向越积极，越接近0态度越消极，<span>曲线两边高中间低说明人物争议较大，反之表明人物多陈述客观事实</span>
-								<br>微博情感倾向平均为： <span>{{sentiments1}}</span> ；评论情感倾向平均为 <span>{{sentiments2}}</span>
-							</div>
-						</el-card>
-					</el-col>
-					<el-col :span="12">
-						<el-card shadow="hover" style="height:400px;">
-							<div slot="header" class="clearfix">
-								<span>微博情感倾向</span>
-							</div>
-							<ve-line :data="weiboSentimentData" :settings="chartSettings1" height="320px" v-loading="(weiboSentimentData.rows.length==0)" :toolbox="toolbox"></ve-line>
-						</el-card>
-					</el-col>
-					<el-col :span="12">
-						<el-card shadow="hover" style="height:400px;">
-							<div slot="header" class="clearfix">
-								<span>评论情感倾向</span>
-							</div>
-							<ve-line :data="fansSentimentData" :settings="chartSettings1" height="320px" v-loading="(fansSentimentData.rows.length==0)" :toolbox="toolbox"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
@@ -161,7 +59,7 @@
 
 <script>
 	module.exports = {
-		name: 'WeiboHotUser',
+		name: 'WeiboHotTopic',
 		data: function() {
 			return {
 				userData: [],
@@ -195,25 +93,9 @@
 				},
 				dateRange: '',
 				inputNickName: '',
-				options: [{
-					value: '选项1',
-					label: '科技'
-				}, {
-					value: '选项2',
-					label: '演绎'
-				}],
 				value: '',
 				tableLoading: false,
-				chartSettings: {
-					level: [
-						['70后', '80后', '90后', '00后', '其他'],
-						['男', '女', '未知']
-					]
-				},
-				wordsCloudData: {
-					columns: ['word', 'count'],
-					rows: []
-				},
+				
 				selected: {
 					id: "",
 					name: ""
@@ -231,30 +113,7 @@
 					province: "",
 					tweetsNum: "",
 				},
-				fansPositionData: {
-					columns: ['位置', '人数'],
-					rows: []
-				},
-				genderOrAgeData: {
-					columns: ['数据', '人数'],
-					rows: []
-				},
-				weiboSentimentData: {
-					columns: ['情感值', '出现次数'],
-					rows: []
-				},
-				chartSettings1: {
-					stack: {
-						'次数': ['出现次数']
-					},
-					area: true
-				},
-				fansSentimentData: {
-					columns: ['情感值', '出现次数'],
-					rows: []
-				},
-				sentiments1: 0,
-				sentiments2: 0,
+				
 				userHotlineDate: {
 					columns: ['时间', '热度', '预测'],
 					rows: []
@@ -296,35 +155,18 @@
 				if (this.userData == []) {
 					return []
 				} else {
-					if(this.type>0){
-						var data = [];
-						var size = (this.userData.length > 15) ? 15 : this.userData.length;
-						for (var i = 0; i < size; i++) {
-							var arr = {
-								id: this.userData[i].weiboUsr._id,
-								order: i + 1,
-								name: this.userData[i].weiboUsr.nickName,
-								authentication: this.userData[i].weiboUsr.authentication,
-								hotData: this.userData[i].hotData
-							}
-							data.push(arr)
+					var data = [];
+					var size = (this.userData.length > 10) ? 10 : this.userData.length;
+					for (var i = 0; i < size; i++) {
+						var arr = {
+							order: i + 1,
+							name: this.userData[i][0],
+							counts: this.userData[i][1],
+							hotData: this.userData[i][2]
 						}
-						return data;                           
-					}else{
-						var data = [];
-						var size = (this.userData.length > 15) ? 15 : this.userData.length;
-						for (var i = 0; i < size; i++) {
-							var arr = {
-								id: this.userData[i][0],
-								order: i + 1,
-								name: this.userData[i][1],
-								authentication: this.userData[i][2],
-								hotData: this.userData[i][3]
-							}
-							data.push(arr)
-						}
-						return data
+						data.push(arr)
 					}
+					return data
 				}
 			},
 
@@ -378,38 +220,22 @@
 			},
 			handleGetUserHotData: function() {
 				var _this = this;
-				this.handleRefresh();
 				this.tableLoading = true;
 				if (this.dateRange == "") {
 					this.handleSetDefaltTime();
 				}
 				var obj = {
-					name: this.inputNickName,
-					startTime: this.startTime,
-					endTime: this.endTime
+					startTime: this.startTime.substring(0, 10),
+					endTime: this.endTime.substring(0, 10)
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserHotData',
+					url: BASE_API + '/getTopicOderData',
 					data: obj
 				}).then(function(res) {
-					//console.log("res", res)
-					_this.tableLoading = false
+					console.log("res", res)
 					_this.userData = res.data.data;
-					if(_this.inputNickName.length>0){
-						_this.type=1;
-					}else{
-						_this.type=0;
-					}
-					_this.selected.id = _this.userTableData[0].id;
-					_this.selected.name = _this.userTableData[0].name;
-					//_this.selectedUserInfo = _this.userData[0].weiboUsr;
-					_this.handleGetUserInfo();
-					_this.handleGetWordsCloudData();
-					_this.handlegetFansInfo();
-					_this.handleGetUserWeiboSetimentData();
-					_this.handleGetFansWeiboSetimentData();
-					_this.handleGetUserHotlineDate();
+					_this.tableLoading = false;
 				}).catch(function() {
 					console.log("请求失败");
 				});
@@ -420,13 +246,7 @@
 			handleDetal: function(row) {
 				this.selected.id = row.id;
 				this.selected.name = row.name;
-				this.handleGetUserInfo();
-				this.handleRefresh();
-				this.handleGetWordsCloudData();
-				this.handlegetFansInfo();
-				this.handleGetUserWeiboSetimentData();
-				this.handleGetFansWeiboSetimentData();
-				this.handleGetUserHotlineDate();
+				
 			},
 			handleGetUserInfo: function() {
 				var _this = this;
@@ -549,12 +369,12 @@
 		margin-bottom: 15px;
 	}
 
-	.el-col {
+	/* .el-col {
 		padding-left: 4px !important;
 		padding-right: 4px !important;
 		padding-top: 1px !important;
 		padding-bottom: 1px !important;
-	}
+	} */
 
 	.mgb20 {
 		margin-bottom: 20px;

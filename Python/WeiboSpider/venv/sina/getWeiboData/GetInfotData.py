@@ -35,7 +35,7 @@ if __name__ == "__main__":
             # 获取话题
             topicList = getWeiboData().getTopic(text)
             for topic in topicList:
-                insertSql = "INSERT INTO `sbhdb`.`weibo_topic`(`topic`, `userId`, `date`) VALUES ('%s', '%s', '%s')" % (
+                insertSql = "INSERT INTO `sbhdb`.`weibo_topic`(`topic`, `user_id`, `date`) VALUES ('%s', '%s', '%s')" % (
                     topic, userId, weiboDate)
             try:
                 getWeiboData().dbCursor.execute(insertSql)

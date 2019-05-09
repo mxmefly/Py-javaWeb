@@ -40,12 +40,20 @@ class WeiboSpider(Spider):
             '1808624312',
             '5676095533'
         ]
-
-        for uid in start_uids:
+        """
+                for uid in start_uids:
             self.cursor.execute("SELECT fan_id FROM weibo_user_rela WHERE followed_id = '%s' ORDER  BY  rand() LIMIT 100"%(uid))
             fansUids = self.cursor.fetchall();
             for funId in fansUids:
                 yield Request(url="https://weibo.cn/%s/info" % funId[0], callback=self.parse_information)
+
+        """
+        for i in range(20):
+            self.cursor.execute(
+                "SELECT fan_id FROM weibo_user_rela WHERE fan_id NOT IN (SELECT user_id FROM weibo_info) ORDER  BY  rand() LIMIT 10")
+            randomUids = self.cursor.fetchall();
+            for uid in randomUids:
+                yield Request(url="https://weibo.cn/%s/info" % uid[0], callback=self.parse_information)
 
     def parse_information(self, response):
         """ 抓取个人信息 """
