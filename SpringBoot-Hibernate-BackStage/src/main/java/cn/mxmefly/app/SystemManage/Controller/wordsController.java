@@ -4,10 +4,15 @@ import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Results;
 import cn.mxmefly.app.SystemManage.Bean.BaseWords;
 import cn.mxmefly.app.SystemManage.Bean.BasicData;
+import cn.mxmefly.app.SystemManage.Bean.NewWords;
 import cn.mxmefly.app.SystemManage.Dao.Repository.BaseWordsRespository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.BasicDataRespository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.NewWordsRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -235,5 +240,64 @@ public class wordsController {
         map.put("sentiment",(float)sentimentsAll/sentimentsCount);
         return map;
     }
-    
+
+    @PostMapping("/getWordList")
+    public Results getWordList(@RequestBody Map map){
+        int page = (int) map.get("page");
+        int size = (int) map.get("size");
+        Sort sort = new Sort(Sort.Direction.DESC,"counts");
+        Pageable pageable = new PageRequest(page, size,sort);
+        Page<BaseWords> pageList = baseWordsRespository.findAll(pageable);
+        return createResult.getResults(pageList);
+    }
+
+    @PostMapping("/editWordShow")
+    public Results editWordShow(@RequestBody Map map){
+        int id = (int) map.get("id");
+        BaseWords baseWords = baseWordsRespository.findOne(id);
+        baseWords.setIsShow((baseWords.getIsShow()==1)?0:1);
+        baseWordsRespository.save(baseWords);
+        return createResult.getResults(true);
+    }
+    @PostMapping("/deleteWordOne")
+    public Results deleteWordOne(@RequestBody Map map){
+        int id = (int) map.get("id");
+        baseWordsRespository.delete(id);
+        return  createResult.getResults(true);
+    }
+
+    @PostMapping("/getNewWordList")
+    public Results getNewWordList(@RequestBody Map map){
+        int page = (int) map.get("page");
+        int size = (int) map.get("size");
+        Sort sort = new Sort(Sort.Direction.DESC,"count");
+        Pageable pageable = new PageRequest(page, size,sort);
+        Page<NewWords> pageList = newWordsRespository.findAll(pageable);
+        return createResult.getResults(pageList);
+    }
+    @PostMapping("/deleteNewWordOne")
+    public Results deleteNewWordOne(@RequestBody Map map){
+        int id = (int) map.get("id");
+        newWordsRespository.delete(id);
+        return  createResult.getResults(true);
+    }
+
+    @PostMapping("/newWordImport")
+    public Results newWordImport(@RequestBody Map map){
+        int id= (int) map.get("id");
+        String word =  (String) map.get("word");
+        int count=(int) map.get("count");
+        BaseWords baseWords = new BaseWords();
+        baseWords.setWord(word);
+        baseWords.setIsShow(1);
+        baseWords.setCounts(count);
+        baseWords.setSentiments(5);
+        baseWords.setWordLength(word.length());
+        baseWords.setType("newWord");
+        baseWordsRespository.save(baseWords);
+        newWordsRespository.delete(id);
+        return createResult.getResults(true);
+    }
+
+
 }
