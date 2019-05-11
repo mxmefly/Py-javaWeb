@@ -1,12 +1,10 @@
 package cn.mxmefly.app.SystemManage.Controller;
 
-import cn.mxmefly.app.Common.GeneralMethod;
-import cn.mxmefly.app.SystemManage.Bean.BaseWords;
-import cn.mxmefly.app.SystemManage.Bean.BasicData;
-import cn.mxmefly.app.SystemManage.Bean.NewWords;
-import cn.mxmefly.app.SystemManage.Dao.Repository.BaseWordsRespository;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Results;
+import cn.mxmefly.app.SystemManage.Bean.BaseWords;
+import cn.mxmefly.app.SystemManage.Bean.BasicData;
+import cn.mxmefly.app.SystemManage.Dao.Repository.BaseWordsRespository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.BasicDataRespository;
 import cn.mxmefly.app.SystemManage.Dao.Repository.NewWordsRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.crypto.Data;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 @RestController
@@ -235,4 +235,5 @@ public class wordsController {
         map.put("sentiment",(float)sentimentsAll/sentimentsCount);
         return map;
     }
+    
 }

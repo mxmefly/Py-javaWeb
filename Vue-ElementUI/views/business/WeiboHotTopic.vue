@@ -20,15 +20,15 @@
 									</div>
 								</el-col>
 							</el-row>
-							<el-table v-loading="tableLoading" :data="userTableData" :row-class-name="tableRowClassName">
+							<el-table v-loading="tableLoading" :data="topicTableData" :row-class-name="tableRowClassName">
 								</el-table-column>
 								<el-table-column label="排名" prop="order" >
 								</el-table-column>
-								<el-table-column label="话题" prop="name" >
+								<el-table-column label="话题" prop="name" :show-overflow-tooltip="true">
 								</el-table-column>
-								<el-table-column label="微博数" prop="counts" >
+								<el-table-column label="微博数" sortable prop="counts" >
 								</el-table-column>
-								<el-table-column label="平均热度" prop="hotData" >
+								<el-table-column label="平均热度" sortable prop="hotData" >
 								</el-table-column>
 								<el-table-column label="操作" width="200px">
 									<template slot-scope="scope">
@@ -39,16 +39,49 @@
 						</el-card>
 					</el-col>
 				</el-row>
+				<el-row :gutter="20" v-if="(selected.name!='')" >
+					<el-col :span="24">
+						<el-card shadow="hover" style="height:630px;">
+							<div slot="header" class="clearfix">
+								<span>参与话题用户及微博</span>
+							</div>
+							<el-col :span="8" >
+								<el-table  :data="topicUserTable" v-loading="(topicUserTable.length==0)">
+									<el-table-column label="昵称" width="110px" prop="nickName" :show-overflow-tooltip="true">
+									</el-table-column>
+									<el-table-column label="微博数"  prop="num" >
+									</el-table-column>
+									<el-table-column label="操作">
+										<template slot-scope="scope">
+											<el-button size="mini" type="primary" @click="handleUserDetal(scope.row)">详细</el-button>
+										</template>
+									</el-table-column>
+								</el-table>	
+							</el-col>
+							<el-col :span="16">
+								<el-table  :data="topicUserWeiboTable" v-loading="(topicUserWeiboTable.length==0)" >
+									<el-table-column label="微博" prop="content" :show-overflow-tooltip="true" width="400px">
+									</el-table-column>
+									<el-table-column label="点赞" sortable prop="likeNum" >
+									</el-table-column>
+									<el-table-column label="转发" prop="repostNum" >
+									</el-table-column>
+									<el-table-column label="回复" prop="commentNum" >
+									</el-table-column>
+								</el-table>	
+							</el-col>
+						</el-card>
+					</el-col>
+				</el-row>
 				<el-row :gutter="20" v-if="(selected.name!='')">
 					<el-col :span="24">
 						<el-card shadow="hover" style="height:360px;">
 							<div slot="header" class="clearfix">
 								<span>热度趋势及预测</span>
 							</div>
-							<ve-line :data="userHotlineDate" :data-zoom="dataZoom" height="280px" v-loading="(userHotlineDate.rows.length==0)" :toolbox="toolbox" :colors="colors"></ve-line>
+							<ve-line :data="topicHotlineDate" :data-zoom="dataZoom" height="280px" v-loading="(topicHotlineDate.rows.length==0)" :toolbox="toolbox" :colors="colors"></ve-line>
 						</el-card>
 					</el-col>
-
 				</el-row>
 
 
@@ -62,8 +95,9 @@
 		name: 'WeiboHotTopic',
 		data: function() {
 			return {
-				userData: [],
-				tableData: [],
+				topicData: [],
+				topicUserWeiboTable:[],
+				topicUserTable:[],
 				pickerOptions: {
 					shortcuts: [{
 						text: '最近一周',
@@ -99,22 +133,8 @@
 				selected: {
 					id: "",
 					name: ""
-				},
-				selectedUserInfo: {
-					authentication: "",
-					birthday: "",
-					briefIntroduction: "",
-					city: "",
-					fansNum: "",
-					followsNum: "",
-					gender: "",
-					labels: "",
-					nickName: "",
-					province: "",
-					tweetsNum: "",
-				},
-				
-				userHotlineDate: {
+				},	
+				topicHotlineDate: {
 					columns: ['时间', '热度', '预测'],
 					rows: []
 				},
@@ -151,18 +171,18 @@
 				}
 				return this.formatDate(this.dateRange[1]);
 			},
-			userTableData: function() {
-				if (this.userData == []) {
+			topicTableData: function() {
+				if (this.topicData == []) {
 					return []
 				} else {
 					var data = [];
-					var size = (this.userData.length > 10) ? 10 : this.userData.length;
+					var size = (this.topicData.length > 10) ? 10 : this.topicData.length;
 					for (var i = 0; i < size; i++) {
 						var arr = {
 							order: i + 1,
-							name: this.userData[i][0],
-							counts: this.userData[i][1],
-							hotData: this.userData[i][2]
+							name: this.topicData[i][0],
+							counts: this.topicData[i][1],
+							hotData: this.topicData[i][2]
 						}
 						data.push(arr)
 					}
@@ -173,7 +193,7 @@
 		},
 		created: function() {
 
-			this.handleGetUserHotData();
+			this.handleGetTopicHotData();
 		},
 		activated: function() {
 
@@ -183,7 +203,7 @@
 		},
 		methods: {
 			handleSerch: function() {
-				this.handleGetUserHotData()
+				this.handleGetTopicHotData()
 			},
 			//设置默认查询
 			handleSetDefaltTime: function() {
@@ -218,7 +238,7 @@
 				} else
 					return '';
 			},
-			handleGetUserHotData: function() {
+			handleGetTopicHotData: function() {
 				var _this = this;
 				this.tableLoading = true;
 				if (this.dateRange == "") {
@@ -233,132 +253,93 @@
 					url: BASE_API + '/getTopicOderData',
 					data: obj
 				}).then(function(res) {
-					console.log("res", res)
-					_this.userData = res.data.data;
+					_this.topicData = res.data.data;
+					_this.selected.name=res.data.data[0][0]
 					_this.tableLoading = false;
+					_this.handlegetTopicUser();
+					_this.handleGetopicHotlineDate();
 				}).catch(function() {
 					console.log("请求失败");
 				});
-			},
-			handleGoHome: function(row) {
-				window.open("https://weibo.com/u/" + row.id);
 			},
 			handleDetal: function(row) {
 				this.selected.id = row.id;
 				this.selected.name = row.name;
-				
+				this.topicUserTable=[];
+				this.handlegetTopicUser();
+				this.handleGetopicHotlineDate();
 			},
-			handleGetUserInfo: function() {
+			handleUserDetal:function(row){
+				this.topicUserWeiboTable=[];
+				this.handleGetTopicUserWeiboInfo(row.userId);
+			},
+			handlegetTopicUser: function() {
 				var _this = this;
 				var obj = {
-					id: this.selected.id,
-				};
-				this.$axios({
-					method: 'post',
-					url: BASE_API + '/getWeiboUserInfo',
-					data: obj
-				}).then(function(res) {
-					_this.selectedUserInfo = res.data.data;
-				}).catch(function() {
-					Console.log("请求失败");
-				});
-			},
-			handleGetWordsCloudData: function() {
-				var _this = this;
-				var obj = {
-					id: this.selected.id,
+					name:this.selected.name,
 					startTime: this.startTime.substring(0, 10),
 					endTime: this.endTime.substring(0, 10)
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserPortrait',
+					url: BASE_API + '/getTopicUser',
 					data: obj
 				}).then(function(res) {
-					_this.wordsCloudData.rows = res.data.data;
+					var result = res.data.data;
+					_this.topicUserTable=[];
+					for(var i=0;i<result.length;i++){
+						var arr= {
+							userId:result[i][0],
+							nickName:result[i][1],
+							num:result[i][3]
+						}
+						_this.topicUserTable.push(arr);
+					}
+					_this.topicUserWeiboTable=[];
+					_this.handleGetTopicUserWeiboInfo(_this.topicUserTable[0].userId);
 				}).catch(function() {
-					Console.log("请求失败");
+					console.log("请求失败");
 				});
 			},
-			handlegetFansInfo: function() {
+			handleGetTopicUserWeiboInfo:function(userId){
 				var _this = this;
 				var obj = {
-					id: this.selected.id
+					topic:this.selected.name,
+					startTime: this.startTime.substring(0, 10),
+					endTime: this.endTime.substring(0, 10),
+					userId:userId
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getFansInfo',
+					url: BASE_API + '/getTopicUserWeiboInfo',
 					data: obj
 				}).then(function(res) {
-					_this.fansPositionData.rows = res.data.data.locationList;
-					_this.genderOrAgeData.rows = res.data.data.genderOrAgeList;
+					_this.topicUserWeiboTable=[]
+					var result = res.data.data;
+					_this.topicUserWeiboTable=result;
 				}).catch(function() {
-					Console.log("请求失败");
+					console.log("请求失败");
 				});
 			},
-			handleGetUserWeiboSetimentData: function() {
+			handleGetopicHotlineDate: function() {
+				this.topicHotlineDate.rows=[];
 				var _this = this;
 				var obj = {
-					id: this.selected.id,
-					startTime: this.startTime,
-					endTime: this.endTime
-				};
-				this.$axios({
-					method: 'post',
-					url: BASE_API + '/getUserWeiboSetimentData',
-					data: obj
-				}).then(function(res) {
-					_this.weiboSentimentData.rows = res.data.data.dataList;
-					_this.sentiments1 = res.data.data.avg;
-				}).catch(function() {
-					Console.log("请求失败");
-				});
-			},
-			handleGetFansWeiboSetimentData: function() {
-				var _this = this;
-				var obj = {
-					id: this.selected.id,
-					startTime: this.startTime,
-					endTime: this.endTime
-				};
-				this.$axios({
-					method: 'post',
-					url: BASE_API + '/getFansWeiboSetimentData',
-					data: obj
-				}).then(function(res) {
-					_this.fansSentimentData.rows = res.data.data.dataList;
-					_this.sentiments2 = res.data.data.avg;
-				}).catch(function() {
-					Console.log("请求失败");
-				});
-			},
-			handleGetUserHotlineDate: function() {
-				var _this = this;
-				var obj = {
-					id: this.selected.id,
+					topic: this.selected.name,
 					startTime: this.startTime.substring(0, 10),
 					endTime: this.endTime.substring(0, 10)
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserHotlineDate',
+					url: BASE_API + '/getTopicHotlineDate',
 					data: obj
 				}).then(function(res) {
-					_this.userHotlineDate.rows = res.data.data;
+					_this.topicHotlineDate.rows = res.data.data;
 
 				}).catch(function() {
 					console.log("请求失败");
 				});
 			},
-			handleRefresh: function() {
-				this.wordsCloudData.rows = [];
-				this.fansPositionData.rows = [];
-				this.genderOrAgeData.rows = [];
-				this.weiboSentimentData.rows = [];
-				this.fansSentimentData.rows = [];
-				this.userHotlineDate.rows = [];
-			}
-
 		}
 	}
 </script>

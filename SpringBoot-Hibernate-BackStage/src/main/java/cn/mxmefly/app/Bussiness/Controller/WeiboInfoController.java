@@ -75,7 +75,7 @@ public class WeiboInfoController {
     }
     @PostMapping("/getTopicOderTest")
     public Results getTopicOderTest(){
-        return  createResult.getResults(weiboTopicRepository.getHotTopicOrder("2019-01-06","2019-06-01"));
+        return  createResult.getResults(weiboTopicRepository.getHotTopicUser("idoltube","2019-01-06","2019-06-01"));
     }
 
 

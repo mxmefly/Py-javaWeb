@@ -29,16 +29,8 @@ class WeiboSpider(Spider):
     def start_requests(self):
         
         start_uids = [
-            '1196235387',
-            '1195230310',
-            '1197362373',
-            '1251000504',
-            '1287373332',
-            '1338738570',
-            '1642566747',
-            '1692391497',
-            '1808624312',
-            '5676095533'
+            '1640016932',
+
         ]
         """
                 for uid in start_uids:
@@ -47,6 +39,10 @@ class WeiboSpider(Spider):
             for funId in fansUids:
                 yield Request(url="https://weibo.cn/%s/info" % funId[0], callback=self.parse_information)
 
+        """
+        """
+        
+        
         """
         for i in range(20):
             self.cursor.execute(

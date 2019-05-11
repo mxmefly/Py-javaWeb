@@ -47,7 +47,7 @@
 								</el-table-column>
 								<el-table-column label="昵称" prop="name" width="240px">
 								</el-table-column>
-								<el-table-column label="简介" prop="authentication" width="450px">
+								<el-table-column label="简介" :show-overflow-tooltip="true" prop="authentication" width="450px">
 								</el-table-column>
 								<el-table-column label="热度" prop="hotData" width="180px">
 								</el-table-column>

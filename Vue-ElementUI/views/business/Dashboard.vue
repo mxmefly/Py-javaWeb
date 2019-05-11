@@ -206,6 +206,7 @@
 			setInterval(this.handleGetCpuUsd, 2000)
 			this.handleGetUserlineDate()
 			this.handleGetWeiboLineData()
+			this.handleGetWeiboCommentLineData();
 		},
 		activated: function() {
 
