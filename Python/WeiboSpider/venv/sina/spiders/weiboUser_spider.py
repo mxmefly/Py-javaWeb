@@ -157,9 +157,6 @@ class WeiboSpider(Spider):
                 information_item['authentication'], '', information_item['crawl_time'], information_item['labels']
             )
             self.cursor.execute(sql)
-            self.cursor.execute("INSERT INTO `sbhdb`.`sys_msg`(`message`, `message_date`) VALUES ('%s', '%s')" % (
-                "获取" + information_item['nick_name'] + "微博信息",
-                time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))))
             self.db.commit()
         except:
             # 数据有重复

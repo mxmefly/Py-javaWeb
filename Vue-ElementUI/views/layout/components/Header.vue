@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">后台管理系统</div>
+        <div class="logo">微博信息中心</div>
         <div class="header-right">
             <div class="header-user-con">
                 <div style="width: 30px;height: 30px;">

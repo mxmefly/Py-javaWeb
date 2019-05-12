@@ -6,7 +6,7 @@
 					<el-col :span="14">
 						<el-card shadow="hover" style="height: 740px;">
 							<div slot="header" class="clearfix">
-								<span>字词热度排行（No.10）</span>
+								<span>表情热度排行（No.10）</span>
 							</div>
 							<el-row class="mgb20">
 								<el-col :span="16">
@@ -23,7 +23,7 @@
 							<el-table :data="HotWordData" v-loading="(HotWordData.length==0)" :row-class-name="tableRowClassName">
 								<el-table-column type="index" >
 								</el-table-column>
-								<el-table-column label="字词"  prop="word" >
+								<el-table-column label="表情"  prop="word" :formatter="formatter1" >
 								</el-table-column>
 								<el-table-column label="数量" prop="counts">
 								</el-table-column>
@@ -39,14 +39,14 @@
 						<el-card shadow="hover"  style="height: 75px;margin-bottom: 5px;">
 						<div class="moudelTitle">
 							    数据处理量有限，因此目前还不具备可靠的分析性
-							<br>加载速度较慢，请耐心等待，相关优化正在努力中
+							<br><span>微博表情还未找到合适的表情icon素材包暂用文字代替</span>
 						</div>
 						</el-card>	
 					</el-col>
 					<el-col :span="10">
 						<el-card shadow="hover" style="height: 660px;" v-loading="(wordUserData.length==0)">
 							<div slot="header" class="clearfix">
-								<span>相关用户（{{selected.name}}）</span>
+								<span>相关用户（[{{selected.name}}]）</span>
 							</div>
 							<el-table :data="wordUserData"  >
 								<el-table-column type="index" >
@@ -68,61 +68,13 @@
 					<el-col :span="24">
 						<el-card shadow="hover" style="height:360px;">
 							<div slot="header" class="clearfix">
-								<span>热度趋势及预测（{{selected.name}}）</span>
+								<span>热度趋势及预测（[{{selected.name}}]）</span>
 							</div>
 							<ve-line :data="topicHotlineDate" :data-zoom="dataZoom" height="280px" v-loading="(topicHotlineDate.rows.length==0)"
 							 :toolbox="toolbox" :colors="colors"></ve-line>
 						</el-card>
 					</el-col>
 				</el-row>
-				<el-row :gutter="20" >
-					<el-col :span="8">
-						<el-card shadow="hover" >
-							<div slot="header" class="clearfix">
-								<span>2017年年度热词</span>
-							</div>
-							<el-table :data="wordYearData.wordsList2017" :row-class-name="tableRowClassName" >
-								<el-table-column type="index" >
-								</el-table-column>
-								<el-table-column label="字词"  prop="word" >
-								</el-table-column>
-								<el-table-column label="数量" prop="counts">
-								</el-table-column>
-							</el-table>
-						</el-card>
-					</el-col>
-					<el-col :span="8">
-						<el-card shadow="hover">
-							<div slot="header" class="clearfix">
-								<span>2018年年度热词</span>
-							</div>
-							<el-table :data="wordYearData.wordsList2018" :row-class-name="tableRowClassName">
-								<el-table-column type="index" >
-								</el-table-column>
-								<el-table-column label="字词"  prop="word" >
-								</el-table-column>
-								<el-table-column label="数量" prop="counts">
-								</el-table-column>
-							</el-table>
-						</el-card>
-					</el-col>
-					<el-col :span="8">
-						<el-card shadow="hover" >
-							<div slot="header" class="clearfix">
-								<span>2019年至今</span>
-							</div>
-							<el-table :data="wordYearData.wordsList2019" :row-class-name="tableRowClassName">
-								<el-table-column type="index" >
-								</el-table-column>
-								<el-table-column label="字词"  prop="word" >
-								</el-table-column>
-								<el-table-column label="数量" prop="counts">
-								</el-table-column>
-							</el-table>
-						</el-card>
-					</el-col>
-				</el-row>
-				
 			</el-col>
 		</el-row>
 	</div>
@@ -134,11 +86,6 @@
 		data: function() {
 			return {
 				HotWordData: [],
-				wordYearData:{
-					wordsList2017:[],
-					wordsList2018:[],
-					wordsList2019:[]
-				},
 				wordUserData:[],
 				pickerOptions: {
 					shortcuts: [{
@@ -211,7 +158,6 @@
 			},
 		},
 		created: function() {
-            this.handleGetWordYearData();
 			this.handleGetHotWordData();
 			
 		},
@@ -265,7 +211,7 @@
 					this.handleSetDefaltTime();
 				}
 				var obj = {
-					type:'word',
+					type:'expression',
 					startTime: this.startTime.substring(0, 10),
 					endTime: this.endTime.substring(0, 10)
 				};
@@ -302,7 +248,7 @@
 			handleGetWordUserData:function(){
 				var _this = this;
 				var obj = {
-					type:'word',
+					type:'expression',
 					name: this.selected.name,
 					startTime: this.startTime.substring(0, 10),
 					endTime: this.endTime.substring(0, 10)
@@ -331,7 +277,7 @@
 				var _this = this;
 				var obj = {
 					name: this.selected.name,
-					type:'word',
+					type:'expression',
 					startTime: this.startTime.substring(0, 10),
 					endTime: this.endTime.substring(0, 10)
 				};
@@ -346,24 +292,14 @@
 					console.log("请求失败");
 				});
 			},
-			handleGetWordYearData:function(){
-				var _this = this;
-				var obj = {};
-				this.$axios({
-					method: 'post',
-					url: BASE_API + '/getPassYearHotWord',
-					data: obj
-				}).then(function(res) {
-					_this.wordYearData = res.data.data;
-				}).catch(function() {
-					console.log("请求失败");
-				});
-			},
 			handleGoHome: function(row) {
 				window.open("https://weibo.com/u/" + row.id);
 			},
 			formatter: function (row, column) {
 			    return (row.nickName==null)?"暂未爬取该用户":row.nickName;
+			},
+			formatter1: function (row, column) {
+			    return '['+row.word+']';
 			},
 			
 		}
