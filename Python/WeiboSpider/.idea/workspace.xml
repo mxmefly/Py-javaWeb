@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="918c47e7-a356-49fc-a5aa-4f77f911b476" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/HotWord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/HotWord.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/PfDispatchRespository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/PfDispatchRespository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/Test.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -426,15 +427,15 @@
       <workItem from="1556094785864" duration="94738000" />
       <workItem from="1556954804817" duration="4664000" />
       <workItem from="1557039446118" duration="19940000" />
-      <workItem from="1557489512234" duration="19474000" />
+      <workItem from="1557489512234" duration="20070000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="223657000" />
+    <option name="totallyTimeSpent" value="224253000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1488" height="878" extended-state="7" />
+    <frame x="-7" y="-7" width="1488" height="878" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24895105" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

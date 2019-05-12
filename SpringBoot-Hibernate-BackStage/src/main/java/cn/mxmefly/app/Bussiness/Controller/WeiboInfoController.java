@@ -6,9 +6,9 @@ import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboInfoRepository;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboTopicRepository;
 import cn.mxmefly.app.Bussiness.Dao.Repository.WeiboUserInfoReposity;
 import cn.mxmefly.app.Common.CreateResult;
-import cn.mxmefly.app.Common.GeneralMethod;
 import cn.mxmefly.app.Common.LinearRegression.MyLinearRegression;
 import cn.mxmefly.app.Common.Results;
+import cn.mxmefly.app.SystemManage.Dao.Repository.PfDispatchRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +28,8 @@ public class WeiboInfoController {
     private WeiboUserInfoReposity weiboUserInfoReposity;
     @Autowired
     private WeiboTopicRepository weiboTopicRepository;
+    @Autowired
+    private PfDispatchRespository pfDispatchRespository;
 
     private CreateResult createResult = new CreateResult();
     @PostMapping("/weiboInfoTest")
@@ -66,8 +68,11 @@ public class WeiboInfoController {
     }
     @PostMapping("/dateTest")
     public Results dateTest(@RequestBody Map map) throws ParseException {
-        ArrayList<String> strings = new GeneralMethod().getDateArrBySAndE("2018-05-06","2018-06-01");
-        return createResult.getResults(strings);
+        Map returnMap = new HashMap();
+        //pfDispatchRespository.importNewWord();
+        returnMap.put("1",pfDispatchRespository.getEventsList());
+        returnMap.put("2",pfDispatchRespository.getEventStatus());
+        return createResult.getResults(returnMap);
     }
     @PostMapping("/getHotOderTest")
     public Results getHotOder(){
