@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="918c47e7-a356-49fc-a5aa-4f77f911b476" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Controller/wordsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Controller/wordsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Bean/TempWord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Controller/WeiboBaseDataController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/TempWordRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Bean/PfDispatch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/PfDispatchRespository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboBaseDataRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/Bussiness/Dao/Repository/WeiboBaseDataRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/SysMsgRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/SysMsgRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/HotWord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/HotWord.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,11 +19,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/WeiboSpider$GetCommentData.coverage" NAME="GetCommentData Coverage Results" MODIFIED="1557489643725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
-    <SUITE FILE_PATH="coverage/WeiboSpider$weiboUser_spider.coverage" NAME="weiboUser_spider Coverage Results" MODIFIED="1557553804640" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
-    <SUITE FILE_PATH="coverage/WeiboSpider$GetInfotData.coverage" NAME="GetInfotData Coverage Results" MODIFIED="1557489632845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
+    <SUITE FILE_PATH="coverage/WeiboSpider$GetCommentData.coverage" NAME="GetCommentData Coverage Results" MODIFIED="1557621546743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
+    <SUITE FILE_PATH="coverage/WeiboSpider$weiboUser_spider.coverage" NAME="weiboUser_spider Coverage Results" MODIFIED="1557621540488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
+    <SUITE FILE_PATH="coverage/WeiboSpider$GetInfotData.coverage" NAME="GetInfotData Coverage Results" MODIFIED="1557621543711" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
     <SUITE FILE_PATH="coverage/WeiboSpider$login.coverage" NAME="login Coverage Results" MODIFIED="1556109188455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/account_build" />
-    <SUITE FILE_PATH="coverage/WeiboSpider$weibo_spider.coverage" NAME="weibo_spider Coverage Results" MODIFIED="1557537333963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
+    <SUITE FILE_PATH="coverage/WeiboSpider$weibo_spider.coverage" NAME="weibo_spider Coverage Results" MODIFIED="1557560300067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -75,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
+            <state relative-caret-position="1170">
               <caret line="45" column="11" lean-forward="true" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
               <folding>
                 <element signature="e#40#49#0" expanded="true" />
@@ -90,7 +98,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetInfotData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
+            <state relative-caret-position="270">
               <caret line="9" column="27" lean-forward="true" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -111,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetCommentData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2908">
-              <caret line="122" selection-start-line="122" selection-end-line="122" />
+            <state relative-caret-position="-1110">
+              <caret line="11" column="54" lean-forward="true" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -401,9 +409,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.weibo_spider" />
         <item itemvalue="Python.GetCommentData" />
         <item itemvalue="Python.GetInfotData" />
+        <item itemvalue="Python.weibo_spider" />
         <item itemvalue="Python.login" />
       </list>
     </recent_temporary>
@@ -424,12 +432,12 @@
       <workItem from="1556094785864" duration="94738000" />
       <workItem from="1556954804817" duration="4664000" />
       <workItem from="1557039446118" duration="19940000" />
-      <workItem from="1557489512234" duration="11834000" />
+      <workItem from="1557489512234" duration="18258000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="216017000" />
+    <option name="totallyTimeSpent" value="222441000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1488" height="878" extended-state="7" />
@@ -670,30 +678,10 @@
     <entry file="file://$PROJECT_DIR$/venv/sina/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetCommentData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2908">
-          <caret line="122" selection-start-line="122" selection-end-line="122" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/getWeiboData.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetInfotData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="9" column="27" lean-forward="true" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -726,10 +714,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
+        <state relative-caret-position="1170">
           <caret line="45" column="11" lean-forward="true" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
           <folding>
             <element signature="e#40#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetInfotData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="9" column="27" lean-forward="true" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetCommentData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1110">
+          <caret line="11" column="54" lean-forward="true" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

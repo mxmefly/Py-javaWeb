@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface SysMsgRepository extends JpaRepository<SysMsg, Integer> {
-    @Query("select count(1) from SysMsg where state = 0")
+    @Query("select count(*) from SysMsg where state = 0")
     public List getMsgNum();
 
     public List<SysMsg> findByState(int state, Sort sort);
