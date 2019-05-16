@@ -273,7 +273,7 @@
 		},
 		computed: {
 			startTime: function() {
-				if (this.dateRange == "") {
+				if (this.dateRange == " ") {
 					var end = new Date();
 					var start = new Date();
 					start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);

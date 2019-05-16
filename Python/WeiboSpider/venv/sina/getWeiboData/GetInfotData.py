@@ -7,7 +7,7 @@ if __name__ == "__main__":
     a=10
     while(a):
         getWeiboData.words = {}
-        selectSql = "SELECT user_id,content,created_at,id FROM weibo_info WHERE isProcess=0 ORDER BY created_at DESC limit 1000"
+        selectSql = "SELECT user_id,content,created_at,id FROM weibo_info WHERE isProcess=0 ORDER  BY  rand()  limit 1000"
         getWeiboData().dbCursor.execute(selectSql)
         contentResults = getWeiboData().dbCursor.fetchall();
         print("此次需要处理" + str(len(contentResults)) + "条微博数据")

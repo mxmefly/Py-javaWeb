@@ -28,7 +28,7 @@ if __name__ == "__main__":
             print("事务提交出错")
         count = 0;
         getWeiboData.words={}
-        selectSql = "SELECT comment_user_id,content,created_at,id,weibo_url FROM weibo_comment WHERE isProcess=0 ORDER BY created_at DESC LIMIT 2000"
+        selectSql = "SELECT comment_user_id,content,created_at,id,weibo_url FROM weibo_comment WHERE isProcess=0 ORDER  BY  rand() LIMIT 2000"
         getWeiboData().dbCursor.execute(selectSql)
         contentResults = getWeiboData().dbCursor.fetchall();
         print("此次需要处理" + str(len(contentResults)) + "条评论数据")
