@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+                                         define(function (require, exports, module) {
     var loginAPI = require('../../api/login.js');
     var login = loginAPI.login;
 	var touristLogin=loginAPI.touristLogin;
@@ -90,9 +90,7 @@ define(function (require, exports, module) {
                 return new Promise(function (resolve, reject) {
                     getInfo(getToken()).then(function (response) {
                         var data = response.data;
-						/* console.log("menuList",getMenuList(data.data.menuList)) */
 						if(data.success){
-							// console.log("routerList",getRouters(data.data.routList))
 							obj.commit('SET_MENULIST', data.data.menuList);
 							obj.commit('SET_ROUTERLIST', menu.getRouters(data.data.routList));
 							obj.commit('SET_NAME', data.data.name);

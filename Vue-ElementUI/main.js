@@ -28,10 +28,8 @@ define(function (require, exports, module) {
 				if(to.path==='/login'){
 					next();
 				}else{
-					/* 这里还有些疑问 */
 					var path = '/login?redirect=' + to.path;
 					next(path);
-					/* next(); */
 				}
 			}
 		}

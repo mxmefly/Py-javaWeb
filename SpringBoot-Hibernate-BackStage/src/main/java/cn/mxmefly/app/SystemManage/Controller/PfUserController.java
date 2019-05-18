@@ -3,7 +3,6 @@ package cn.mxmefly.app.SystemManage.Controller;
 import cn.mxmefly.app.Common.CreateResult;
 import cn.mxmefly.app.Common.Results;
 import cn.mxmefly.app.SystemManage.Dao.Repository.PfUserRepository;
-import cn.mxmefly.app.SystemManage.Service.pfUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PfUserController {
     @Autowired
     private PfUserRepository pur;
-
-    private pfUserService pus=new pfUserService();
 
     private CreateResult createResult = new CreateResult();
     /*获取所有用户*/

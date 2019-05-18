@@ -37,15 +37,15 @@
 <script>
     process = {
         env: {
-            BASE_API: "https://easy-mock.com/mock/5c47de3ad78a504a6c37c0b6/example"
+            BASE_API: ""
         }
     };
     seajs.config({
         alias: {
             'router': './router/index.js',
             'store': './store/index.js',
-			'dynamicRouter':'./store/dynamicRouter.js',
-            'validator': './util/validate.js'
+            'validator': './util/validate.js' ,//加载公用方法
+			
         }
     });
     seajs.use('./main.js');
