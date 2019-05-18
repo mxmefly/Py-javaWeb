@@ -271,7 +271,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getHotBaseData',
+					url:getHotBaseDataApi,
 					data: obj
 				}).then(function(res) {
 					var result = res.data.data;
@@ -309,7 +309,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getBaseDataUser',
+					url:getBaseDataUserApi,
 					data: obj
 				}).then(function(res) {
 					var result = res.data.data;
@@ -337,9 +337,10 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getWordHotLine',
+					url: getWordHotLineApi,
 					data: obj
 				}).then(function(res) {
+					console.log(res)
 					_this.topicHotlineDate.rows = res.data.data;
 
 				}).catch(function() {
@@ -351,7 +352,7 @@
 				var obj = {};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getPassYearHotWord',
+					url: getPassYearHotWordApi,
 					data: obj
 				}).then(function(res) {
 					_this.wordYearData = res.data.data;

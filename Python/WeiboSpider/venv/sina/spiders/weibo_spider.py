@@ -9,7 +9,6 @@ from scrapy.http import Request
 from scrapy.utils.project import get_project_settings
 from sina.items import TweetsItem, InformationItem, RelationshipsItem, CommentItem
 from sina.settings import  MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD,MYSQL_DB
-from sina.settings import MAX_WEIBO_PAGES,MAX_COMMENT_PAGES,MIN_WEIBO_DATE
 from sina.spiders.utils import time_fix
 import time
 import pymysql
@@ -26,6 +25,14 @@ class WeiboSpider(Spider):
     # 使用 cursor() 方法创建一个游标对象 cursor
     cursor = db.cursor()
 
+    cursor.execute("SELECT int_val1,int_val2,str_val1 FROM pf_config WHERE name = 'spider_config'")
+    configAll = cursor.fetchall();
+    MAX_WEIBO_PAGES = configAll[0][0]
+    MAX_COMMENT_PAGES = configAll[0][1]
+    MIN_WEIBO_DATE = configAll[0][2]
+    print('获取MAX_WEIBO_PAGES配置'+str(MAX_WEIBO_PAGES))
+    print('获取MAX_COMMENT_PAGES配置' + str(MAX_COMMENT_PAGES))
+    print('获取MIN_WEIBO_DATE配置' + MIN_WEIBO_DATE)
     def start_requests(self):
         start_uids = [
             
@@ -176,8 +183,8 @@ class WeiboSpider(Spider):
             if all_page:
                 all_page = all_page.group(1)
                 all_page = int(all_page)
-                if(all_page>MAX_WEIBO_PAGES):
-                    all_page=MAX_WEIBO_PAGES
+                if(all_page>self.MAX_WEIBO_PAGES):
+                    all_page=self.MAX_WEIBO_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
                     yield Request(page_url, self.parse_tweet, dont_filter=True, meta=response.meta)
@@ -201,7 +208,7 @@ class WeiboSpider(Spider):
                 else:
                     tweet_item['created_at'] = time_fix(create_time_info.strip())
                 #时间最低日期
-                if(tweet_item['created_at']<MIN_WEIBO_DATE):
+                if(tweet_item['created_at']<self.MIN_WEIBO_DATE):
                     1
                 else:
                     like_num = tweet_node.xpath('.//a[contains(text(),"赞[")]/text()')[-1]
@@ -377,8 +384,8 @@ class WeiboSpider(Spider):
             if all_page:
                 all_page = all_page.group(1)
                 all_page = int(all_page)
-                if(all_page>MAX_COMMENT_PAGES):
-                    all_page=MAX_COMMENT_PAGES
+                if(all_page>self.MAX_COMMENT_PAGES):
+                    all_page=self.MAX_COMMENT_PAGES
                 for page_num in range(2, all_page + 1):
                     page_url = response.url.replace('page=1', 'page={}'.format(page_num))
                     yield Request(page_url, self.parse_comment, dont_filter=True, meta=response.meta)

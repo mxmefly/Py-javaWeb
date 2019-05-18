@@ -159,10 +159,9 @@
 				// obj = JSON.stringify(obj);
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/allData/getUserInfo',
+					url: getAllUserInfoApi,
 					data: obj
 				}).then(function(res) {
-					console.log("res", res);
 					_this.fansNumData.rows = res.data.data.fansNumMap;
 					_this.ageNumMap.rows = res.data.data.ageNumMap;
 					_this.genderNumMap.rows=res.data.data.genderNumMap;

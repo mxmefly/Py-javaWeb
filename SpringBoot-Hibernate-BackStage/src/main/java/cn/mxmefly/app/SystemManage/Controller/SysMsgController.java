@@ -21,12 +21,12 @@ public class SysMsgController {
 
     private CreateResult createResult = new CreateResult();
 
-    @PostMapping("getMsgNum")
+    @PostMapping("/getMsgNum")
     public Results getMsgNum(@RequestBody Map map){
        return createResult.getResults(sysMsgRepository.getMsgNum().get(0));
     }
 
-    @PostMapping("getMsgData")
+    @PostMapping("/getMsgData")
     public Results getMsgData(){
         Map returnMap = new HashMap();
         /*排序查询*/
@@ -37,7 +37,7 @@ public class SysMsgController {
         return createResult.getResults(returnMap);
     }
 
-    @PostMapping("updateMsgState")
+    @PostMapping("/updateMsgState")
     public Results updateMsgState(@RequestBody Map map){
         int id = (int) map.get("id");
         int state= (int) map.get("state");
@@ -47,7 +47,7 @@ public class SysMsgController {
         return createResult.getResults(true,"更新成功");
     }
 
-    @PostMapping("updateStateAll")
+    @PostMapping("/updateStateAll")
     public Results updateStateAll(@RequestBody Map map){
         int state = (int)map.get("state");
         int oldState = (int)map.get("oldState");
@@ -59,14 +59,14 @@ public class SysMsgController {
         return createResult.getResults(list.size());
     }
 
-    @PostMapping("delMsgById")
+    @PostMapping("/delMsgById")
     public Results delMsgById(@RequestBody Map map){
         int id = (int)map.get("id");
         sysMsgRepository.delete(id);
         return createResult.getResults(true,"删除成功");
     }
 
-    @PostMapping("delMsgByAll")
+    @PostMapping("/delMsgByAll")
     public Results delMsgByAll(){
         List<SysMsg> list = sysMsgRepository.findByState(1);
         sysMsgRepository.delete(list);

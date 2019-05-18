@@ -217,7 +217,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getHotBaseData',
+					url: getHotBaseDataApi,
 					data: obj
 				}).then(function(res) {
 					var result = res.data.data;
@@ -255,7 +255,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getBaseDataUser',
+					url: getBaseDataUserApi,
 					data: obj
 				}).then(function(res) {
 					var result = res.data.data;
@@ -283,7 +283,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getWordHotLine',
+					url: getWordHotLineApi,
 					data: obj
 				}).then(function(res) {
 					_this.topicHotlineDate.rows = res.data.data;

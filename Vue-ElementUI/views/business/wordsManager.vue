@@ -124,7 +124,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: wordsImport,
+					url: wordsImportApi,
 					data: obj
 				}).then(function(res) {
 					if (res.data.success) {
@@ -154,7 +154,7 @@
 				};
 			    this.$axios({
 			        method: 'post',
-			        url: BASE_API+'/getWordList',
+			        url: getWordListApi,
 			        data: obj
 			    }).then(function (res) {
 			        _this.baseWordTableData = res.data.data.content;
@@ -170,7 +170,7 @@
 				};
 				this.$axios({
 				    method: 'post',
-				    url: BASE_API+'/editWordShow',
+				    url: editWordShowApi,
 				    data: obj
 				}).then(function (res) {
 					if (res.data.data) {
@@ -190,7 +190,7 @@
 				};
 				this.$axios({
 				    method: 'post',
-				    url: BASE_API+'/deleteWordOne',
+				    url: deleteWordOneApi,
 				    data: obj
 				}).then(function (res) {		
 					if (res.data.data) {
@@ -211,7 +211,7 @@
 				};
 			    this.$axios({
 			        method: 'post',
-			        url: BASE_API+'/getNewWordList',
+			        url: getNewWordListApi,
 			        data: obj
 			    }).then(function (res) {
 			        _this.newWordTableData = res.data.data.content;
@@ -229,7 +229,7 @@
 				};
 				this.$axios({
 				    method: 'post',
-				    url: BASE_API+'/newWordImport',
+				    url: newWordImportApi,
 				    data: obj
 				}).then(function (res) {		
 					if (res.data.data) {
@@ -252,7 +252,7 @@
 				};
 				this.$axios({
 				    method: 'post',
-				    url: BASE_API+'/deleteNewWordOne',
+				    url: deleteNewWordOneApi,
 				    data: obj
 				}).then(function (res) {		
 					if (res.data.data) {

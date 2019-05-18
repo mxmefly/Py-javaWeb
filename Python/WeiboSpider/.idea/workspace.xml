@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="918c47e7-a356-49fc-a5aa-4f77f911b476" name="Default Changelist" comment="" />
+    <list default="true" id="918c47e7-a356-49fc-a5aa-4f77f911b476" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Bean/PfConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Dao/Repository/PfConfigRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Controller/SysMsgController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../SpringBoot-Hibernate-BackStage/src/main/java/cn/mxmefly/app/SystemManage/Controller/SysMsgController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/HotWord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vue-ElementUI/views/business/HotWord.vue" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,16 +19,16 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/WeiboSpider$GetCommentData.coverage" NAME="GetCommentData Coverage Results" MODIFIED="1557967887951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
     <SUITE FILE_PATH="coverage/WeiboSpider$weiboUser_spider.coverage" NAME="weiboUser_spider Coverage Results" MODIFIED="1558054535987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
-    <SUITE FILE_PATH="coverage/WeiboSpider$GetInfotData.coverage" NAME="GetInfotData Coverage Results" MODIFIED="1557967896729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
+    <SUITE FILE_PATH="coverage/WeiboSpider$GetInfotData.coverage" NAME="GetInfotData Coverage Results" MODIFIED="1558145915103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/getWeiboData" />
     <SUITE FILE_PATH="coverage/WeiboSpider$login.coverage" NAME="login Coverage Results" MODIFIED="1556109188455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/account_build" />
-    <SUITE FILE_PATH="coverage/WeiboSpider$weibo_spider.coverage" NAME="weibo_spider Coverage Results" MODIFIED="1557880545583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
+    <SUITE FILE_PATH="coverage/WeiboSpider$weibo_spider.coverage" NAME="weibo_spider Coverage Results" MODIFIED="1558166897197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/sina/spiders" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetInfotData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-540">
+            <state relative-caret-position="-270">
               <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -29,10 +37,40 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="25">
+              <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+              <folding>
+                <element signature="e#40#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/sina/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="332">
+              <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-350">
+              <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/sina/middlewares.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
+            <state relative-caret-position="540">
               <caret line="23" column="96" selection-start-line="23" selection-start-column="79" selection-end-line="23" selection-end-column="96" />
             </state>
           </provider>
@@ -79,6 +117,9 @@
       <find>parse_information</find>
       <find>copy</find>
       <find>weibo_topic</find>
+      <find>MAX_WEIBO_PAGES</find>
+      <find>MAX_COMMENT_PAGES</find>
+      <find>MIN_WEIBO_DATE</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -95,19 +136,19 @@
         <option value="$PROJECT_DIR$/venv/sina/pipelines.py" />
         <option value="$PROJECT_DIR$/venv/sina/middlewares.py" />
         <option value="$PROJECT_DIR$/venv/sina/getWeiboData/getWeiboData.py" />
-        <option value="$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py" />
         <option value="$PROJECT_DIR$/venv/sina/settings.py" />
-        <option value="$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py" />
         <option value="$PROJECT_DIR$/venv/sina/getWeiboData/GetCommentData.py" />
         <option value="$PROJECT_DIR$/venv/sina/getWeiboData/GetInfotData.py" />
+        <option value="$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py" />
+        <option value="$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-25" />
-    <option name="y" value="35" />
+    <option name="x" value="-79" />
+    <option name="y" value="77" />
     <option name="width" value="1860" />
-    <option name="height" value="1100" />
+    <option name="height" value="1098" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -155,36 +196,6 @@
               <item name="sina" type="462c0819:PsiDirectoryNode" />
               <item name="spiders" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="WeiboSpider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="WeiboSpider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (WeiboSpider) &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="WeiboSpider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (WeiboSpider) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WeiboSpider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (WeiboSpider) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-              <item name="sina" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WeiboSpider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.7 (WeiboSpider) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-              <item name="sina" type="462c0819:PsiDirectoryNode" />
-              <item name="getWeiboData" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -220,7 +231,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.weiboUser_spider">
+  <component name="RunManager" selected="Python.weibo_spider">
     <configuration name="GetCommentData" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="WeiboSpider" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -340,9 +351,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.weibo_spider" />
         <item itemvalue="Python.GetInfotData" />
         <item itemvalue="Python.GetCommentData" />
-        <item itemvalue="Python.weibo_spider" />
         <item itemvalue="Python.login" />
       </list>
     </recent_temporary>
@@ -364,22 +375,22 @@
       <workItem from="1556954804817" duration="4664000" />
       <workItem from="1557039446118" duration="19940000" />
       <workItem from="1557489512234" duration="32738000" />
-      <workItem from="1558011463216" duration="849000" />
+      <workItem from="1558011463216" duration="5755000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237770000" />
+    <option name="totallyTimeSpent" value="242676000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1488" height="878" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25244755" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19020979" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2707775" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3994638" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.36997318" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -624,47 +635,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/sina/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="150" column="27" selection-start-line="150" selection-start-column="27" selection-end-line="150" selection-end-column="27" />
-          <folding>
-            <element signature="e#40#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5910">
-          <caret line="215" lean-forward="true" selection-start-line="215" selection-end-line="215" />
-          <folding>
-            <element signature="e#40#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/sina/getWeiboData/GetInfotData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-540">
+        <state relative-caret-position="-270">
           <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/sina/middlewares.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="23" column="96" selection-start-line="23" selection-start-column="79" selection-end-line="23" selection-end-column="96" />
         </state>
       </provider>
     </entry>
@@ -684,6 +661,37 @@
           <caret line="30" column="123" selection-start-line="30" selection-start-column="123" selection-end-line="30" selection-end-column="123" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/sina/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="41" column="35" lean-forward="true" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/sina/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="23" column="96" selection-start-line="23" selection-start-column="79" selection-end-line="23" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weiboUser_spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-350">
+          <caret line="10" column="74" selection-start-line="10" selection-start-column="74" selection-end-line="10" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/sina/spiders/weibo_spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+          <folding>
+            <element signature="e#40#49#0" expanded="true" />
           </folding>
         </state>
       </provider>

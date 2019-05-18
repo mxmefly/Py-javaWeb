@@ -250,7 +250,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getTopicOderData',
+					url: getTopicOderDataApi,
 					data: obj
 				}).then(function(res) {
 					_this.topicData = res.data.data;
@@ -282,7 +282,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getTopicUser',
+					url: getTopicUserApi,
 					data: obj
 				}).then(function(res) {
 					var result = res.data.data;
@@ -311,7 +311,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getTopicUserWeiboInfo',
+					url: getTopicUserWeiboInfoApi,
 					data: obj
 				}).then(function(res) {
 					_this.topicUserWeiboTable=[]
@@ -331,7 +331,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getTopicHotlineDate',
+					url:getTopicHotlineDateApi,
 					data: obj
 				}).then(function(res) {
 					_this.topicHotlineDate.rows = res.data.data;

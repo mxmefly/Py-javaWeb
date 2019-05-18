@@ -9,7 +9,6 @@ from scrapy.http import Request
 from scrapy.utils.project import get_project_settings
 from sina.items import TweetsItem, InformationItem, RelationshipsItem, CommentItem
 from sina.settings import MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB
-from sina.settings import MAX_WEIBO_PAGES, MAX_COMMENT_PAGES, MIN_WEIBO_DATE
 from sina.spiders.utils import time_fix
 import time
 import pymysql
@@ -25,7 +24,6 @@ class WeiboSpider(Spider):
     db = pymysql.connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB)
     # 使用 cursor() 方法创建一个游标对象 cursor
     cursor = db.cursor()
-
     def start_requests(self):
         
         start_uids = [

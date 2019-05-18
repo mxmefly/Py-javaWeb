@@ -390,7 +390,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserHotData',
+					url: getUserHotDataApi,
 					data: obj
 				}).then(function(res) {
 					//console.log("res", res)
@@ -435,7 +435,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getWeiboUserInfo',
+					url: getWeiboUserInfoApi,
 					data: obj
 				}).then(function(res) {
 					_this.selectedUserInfo = res.data.data;
@@ -452,7 +452,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserPortrait',
+					url: getUserPortraitapi,
 					data: obj
 				}).then(function(res) {
 					_this.wordsCloudData.rows = res.data.data;
@@ -467,7 +467,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getFansInfo',
+					url: getFansInfoApi,
 					data: obj
 				}).then(function(res) {
 					_this.fansPositionData.rows = res.data.data.locationList;
@@ -485,7 +485,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserWeiboSetimentData',
+					url: getUserWeiboSetimentDataApi,
 					data: obj
 				}).then(function(res) {
 					_this.weiboSentimentData.rows = res.data.data.dataList;
@@ -503,7 +503,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getFansWeiboSetimentData',
+					url: getFansWeiboSetimentDataApi,
 					data: obj
 				}).then(function(res) {
 					_this.fansSentimentData.rows = res.data.data.dataList;
@@ -521,7 +521,7 @@
 				};
 				this.$axios({
 					method: 'post',
-					url: BASE_API + '/getUserHotlineDate',
+					url: getUserHotlineDateApi,
 					data: obj
 				}).then(function(res) {
 					_this.userHotlineDate.rows = res.data.data;
