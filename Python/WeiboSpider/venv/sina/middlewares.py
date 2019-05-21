@@ -23,7 +23,6 @@ class CookieMiddleware(object):
             raise Exception('当前账号池为空')
         self.cursor.execute("SELECT * FROM account_pool WHERE status='success' ORDER  BY  rand() LIMIT 1")
         random_account = self.cursor.fetchall()
-        #请求时延迟
         request.headers.setdefault('Cookie', str(random_account[0][3]))
         request.meta['account'] = random_account[0]
 

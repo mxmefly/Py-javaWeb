@@ -4,7 +4,7 @@
 			<el-card shadow="hover" style="height:90px;">
 				<div class="moudelTitle">
 					<span>说明：</span>
-					<br>本数据选取的参考样本容量为 <span>1000 </span>占总获取用户的 <span> {{Math.round(100000/allUserCounts)}}% 。</span>具有足够的参考性
+					<br>本数据选取的参考样本容量为 <span>3000 </span>占总获取用户的 <span> {{Math.round(300000/allUserCounts)}}% 。</span>具有足够的参考性
 					<br>但该项目起初只是抓取大V用户，后期抓取了大量用户，故粉丝数量分布目前参考性不大
 				</div>
 			</el-card>

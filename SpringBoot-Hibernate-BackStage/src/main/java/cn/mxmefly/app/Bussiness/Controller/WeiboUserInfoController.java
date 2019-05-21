@@ -46,32 +46,7 @@ public class WeiboUserInfoController {
         if(name.length()==0){
             return createResult.getResults(weiboUserInfoReposity.getHotOder(t1,t2));
         }else {
-            weiboUserInfos=weiboUserInfoReposity.findByNickNameLike("%"+name+"%");
-            for(int i=0;i<weiboUserInfos.size();i++){
-                Map m= new HashMap();
-                m.put("weiboUsr",weiboUserInfos.get(i));
-                float value= (float) 0;
-                try {
-                    value=weiboUserInfoReposity.getUserHotData(weiboUserInfos.get(i).get_id(),t1,t2);
-                    //long count=weiboInfoRepository.countByUserIdAndCreatedAtBetween(bigVlist.get(i).get_id(),t1,t2);
-                    m.put("hotData",value);
-                    data.add(m);
-                }catch (Exception e){
-                    value=0;
-                }
-
-            }
-            Collections.sort(data, new Comparator<Map>() {
-                @Override
-                public int compare(Map o1, Map o2) {
-                    if((float)o2.get("hotData")-(float)o1.get("hotData")>0){
-                        return 1;
-                    }else{
-                        return -1;
-                    }
-                }
-            });
-            return createResult.getResults(data);
+            return createResult.getResults(weiboUserInfoReposity.getHotOderByName(t1,t2,'%'+name+'%'));
         }
     }
 

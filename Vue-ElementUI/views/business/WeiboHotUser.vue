@@ -296,35 +296,19 @@
 				if (this.userData == []) {
 					return []
 				} else {
-					if(this.type>0){
-						var data = [];
-						var size = (this.userData.length > 15) ? 15 : this.userData.length;
-						for (var i = 0; i < size; i++) {
-							var arr = {
-								id: this.userData[i].weiboUsr._id,
-								order: i + 1,
-								name: this.userData[i].weiboUsr.nickName,
-								authentication: this.userData[i].weiboUsr.authentication,
-								hotData: this.userData[i].hotData
-							}
-							data.push(arr)
+					var data = [];
+					var size = (this.userData.length > 15) ? 15 : this.userData.length;
+					for (var i = 0; i < size; i++) {
+						var arr = {
+							id: this.userData[i][0],
+							order: i + 1,
+							name: this.userData[i][1],
+							authentication: this.userData[i][2],
+							hotData: this.userData[i][3]
 						}
-						return data;                           
-					}else{
-						var data = [];
-						var size = (this.userData.length > 15) ? 15 : this.userData.length;
-						for (var i = 0; i < size; i++) {
-							var arr = {
-								id: this.userData[i][0],
-								order: i + 1,
-								name: this.userData[i][1],
-								authentication: this.userData[i][2],
-								hotData: this.userData[i][3]
-							}
-							data.push(arr)
-						}
-						return data
+						data.push(arr)
 					}
+					return data
 				}
 			},
 
@@ -396,11 +380,6 @@
 					//console.log("res", res)
 					_this.tableLoading = false
 					_this.userData = res.data.data;
-					if(_this.inputNickName.length>0){
-						_this.type=1;
-					}else{
-						_this.type=0;
-					}
 					_this.selected.id = _this.userTableData[0].id;
 					_this.selected.name = _this.userTableData[0].name;
 					//_this.selectedUserInfo = _this.userData[0].weiboUsr;
